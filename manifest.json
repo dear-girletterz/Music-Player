@@ -1,1 +1,17 @@
+{
+  "short_name": "VibeMusic",
+  "name": "Waves & Night Personal Streamer",
+  "icons": [
+    {
+      "src": "https://cdn-icons-png.flaticon.com/512/3844/3844724.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ],
+  "start_url": "./index.html",
+  "background_color": "#1d3557",
+  "theme_color": "#457b9d",
+  "display": "standalone",
+  "orientation": "portrait"
+}
 
