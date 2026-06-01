@@ -1,1 +1,133 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Waves & Night Music</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="manifest" href="manifest.json">
+</head>
+<body>
+
+    <div class="music-card">
+        <div class="header">
+            <span class="material-icons-round">expand_more</span>
+            <p>PLAYING FROM PLAYLIST</p>
+            <span class="material-icons-round">more_vert</span>
+        </div>
+
+        <div class="cover-art">
+            <div class="wave-animation"></div>
+        </div>
+
+        <div class="song-details">
+            <h1 id="song-title">Memuat Lagu...</h1>
+            <p id="song-artist">Nama Penyanyi</p>
+        </div>
+
+        <div class="controls">
+            <button class="btn-secondary" onclick="prevSong()">
+                <span class="material-icons-round">skip_previous</span>
+            </button>
+            <button class="btn-main" id="play-btn" onclick="togglePlay()">
+                <span class="material-icons-round" id="play-icon">play_arrow</span>
+            </button>
+            <button class="btn-secondary" onclick="nextSong()">
+                <span class="material-icons-round">skip_next</span>
+            </button>
+        </div>
+    </div>
+
+    <div id="yt-player" style="position: absolute; top: -9999px; left: -9999px;"></div>
+
+    <script src="https://www.youtube.com/iframe_api"></script>
+    <script>
+        // DAFTAR LAGU KAMU (Silakan ganti/tambah ID YouTube di sini nanti)
+        const playlist = [
+            { title: "Ganti Judul Lagu 1", artist: "Penyanyi 1", id: "dQw4w9WgXcQ" },
+            { title: "Ganti Judul Lagu 2", artist: "Penyanyi 2", id: "LJH7sWvxZ-I" }
+        ];
+
+        let currentIndex = 0;
+        let player;
+        let isPlaying = false;
+
+        function onYouTubeIframeAPIReady() {
+            player = new YT.Player('yt-player', {
+                height: '0',
+                width: '0',
+                videoId: playlist[currentIndex].id,
+                events: {
+                    'onReady': onPlayerReady,
+                    'onStateChange': onPlayerStateChange
+                }
+            });
+        }
+
+        function onPlayerReady() {
+            updatePlayerUI();
+        }
+
+        function updatePlayerUI() {
+            const currentSong = playlist[currentIndex];
+            document.getElementById('song-title').innerText = currentSong.title;
+            document.getElementById('song-artist').innerText = currentSong.artist;
+
+            // Memunculkan Kontrol di Notifikasi HP (Media Session API)
+            if ('mediaSession' in navigator) {
+                navigator.mediaSession.metadata = new MediaMetadata({
+                    title: currentSong.title,
+                    artist: currentSong.artist,
+                    album: 'My Vibe Playlist'
+                });
+                
+                navigator.mediaSession.setActionHandler('play', togglePlay);
+                navigator.mediaSession.setActionHandler('pause', togglePlay);
+                navigator.mediaSession.setActionHandler('previoustrack', prevSong);
+                navigator.mediaSession.setActionHandler('nexttrack', nextSong);
+            }
+        }
+
+        function togglePlay() {
+            if (!player) return;
+            const icon = document.getElementById('play-icon');
+            
+            if (isPlaying) {
+                player.pauseVideo();
+                icon.innerText = "play_arrow";
+                isPlaying = false;
+            } else {
+                player.playVideo();
+                icon.innerText = "pause";
+                isPlaying = true;
+            }
+        }
+
+        function onPlayerStateChange(event) {
+            // Kalau lagu habis otomatis putar lagu berikutnya
+            if (event.data === YT.PlayerState.ENDED) {
+                nextSong();
+            }
+        }
+
+        function nextSong() {
+            currentIndex = (currentIndex + 1) % playlist.length;
+            player.loadVideoById(playlist[currentIndex].id);
+            if(!isPlaying) togglePlay();
+            updatePlayerUI();
+        }
+
+        function prevSong() {
+            currentIndex = (currentIndex - 1 + playlist.length) % playlist.length;
+            player.loadVideoById(playlist[currentIndex].id);
+            if(!isPlaying) togglePlay();
+            updatePlayerUI();
+        }
+    </script>
+</body>
+</html>
 
