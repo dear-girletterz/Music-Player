@@ -6,13 +6,14 @@
 
 body {
     font-family: 'Poppins', sans-serif;
-    background: linear-gradient(135deg, #a8dadc 0%, #457b9d 50%, #1d3557 100%);
+    /* Gradasi super soft: Biru Awan Pastel ke Pink Pastel Lembut */
+    background: linear-gradient(135deg, #e0f2f1 0%, #d0e1fd 50%, #fbcfe8 100%);
     min-height: 100vh;
     display: flex;
     justify-content: center;
-    align-items: flex-start; /* Biar kalau foldernya banyak bisa di-scroll ke bawah */
-    color: #ffffff;
-    padding: 30px 10px;
+    align-items: flex-start;
+    color: #4a5568; /* Warna teks diubah jadi abu-abu gelap lembut, bukan hitam pekat biar tetep soft */
+    padding: 40px 15px;
 }
 
 .container {
@@ -30,7 +31,8 @@ body {
     font-weight: 700;
     margin-bottom: 25px;
     text-align: center;
-    text-shadow: 0 2px 10px rgba(0,0,0,0.2);
+    color: #5a67d8; /* Warna ungu-biru pastel untuk judul */
+    letter-spacing: 0.5px;
 }
 
 /* KUMPULAN FOLDER BOX */
@@ -40,16 +42,16 @@ body {
     gap: 15px;
 }
 
-/* Base style untuk kotak folder */
+/* Kotak folder dengan efek Glassmorphism yang sangat halus */
 .folder-box {
     display: flex;
     align-items: center;
-    padding: 15px 20px;
-    border-radius: 20px;
+    padding: 16px 20px;
+    border-radius: 24px; /* Sudut lebih melengkung biar makin gemas */
     cursor: pointer;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 10px 25px rgba(165, 180, 252, 0.2);
     transition: transform 0.2s ease, box-shadow 0.2s ease;
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.6);
 }
 
 .folder-box:active {
@@ -60,36 +62,37 @@ body {
 .folder-img {
     width: 55px;
     height: 55px;
-    border-radius: 50%; /* Efek Buat Jadi Bulat Sempurna */
+    border-radius: 50%;
     object-fit: cover;
     margin-right: 20px;
-    border: 2px solid rgba(255, 255, 255, 0.6);
+    border: 3px solid #ffffff; /* Frame putih bersih */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
 }
 
 .folder-name {
-    font-size: 16px;
+    font-size: 15px;
     font-weight: 600;
     letter-spacing: 0.5px;
 }
 
-/* VARIASI WARNA PASTEL AESTHETIC SESUAI REQ KAMU */
-.f-blue { background: rgba(173, 216, 230, 0.25); color: #e0f7fa; }       /* ENHYPEN - Biru Muda */
-.f-pink { background: rgba(255, 182, 193, 0.25); color: #ffebee; }       /* HEARTS2HEARTS - Pink Muda */
-.f-green { background: rgba(144, 238, 144, 0.25); color: #e8f5e9; }      /* CORTIS - Hijau Muda */
-.f-red { background: rgba(240, 128, 128, 0.25); color: #ffeade; }        /* BABYMONSTER - Merah Pastel */
-.f-grey { background: rgba(211, 211, 211, 0.25); color: #f5f5f5; }       /* LNGSHOT - Abu Muda */
-.f-purple { background: rgba(216, 191, 216, 0.25); color: #f3e5f5; }     /* LAINNYA - Ungu Muda */
+/* VARIASI WARNA FOLDER - 100% SUPER SOFT PASTEL */
+.f-blue { background: rgba(224, 242, 254, 0.8); color: #0369a1; }       /* ENHYPEN - Biru Pastel Lembut */
+.f-pink { background: rgba(253, 242, 248, 0.8); color: #be185d; }       /* HEARTS2HEARTS - Pink Macaron */
+.f-green { background: rgba(240, 253, 250, 0.8); color: #0f766e; }      /* CORTIS - Hijau Matcha Soft */
+.f-red { background: rgba(255, 241, 241, 0.8); color: #c2410c; }        /* BABYMONSTER - Coral Rose Pastel */
+.f-grey { background: rgba(248, 250, 252, 0.8); color: #475569; }       /* LNGSHOT - Abu Kabut Soft */
+.f-purple { background: rgba(250, 245, 255, 0.8); color: #6b21a8; }     /* LAINNYA - Ungu Lavender Soft */
 
 
 /* STYLE PLAYER (HALAMAN KEDUA) */
 .music-card {
-    background: rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.7); /* Background putih transparan kyk kaca */
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
-    padding: 25px;
-    border-radius: 30px;
-    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 30px 25px;
+    border-radius: 32px;
+    box-shadow: 0 20px 40px rgba(148, 163, 184, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.7);
     text-align: center;
 }
 
@@ -98,33 +101,35 @@ body {
     justify-content: space-between;
     align-items: center;
     font-size: 11px;
-    letter-spacing: 2px;
-    opacity: 0.8;
+    letter-spacing: 1.5px;
+    color: #94a3b8;
     margin-bottom: 25px;
 }
 
-.header .material-icons-round { cursor: pointer; font-size: 22px; }
+.header .material-icons-round { cursor: pointer; font-size: 24px; color: #64748b; }
 
 .cover-art {
     width: 100%;
     aspect-ratio: 1 / 1;
-    border-radius: 20px;
-    margin-bottom: 30px;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    border-radius: 24px;
+    margin-bottom: 25px;
+    box-shadow: 0 12px 24px rgba(148, 163, 184, 0.2);
     overflow: hidden;
 }
 
+/* Animasi ombak bawaan diubah jadi warna pastel estetik */
 .wave-animation {
     width: 100%;
     height: 100%;
-    background: url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=500&auto=format&fit=crop') center/cover;
-    opacity: 0.8;
+    background: linear-gradient(45deg, #a5f3fc, #fbcfe8);
+    opacity: 0.9;
 }
 
 .song-details h1 {
-    font-size: 22px;
+    font-size: 20px;
     font-weight: 700;
-    margin-bottom: 5px;
+    color: #1e293b;
+    margin-bottom: 6px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -132,8 +137,8 @@ body {
 
 .song-details p {
     font-size: 14px;
-    opacity: 0.7;
-    margin-bottom: 35px;
+    color: #64748b;
+    margin-bottom: 30px;
 }
 
 .controls {
@@ -146,13 +151,30 @@ body {
 button {
     background: none;
     border: none;
-    color: white;
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
+    transition: transform 0.2s ease;
 }
 
-.btn-secondary .material-icons-round { font-size: 38px; opacity: 0.8; }
-.btn-main { background: #ffffff; color: #1d3557; width: 65px; height: 65px; border-radius: 50%; }
+button:active {
+    transform: scale(0.9);
+}
+
+.btn-secondary .material-icons-round { 
+    font-size: 40px; 
+    color: #94a3b8; 
+}
+
+/* Tombol Play Utama yang Lebih Pop Out tapi Tetap Soft */
+.btn-main { 
+    background: #6366f1; /* Indigo lembut */
+    color: #ffffff; 
+    width: 65px; 
+    height: 65px; 
+    border-radius: 50%; 
+    box-shadow: 0 8px 20px rgba(99, 102, 241, 0.3);
+}
+
 .btn-main .material-icons-round { font-size: 36px; }
