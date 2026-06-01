@@ -6,261 +6,206 @@
     <title>Waves & Night Music</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
-    <link rel="manifest" href="manifest.json">
 </head>
 <body>
 
+    <!-- HALAMAN 1: DAFTAR FOLDER UTAMA -->
     <div class="container" id="folder-screen">
         <h2 class="app-title">My Vibe Library</h2>
-        
         <div class="folder-list">
             <div class="folder-box f-blue" onclick="openPlaylist('enhypen')">
-                <img src="https://www.allkpop.com/upload/2021/09/content/301148/1633016889-moyeyt3.jpeg" class="folder-img" alt="ENHYPEN">
+                <img src="https://images.unsplash.com/photo-1514525253161-7a46d19cd819?q=80&w=150&auto=format&fit=crop" class="folder-img" alt="ENHYPEN">
                 <span class="folder-name">ENHYPEN</span>
             </div>
-
             <div class="folder-box f-pink" onclick="openPlaylist('hearts2hearts')">
-                <img src="https://static.wikia.nocookie.net/kpop/images/e/e2/Hearts2Hearts_Rude%21_group_concept_photo_1.png" class="folder-img" alt="HEARTS2HEARTS">
+                <img src="https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?q=80&w=150&auto=format&fit=crop" class="folder-img" alt="HEARTS2HEARTS">
                 <span class="folder-name">HEARTS2HEARTS</span>
             </div>
-
             <div class="folder-box f-green" onclick="openPlaylist('cortis')">
-                <img src="https://lxpr.lspr.ac.id/wp-content/uploads/2025/11/X-cortis.jpg" class="folder-img" alt="CORTIS">
+                <img src="https://images.unsplash.com/photo-1470225620780-dba8ba36b745?q=80&w=150&auto=format&fit=crop" class="folder-img" alt="CORTIS">
                 <span class="folder-name">CORTIS</span>
             </div>
-
             <div class="folder-box f-red" onclick="openPlaylist('babymonster')">
-                <img src="https://uploaded.celebconfirmed.com/2_d73841a135.jpg" class="folder-img" alt="BABYMONSTER">
+                <img src="https://images.unsplash.com/photo-1501386761578-eac5c94b800a?q=80&w=150&auto=format&fit=crop" class="folder-img" alt="BABYMONSTER">
                 <span class="folder-name">BABYMONSTER</span>
             </div>
-
             <div class="folder-box f-grey" onclick="openPlaylist('lngshot')">
-                <img src="https://www.billboard.com/wp-content/uploads/2026/02/LNGSHOT-k-pop-rookie-of-the-month-2026-cr-jang-jungwoo-billboard-2.jpg?w=1280" class="folder-img" alt="LNGSHOT">
+                <img src="https://images.unsplash.com/photo-1498038432885-c6f3f1b912ee?q=80&w=150&auto=format&fit=crop" class="folder-img" alt="LNGSHOT">
                 <span class="folder-name">LNGSHOT</span>
             </div>
-
             <div class="folder-box f-purple" onclick="openPlaylist('lainnya')">
-                <img src="https://images.pexels.com/photos/2119281/pexels-photo-2119281.jpeg" class="folder-img" alt="LAINNYA">
+                <img src="https://images.unsplash.com/photo-1459749411175-04bf5292ceea?q=80&w=150&auto=format&fit=crop" class="folder-img" alt="LAINNYA">
                 <span class="folder-name">LAINNYA</span>
             </div>
         </div>
     </div>
 
-    <div class="container hide" id="player-screen">
-        <div class="music-card">
-            <div class="header">
-                <span class="material-icons-round" onclick="backToFolders()">arrow_back</span>
-                <p id="playlist-indicator">PLAYING FROM PLAYLIST</p>
-                <span class="material-icons-round">more_vert</span>
+    <!-- HALAMAN 2: DAFTAR LAGU BERJEJER (PLAYLIST VIEW) -->
+    <div class="container hide" id="playlist-screen">
+        <div class="playlist-card">
+            <div class="playlist-header">
+                <span class="material-icons-round back-btn" onclick="backToFolders()">arrow_back</span>
+                <h3 id="playlist-title">Nama Playlist</h3>
             </div>
-
-            <div class="cover-art">
-                <div class="wave-animation"></div>
-            </div>
-
-            <div class="song-details">
-                <h1 id="song-title">Memuat Lagu...</h1>
-                <p id="song-artist">Nama Penyanyi</p>
-            </div>
-
-            <div class="controls">
-                <button class="btn-secondary" onclick="prevSong()">
-                    <span class="material-icons-round">skip_previous</span>
-                </button>
-                <button class="btn-main" id="play-btn" onclick="togglePlay()">
-                    <span class="material-icons-round" id="play-icon">play_arrow</span>
-                </button>
-                <button class="btn-secondary" onclick="nextSong()">
-                    <span class="material-icons-round">skip_next</span>
-                </button>
-            </div>
+            <!-- Tempat daftar lagu berjejer ke bawah muncul -->
+            <div class="song-list" id="song-list-container"></div>
         </div>
     </div>
 
-    <div id="yt-player" style="position: absolute; top: -9999px; left: -9999px;"></div>
+    <!-- MINI PLAYER YANG MUNCUL DI BAWAH KALO LAGU DIPUTAR -->
+    <div class="mini-player hide" id="mini-player" onclick="openFullPlayer()">
+        <div class="mini-info">
+            <h4 id="mini-title">Judul Lagu</h4>
+            <p id="mini-artist">Penyanyi</p>
+        </div>
+        <div class="mini-controls" onclick="event.stopPropagation();">
+            <button onclick="togglePlay()"><span class="material-icons-round" id="mini-play-icon">play_arrow</span></button>
+            <button onclick="nextSong()"><span class="material-icons-round">skip_next</span></button>
+        </div>
+    </div>
 
-    <script src="https://www.youtube.com/iframe_api"></script>
+    <!-- Tag Audio HTML5 Tersembunyi (Biar bisa jalan di background) -->
+    <audio id="audio-player" crossorigin="anonymous"></audio>
+
     <script>
-        // DATABASE LAGU BERDASARKAN FOLDER
+        // DATABASE LAGU MENGGUNAKAN AUDIO MP3/M4A (BIAR BISA BACKROUND PLAY)
         const allPlaylists = {
             enhypen: [
-                { title: "Given-Taken", artist: "ENHYPEN", id: "nQ6wLuYvGd4" },
-                { title: "Let Me In (20 CUBE)", artist: "ENHYPEN", id: "v_Zf_bY8mkw" },
-                { title: "10 Months", artist: "ENHYPEN", id: "88m2fI4C-B0" },
-                { title: "Flicker", artist: "ENHYPEN", id: "tbyVbNmsM6Y" }
-                { title: "Drunk-Dazed", artist: "ENHYPEN", id: "HacxL4W0J9w" },
-                { title: "FEVER", artist: "ENHYPEN", id: "eB96Z0l-U0s" },
-                { title: "Not For Sale", artist: "ENHYPEN", id: "g_5X5Q5l4L4" },
-                { title: "Mixed Up", artist: "ENHYPEN", id: "tUoN5n0_M5o" }, 
-                { title: "Tamed-Dashed", artist: "ENHYPEN", id: "0wS9Zc5d644" },
-                { title: "Upper Side Dreamin'", artist: "ENHYPEN", id: "5kS2419_X_8" },
-                { title: "Just a Little Bit", artist: "ENHYPEN", id: "v_74i_rI_8s" },
-                { title: "Go Big or Go Home", artist: "ENHYPEN", id: "rS1x7U1pG8E" },
-                { title: "Blockbuster", artist: "ENHYPEN", id: "nC8a4m5zK1Q" },
-                { title: "Attention, please!", artist: "ENHYPEN", id: "M7v9x2b3n4m" }, 
-                { title: "Blessed-Cursed", artist: "ENHYPEN", id: "OonNf8Uv9Hk" },
-                { title: "Polaroid Love", artist: "ENHYPEN", id: "vX8X67XF7v4" }, 
-                { title: "Future Perfect (Pass the MIC)", artist: "ENHYPEN", id: "Q7Z4Lh84vEY" },
-                { title: "ParadoXXX Invasion", artist: "ENHYPEN", id: "M1gU-wO1c2Q" },
-                { title: "TFW (That Feeling When)", artist: "ENHYPEN", id: "oK2G4H0vS8M" },
-                { title: "SHOUT OUT", artist: "ENHYPEN", id: "v_Vv_9F5m5w" },
-                { title: "Bite Me", artist: "ENHYPEN", id: "wX6vN3_R_5M" },
-                { title: "Sacrifice (Eat Me Up)", artist: "ENHYPEN", id: "H8B4n9GvL6c" },
-                { title: "Chaconne", artist: "ENHYPEN", id: "tM2V4XoP1M8" },
-                { title: "Bills", artist: "ENHYPEN", id: "zV4K3mO5N2s" },
-                { title: "Karma", artist: "ENHYPEN", id: "w_R8m3N1vO4" }, 
-                { title: "Mortal", artist: "ENHYPEN", id: "dQ_v8N3M1Xo" },
-                { title: "Sweet Venom", artist: "ENHYPEN", id: "H7m6vO9R2Lk" },
-                { title: "Still Monster", artist: "ENHYPEN", id: "tV2M4KnP6R0" },
-                { title: "Blind", artist: "ENHYPEN", id: "w_K3mO5N8vA" },
-                { title: "Orange Flower (You Complete Me)", artist: "ENHYPEN", id: "zR4V9XmO1L2" },
-                { title: "Fatal Trouble", artist: "ENHYPEN", id: "v_F4tL9Tr0b" },
-                { title: "Criminal Love", artist: "ENHYPEN", id: "wX8CrM9Lv2N" },
-                { title: "One In A Billion", artist: "ENHYPEN", id: "h2O1nBiL9On" },
-                { title: "Bad Desire", artist: "ENHYPEN", id: "tM4DsR9V1Un" },
-                { title: "Outside", artist: "ENHYPEN", id: "zV3OuTd5S8M" },
-                { title: "Loose", artist: "ENHYPEN", id: "kL8Os3N2vP4" },
-                { title: "Helium", artist: "ENHYPEN", id: "hL9HlM5vR3X" },
-                { title: "Too Close", artist: "ENHYPEN", id: "w_T2ClS8m1O" }, 
-                { title: "Moonstruck", artist: "ENHYPEN", id: "oM8nS2vK9P0" },
-                { title: "XO (Only If You Say Yes)", artist: "ENHYPEN", id: "xO_9YyS8vA4" },
-                { title: "Your Eyes Only", artist: "ENHYPEN", id: "yUrE8zV9L6m" },
-                { title: "Hundred Broken Hearts", artist: "ENHYPEN", id: "hB100H2vS4m" },
-                { title: "Brought The Heat Back", artist: "ENHYPEN", id: "bH3atB4ck9v" },
-                { title: "Paranormal", artist: "ENHYPEN", id: "pArAn0RmAl6v" },
-                { title: "Royalty", artist: "ENHYPEN", id: "rOyAlTy8vA1" },
-                { title: "Highway 1009", artist: "ENHYPEN", id: "hWy1009vM2x" },
-                { title: "No Doubt", artist: "ENHYPEN", id: "nD0ubt8vM3s" },
-                { title: "Daydream", artist: "ENHYPEN", id: "dAyDrEam4vA" },
-                { title: "Knife", artist: "ENHYPEN", id: "kN1fE9vA4s" },
-                { title: "Stealer", artist: "ENHYPEN", id: "sTeAlEr7vM1" },
-                { title: "Big Girls Don't Cry", artist: "ENHYPEN", id: "bG1rLs8vA5m" },
-                { title: "No Way Back", artist: "ENHYPEN", id: "nWbAk9vO2p" },
-                { title: "Shine On Me", artist: "ENHYPEN", id: "sHiNeOn4vE1" }, 
-                { title: "Blossom", artist: "ENHYPEN", id: "iA4QNyMjY-I" }
+                { title: "Given-Taken", artist: "ENHYPEN", url: "ENHYPEN - Given-Taken.mp3" },
+                { title: "Let Me In (20 CUBE)", artist: "ENHYPEN", url: "ENHYPEN - Let Me In (20 Cube).mp3" },
+                { title: "10 Months", artist: "ENHYPEN", url: "ENHYPEN - 10 Months.mp3" },
+                { title: "Flicker", artist: "ENHYPEN", url: "ENHYPEN - Flicker.mp3" }     
             ],
-            hearts2hearts: [
-                { title: "Contoh Lagu H2H", artist: "HEARTS2HEARTS", id: "dQw4w9WgXcQ" }
-            ],
-            cortis: [
-                { title: "Contoh Lagu Cortis", artist: "CORTIS", id: "dQw4w9WgXcQ" }
-            ],
-            babymonster: [
-                { title: "Contoh Lagu Baemon", artist: "BABYMONSTER", id: "dQw4w9WgXcQ" }
-            ],
-            lngshot: [
-                { title: "Contoh Lagu Lngshot", artist: "LNGSHOT", id: "dQw4w9WgXcQ" }
-            ],
-            lainnya: [
-                { title: "Lagu Bebas", artist: "Penyanyi Lain", id: "dQw4w9WgXcQ" }
-            ]
+            hearts2hearts: [],
+            cortis: [],
+            babymonster: [],
+            lngshot: [],
+            lainnya: []
         };
 
         let currentPlaylist = [];
+        let currentPlaylistName = "";
         let currentIndex = 0;
-        let player;
+        const audio = document.getElementById('audio-player');
         let isPlaying = false;
 
-        function onYouTubeIframeAPIReady() {
-            // Player diinisialisasi tanpa memutar lagu dulu
-            player = new YT.Player('yt-player', {
-                height: '0', width: '0',
-                events: {
-                    'onStateChange': onPlayerStateChange
-                }
-            });
-        }
-
+        // Buka daftar lagu berjejer ke bawah
         function openPlaylist(folderName) {
+            currentPlaylistName = folderName;
             currentPlaylist = allPlaylists[folderName];
-            currentIndex = 0;
             
+            document.getElementById('playlist-title').innerText = folderName.toUpperCase();
+            const listContainer = document.getElementById('song-list-container');
+            listContainer.innerHTML = ""; // reset list
+
             if (currentPlaylist.length === 0) {
-                alert("Folder ini belum ada lagunya!");
-                return;
+                listContainer.innerHTML = `<p class="empty-msg">Belum ada lagu di folder ini ✨</p>`;
+            } else {
+                // Tampilkan list berjejer ke bawah
+                currentPlaylist.forEach((song, index) => {
+                    const songItem = document.createElement('div');
+                    songItem.className = `song-item ${currentIndex === index && currentPlaylistName === folderName && isPlaying ? 'active-song' : ''}`;
+                    songItem.onclick = () => selectSong(index);
+                    songItem.innerHTML = `
+                        <div class="song-num">${index + 1}</div>
+                        <div class="song-meta">
+                            <span class="s-title">${song.title}</span>
+                            <span class="s-artist">${song.artist}</span>
+                        </div>
+                        <span class="material-icons-round play-icon-list">play_circle_filled</span>
+                    `;
+                    listContainer.appendChild(songItem);
+                });
             }
 
-            // Ganti nama indikator di player
-            document.getElementById('playlist-indicator').innerText = folderName.toUpperCase();
-            
-            // Pindah halaman
             document.getElementById('folder-screen').classList.add('hide');
-            document.getElementById('player-screen').classList.remove('hide');
-
-            // Load lagu pertama di folder itu
-            player.loadVideoById(currentPlaylist[currentIndex].id);
-            player.pauseVideo(); // Biar gak langsung otomatis play berisik
-            isPlaying = false;
-            document.getElementById('play-icon').innerText = "play_arrow";
-            
-            updatePlayerUI();
+            document.getElementById('playlist-screen').classList.remove('hide');
         }
 
         function backToFolders() {
-            if (isPlaying) {
-                player.pauseVideo();
-                isPlaying = false;
-                document.getElementById('play-icon').innerText = "play_arrow";
-            }
-            document.getElementById('player-screen').classList.add('hide');
+            document.getElementById('playlist-screen').classList.add('hide');
             document.getElementById('folder-screen').classList.remove('hide');
         }
 
-        function updatePlayerUI() {
-            const currentSong = currentPlaylist[currentIndex];
-            document.getElementById('song-title').innerText = currentSong.title;
-            document.getElementById('song-artist').innerText = currentSong.artist;
-
-            if ('mediaSession' in navigator) {
-                navigator.mediaSession.metadata = new MediaMetadata({
-                    title: currentSong.title,
-                    artist: currentSong.artist
-                });
-                navigator.mediaSession.setActionHandler('play', togglePlay);
-                navigator.mediaSession.setActionHandler('pause', togglePlay);
-                navigator.mediaSession.setActionHandler('previoustrack', prevSong);
-                navigator.mediaSession.setActionHandler('nexttrack', nextSong);
-            }
+        // Ketika salah satu lagu di list diklik
+        function selectSong(index) {
+            currentIndex = index;
+            const song = currentPlaylist[currentIndex];
+            
+            audio.src = song.url;
+            audio.play().then(() => {
+                isPlaying = true;
+                updateUI();
+                setupNotification(song); // Pasang ke bar notifikasi HP
+            }).catch(err => console.log("Gagal memutar, cek link audio kamu:", err));
         }
 
         function togglePlay() {
-            if (!player || currentPlaylist.length === 0) return;
-            const icon = document.getElementById('play-icon');
+            if (!audio.src) return;
             if (isPlaying) {
-                player.pauseVideo();
-                icon.innerText = "play_arrow";
+                audio.pause();
                 isPlaying = false;
             } else {
-                player.playVideo();
-                icon.innerText = "pause";
+                audio.play();
                 isPlaying = true;
             }
-        }
-
-        function onPlayerStateChange(event) {
-            if (event.data === YT.PlayerState.ENDED) {
-                nextSong();
+            updateUI();
+            if ('mediaSession' in navigator) {
+                navigator.mediaSession.playbackState = isPlaying ? "playing" : "paused";
             }
         }
 
         function nextSong() {
             if (currentPlaylist.length === 0) return;
             currentIndex = (currentIndex + 1) % currentPlaylist.length;
-            player.loadVideoById(currentPlaylist[currentIndex].id);
-            if(!isPlaying) togglePlay();
-            updatePlayerUI();
+            selectSong(currentIndex);
         }
 
-        function prevSong() {
-            if (currentPlaylist.length === 0) return;
-            currentIndex = (currentIndex - 1 + currentPlaylist.length) % currentPlaylist.length;
-            player.loadVideoById(currentPlaylist[currentIndex].id);
-            if(!isPlaying) togglePlay();
-            updatePlayerUI();
+        function updateUI() {
+            const song = currentPlaylist[currentIndex];
+            if (!song) return;
+
+            // Munculkan mini player bawah
+            document.getElementById('mini-player').classList.remove('hide');
+            document.getElementById('mini-title').innerText = song.title;
+            document.getElementById('mini-artist').innerText = song.artist;
+            
+            document.getElementById('mini-play-icon').innerText = isPlaying ? "pause" : "play_arrow";
+
+            // Update status keaktifan di list lagu
+            const items = document.querySelectorAll('.song-item');
+            items.forEach((item, idx) => {
+                if (idx === currentIndex) item.classList.add('active-song');
+                else item.classList.remove('active-song');
+            });
         }
+
+        // FITUR SAKTI: BIAR NYANTOL DI NOTIFIKASI HP & TETEP NYALA DI BACKGROUND
+        function setupNotification(song) {
+            if ('mediaSession' in navigator) {
+                navigator.mediaSession.metadata = new MediaMetadata({
+                    title: song.title,
+                    artist: song.artist,
+                    album: currentPlaylistName.toUpperCase(),
+                    artwork: [
+                        { src: 'https://images.unsplash.com/photo-1514525253161-7a46d19cd819?q=80&w=256&auto=format&fit=crop', sizes: '256x256', type: 'image/jpeg' }
+                    ]
+                });
+
+                // Tombol kontrol di Notif HP
+                navigator.mediaSession.setActionHandler('play', () => togglePlay());
+                navigator.mediaSession.setActionHandler('pause', () => togglePlay());
+                navigator.mediaSession.setActionHandler('nexttrack', () => nextSong());
+            }
+        }
+
+        // Otomatis putar lagu berikutnya kalau lagu habis
+        audio.onended = () => {
+            nextSong();
+        };
     </script>
 </body>
 </html>
