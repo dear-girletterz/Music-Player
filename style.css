@@ -6,23 +6,86 @@
 
 body {
     font-family: 'Poppins', sans-serif;
-    /* Gradasi Pastel Biru ke Biru Gelap (Vibes Ombak & Langit Malam) */
     background: linear-gradient(135deg, #a8dadc 0%, #457b9d 50%, #1d3557 100%);
-    height: 100vh;
+    min-height: 100vh;
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: flex-start; /* Biar kalau foldernya banyak bisa di-scroll ke bawah */
     color: #ffffff;
-    overflow: hidden;
+    padding: 30px 10px;
 }
 
-/* Kartu Pemutar Musik Ala Spotify Premium */
+.container {
+    width: 100%;
+    max-width: 360px;
+    transition: all 0.3s ease;
+}
+
+.hide {
+    display: none !important;
+}
+
+.app-title {
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 25px;
+    text-align: center;
+    text-shadow: 0 2px 10px rgba(0,0,0,0.2);
+}
+
+/* KUMPULAN FOLDER BOX */
+.folder-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+/* Base style untuk kotak folder */
+.folder-box {
+    display: flex;
+    align-items: center;
+    padding: 15px 20px;
+    border-radius: 20px;
+    cursor: pointer;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.folder-box:active {
+    transform: scale(0.96);
+}
+
+/* Gambar bulat di samping nama folder */
+.folder-img {
+    width: 55px;
+    height: 55px;
+    border-radius: 50%; /* Efek Buat Jadi Bulat Sempurna */
+    object-fit: cover;
+    margin-right: 20px;
+    border: 2px solid rgba(255, 255, 255, 0.6);
+}
+
+.folder-name {
+    font-size: 16px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+}
+
+/* VARIASI WARNA PASTEL AESTHETIC SESUAI REQ KAMU */
+.f-blue { background: rgba(173, 216, 230, 0.25); color: #e0f7fa; }       /* ENHYPEN - Biru Muda */
+.f-pink { background: rgba(255, 182, 193, 0.25); color: #ffebee; }       /* HEARTS2HEARTS - Pink Muda */
+.f-green { background: rgba(144, 238, 144, 0.25); color: #e8f5e9; }      /* CORTIS - Hijau Muda */
+.f-red { background: rgba(240, 128, 128, 0.25); color: #ffeade; }        /* BABYMONSTER - Merah Pastel */
+.f-grey { background: rgba(211, 211, 211, 0.25); color: #f5f5f5; }       /* LNGSHOT - Abu Muda */
+.f-purple { background: rgba(216, 191, 216, 0.25); color: #f3e5f5; }     /* LAINNYA - Ungu Muda */
+
+
+/* STYLE PLAYER (HALAMAN KEDUA) */
 .music-card {
     background: rgba(255, 255, 255, 0.1);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
-    width: 90%;
-    max-width: 360px;
     padding: 25px;
     border-radius: 30px;
     box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
@@ -30,39 +93,34 @@ body {
     text-align: center;
 }
 
-/* Bagian Atas */
 .header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    font-size: 10px;
+    font-size: 11px;
     letter-spacing: 2px;
     opacity: 0.8;
     margin-bottom: 25px;
 }
 
-/* Wadah Cover Art Efek Ombak */
+.header .material-icons-round { cursor: pointer; font-size: 22px; }
+
 .cover-art {
     width: 100%;
     aspect-ratio: 1 / 1;
-    background: linear-gradient(45deg, #2a9d8f, #e9c46a);
     border-radius: 20px;
     margin-bottom: 30px;
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
     overflow: hidden;
-    position: relative;
 }
 
-/* Efek Animasi Ombak Lembut di Cover */
 .wave-animation {
     width: 100%;
     height: 100%;
     background: url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=500&auto=format&fit=crop') center/cover;
     opacity: 0.8;
-    transition: transform 0.5s ease;
 }
 
-/* Detail Judul & Penyanyi */
 .song-details h1 {
     font-size: 22px;
     font-weight: 700;
@@ -78,7 +136,6 @@ body {
     margin-bottom: 35px;
 }
 
-/* Tombol Kontrol */
 .controls {
     display: flex;
     justify-content: center;
@@ -91,32 +148,11 @@ button {
     border: none;
     color: white;
     cursor: pointer;
-    transition: transform 0.2s ease;
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
-button:active {
-    transform: scale(0.9);
-}
-
-.btn-secondary .material-icons-round {
-    font-size: 38px;
-    opacity: 0.8;
-}
-
-/* Tombol Play Utama Bulat Besar */
-.btn-main {
-    background: #ffffff;
-    color: #1d3557;
-    width: 65px;
-    height: 65px;
-    border-radius: 50px;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
-}
-
-.btn-main .material-icons-round {
-    font-size: 36px;
-}
-
+.btn-secondary .material-icons-round { font-size: 38px; opacity: 0.8; }
+.btn-main { background: #ffffff; color: #1d3557; width: 65px; height: 65px; border-radius: 50%; }
+.btn-main .material-icons-round { font-size: 36px; }
