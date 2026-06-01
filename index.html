@@ -13,32 +13,70 @@
 </head>
 <body>
 
-    <div class="music-card">
-        <div class="header">
-            <span class="material-icons-round">expand_more</span>
-            <p>PLAYING FROM PLAYLIST</p>
-            <span class="material-icons-round">more_vert</span>
-        </div>
+    <div class="container" id="folder-screen">
+        <h2 class="app-title">My Vibe Library</h2>
+        
+        <div class="folder-list">
+            <div class="folder-box f-blue" onclick="openPlaylist('enhypen')">
+                <img src="https://images.unsplash.com/photo-1514525253161-7a46d19cd819?q=80&w=150&auto=format&fit=crop" class="folder-img" alt="ENHYPEN">
+                <span class="folder-name">ENHYPEN</span>
+            </div>
 
-        <div class="cover-art">
-            <div class="wave-animation"></div>
-        </div>
+            <div class="folder-box f-pink" onclick="openPlaylist('hearts2hearts')">
+                <img src="https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?q=80&w=150&auto=format&fit=crop" class="folder-img" alt="HEARTS2HEARTS">
+                <span class="folder-name">HEARTS2HEARTS</span>
+            </div>
 
-        <div class="song-details">
-            <h1 id="song-title">Memuat Lagu...</h1>
-            <p id="song-artist">Nama Penyanyi</p>
-        </div>
+            <div class="folder-box f-green" onclick="openPlaylist('cortis')">
+                <img src="https://images.unsplash.com/photo-1470225620780-dba8ba36b745?q=80&w=150&auto=format&fit=crop" class="folder-img" alt="CORTIS">
+                <span class="folder-name">CORTIS</span>
+            </div>
 
-        <div class="controls">
-            <button class="btn-secondary" onclick="prevSong()">
-                <span class="material-icons-round">skip_previous</span>
-            </button>
-            <button class="btn-main" id="play-btn" onclick="togglePlay()">
-                <span class="material-icons-round" id="play-icon">play_arrow</span>
-            </button>
-            <button class="btn-secondary" onclick="nextSong()">
-                <span class="material-icons-round">skip_next</span>
-            </button>
+            <div class="folder-box f-red" onclick="openPlaylist('babymonster')">
+                <img src="https://images.unsplash.com/photo-1501386761578-eac5c94b800a?q=80&w=150&auto=format&fit=crop" class="folder-img" alt="BABYMONSTER">
+                <span class="folder-name">BABYMONSTER</span>
+            </div>
+
+            <div class="folder-box f-grey" onclick="openPlaylist('lngshot')">
+                <img src="https://images.unsplash.com/photo-1498038432885-c6f3f1b912ee?q=80&w=150&auto=format&fit=crop" class="folder-img" alt="LNGSHOT">
+                <span class="folder-name">LNGSHOT</span>
+            </div>
+
+            <div class="folder-box f-purple" onclick="openPlaylist('lainnya')">
+                <img src="https://images.unsplash.com/photo-1459749411175-04bf5292ceea?q=80&w=150&auto=format&fit=crop" class="folder-img" alt="LAINNYA">
+                <span class="folder-name">LAINNYA</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="container hide" id="player-screen">
+        <div class="music-card">
+            <div class="header">
+                <span class="material-icons-round" onclick="backToFolders()">arrow_back</span>
+                <p id="playlist-indicator">PLAYING FROM PLAYLIST</p>
+                <span class="material-icons-round">more_vert</span>
+            </div>
+
+            <div class="cover-art">
+                <div class="wave-animation"></div>
+            </div>
+
+            <div class="song-details">
+                <h1 id="song-title">Memuat Lagu...</h1>
+                <p id="song-artist">Nama Penyanyi</p>
+            </div>
+
+            <div class="controls">
+                <button class="btn-secondary" onclick="prevSong()">
+                    <span class="material-icons-round">skip_previous</span>
+                </button>
+                <button class="btn-main" id="play-btn" onclick="togglePlay()">
+                    <span class="material-icons-round" id="play-icon">play_arrow</span>
+                </button>
+                <button class="btn-secondary" onclick="nextSong()">
+                    <span class="material-icons-round">skip_next</span>
+                </button>
+            </div>
         </div>
     </div>
 
@@ -46,45 +84,90 @@
 
     <script src="https://www.youtube.com/iframe_api"></script>
     <script>
-        // DAFTAR LAGU KAMU (Silakan ganti/tambah ID YouTube di sini nanti)
-        const playlist = [
-            { title: "Ganti Judul Lagu 1", artist: "Penyanyi 1", id: "dQw4w9WgXcQ" },
-            { title: "Ganti Judul Lagu 2", artist: "Penyanyi 2", id: "LJH7sWvxZ-I" }
-        ];
+        // DATABASE LAGU BERDASARKAN FOLDER
+        const allPlaylists = {
+            enhypen: [
+                { title: "Blossom", artist: "ENHYPEN", id: "iA4QNyMjY-I" },
+                // Kamu tinggal tambah lagu ENHYPEN lain di bawah sini kyk gini:
+                // { title: "Judul Lagu 2", artist: "ENHYPEN", id: "ID_YOUTUBE" }
+            ],
+            hearts2hearts: [
+                { title: "Contoh Lagu H2H", artist: "HEARTS2HEARTS", id: "dQw4w9WgXcQ" }
+            ],
+            cortis: [
+                { title: "Contoh Lagu Cortis", artist: "CORTIS", id: "dQw4w9WgXcQ" }
+            ],
+            babymonster: [
+                { title: "Contoh Lagu Baemon", artist: "BABYMONSTER", id: "dQw4w9WgXcQ" }
+            ],
+            lngshot: [
+                { title: "Contoh Lagu Lngshot", artist: "LNGSHOT", id: "dQw4w9WgXcQ" }
+            ],
+            lainnya: [
+                { title: "Lagu Bebas", artist: "Penyanyi Lain", id: "dQw4w9WgXcQ" }
+            ]
+        };
 
+        let currentPlaylist = [];
         let currentIndex = 0;
         let player;
         let isPlaying = false;
 
         function onYouTubeIframeAPIReady() {
+            // Player diinisialisasi tanpa memutar lagu dulu
             player = new YT.Player('yt-player', {
-                height: '0',
-                width: '0',
-                videoId: playlist[currentIndex].id,
+                height: '0', width: '0',
                 events: {
-                    'onReady': onPlayerReady,
                     'onStateChange': onPlayerStateChange
                 }
             });
         }
 
-        function onPlayerReady() {
+        function openPlaylist(folderName) {
+            currentPlaylist = allPlaylists[folderName];
+            currentIndex = 0;
+            
+            if (currentPlaylist.length === 0) {
+                alert("Folder ini belum ada lagunya!");
+                return;
+            }
+
+            // Ganti nama indikator di player
+            document.getElementById('playlist-indicator').innerText = folderName.toUpperCase();
+            
+            // Pindah halaman
+            document.getElementById('folder-screen').classList.add('hide');
+            document.getElementById('player-screen').classList.remove('hide');
+
+            // Load lagu pertama di folder itu
+            player.loadVideoById(currentPlaylist[currentIndex].id);
+            player.pauseVideo(); // Biar gak langsung otomatis play berisik
+            isPlaying = false;
+            document.getElementById('play-icon').innerText = "play_arrow";
+            
             updatePlayerUI();
         }
 
+        function backToFolders() {
+            if (isPlaying) {
+                player.pauseVideo();
+                isPlaying = false;
+                document.getElementById('play-icon').innerText = "play_arrow";
+            }
+            document.getElementById('player-screen').classList.add('hide');
+            document.getElementById('folder-screen').classList.remove('hide');
+        }
+
         function updatePlayerUI() {
-            const currentSong = playlist[currentIndex];
+            const currentSong = currentPlaylist[currentIndex];
             document.getElementById('song-title').innerText = currentSong.title;
             document.getElementById('song-artist').innerText = currentSong.artist;
 
-            // Memunculkan Kontrol di Notifikasi HP (Media Session API)
             if ('mediaSession' in navigator) {
                 navigator.mediaSession.metadata = new MediaMetadata({
                     title: currentSong.title,
-                    artist: currentSong.artist,
-                    album: 'My Vibe Playlist'
+                    artist: currentSong.artist
                 });
-                
                 navigator.mediaSession.setActionHandler('play', togglePlay);
                 navigator.mediaSession.setActionHandler('pause', togglePlay);
                 navigator.mediaSession.setActionHandler('previoustrack', prevSong);
@@ -93,9 +176,8 @@
         }
 
         function togglePlay() {
-            if (!player) return;
+            if (!player || currentPlaylist.length === 0) return;
             const icon = document.getElementById('play-icon');
-            
             if (isPlaying) {
                 player.pauseVideo();
                 icon.innerText = "play_arrow";
@@ -108,26 +190,26 @@
         }
 
         function onPlayerStateChange(event) {
-            // Kalau lagu habis otomatis putar lagu berikutnya
             if (event.data === YT.PlayerState.ENDED) {
                 nextSong();
             }
         }
 
         function nextSong() {
-            currentIndex = (currentIndex + 1) % playlist.length;
-            player.loadVideoById(playlist[currentIndex].id);
+            if (currentPlaylist.length === 0) return;
+            currentIndex = (currentIndex + 1) % currentPlaylist.length;
+            player.loadVideoById(currentPlaylist[currentIndex].id);
             if(!isPlaying) togglePlay();
             updatePlayerUI();
         }
 
         function prevSong() {
-            currentIndex = (currentIndex - 1 + playlist.length) % playlist.length;
-            player.loadVideoById(playlist[currentIndex].id);
+            if (currentPlaylist.length === 0) return;
+            currentIndex = (currentIndex - 1 + currentPlaylist.length) % currentPlaylist.length;
+            player.loadVideoById(currentPlaylist[currentIndex].id);
             if(!isPlaying) togglePlay();
             updatePlayerUI();
         }
     </script>
 </body>
 </html>
-
