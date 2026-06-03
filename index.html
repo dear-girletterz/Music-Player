@@ -199,14 +199,14 @@
             
             document.getElementById('mini-play-icon').innerText = isPlaying ? "pause" : "play_arrow";
 
-            // SINKRONISASI MATRIKS WARNA PASTEL SISI PLAYER
+            // SINKRONISASI WARNA MINI PLAYER (LEBIH MUDA/PASTEL)
             miniPlayer.className = "mini-player"; 
-            if (currentPlaylistName === 'enhypen') miniPlayer.style.background = "linear-gradient(135deg, #e0f2fe, #bae6fd)"; 
-            else if (currentPlaylistName === 'hearts2hearts') miniPlayer.style.background = "linear-gradient(135deg, #fce7f3, #fbcfe8)"; 
-            else if (currentPlaylistName === 'babymonster') miniPlayer.style.background = "linear-gradient(135deg, #fee2e2, #fecaca)"; 
-            else if (currentPlaylistName === 'lngshot') miniPlayer.style.background = "linear-gradient(135deg, #f3f4f6, #e5e7eb)"; 
-            else if (currentPlaylistName === 'cortis') miniPlayer.style.background = "linear-gradient(135deg, #f0fdf4, #dcfce7)"; 
-            else if (currentPlaylistName === 'lainnya') miniPlayer.style.background = "linear-gradient(135deg, #f3e8ff, #e9d5ff)"; 
+            if (currentPlaylistName === 'enhypen') miniPlayer.style.background = "linear-gradient(135deg, #f0f7ff, #e1effe)"; 
+            else if (currentPlaylistName === 'hearts2hearts') miniPlayer.style.background = "linear-gradient(135deg, #fff5f7, #fde8ec)"; 
+            else if (currentPlaylistName === 'babymonster') miniPlayer.style.background = "linear-gradient(135deg, #fff5f5, #fde8e8)"; 
+            else if (currentPlaylistName === 'lngshot') miniPlayer.style.background = "linear-gradient(135deg, #f9fafb, #f3f4f6)"; 
+            else if (currentPlaylistName === 'cortis') miniPlayer.style.background = "linear-gradient(135deg, #f3faf4, #e3f7e6)"; 
+            else if (currentPlaylistName === 'lainnya') miniPlayer.style.background = "linear-gradient(135deg, #faf5ff, #f3e8ff)"; 
 
             const items = document.querySelectorAll('.song-item');
             items.forEach((item, idx) => {
