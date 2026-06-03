@@ -494,40 +494,66 @@
         let isPlaying = false;
 
         function openPlaylist(folderName) {
-            currentPlaylistName = folderName;
-            currentPlaylist = allPlaylists[folderName] || [];
-            
-            document.getElementById('playlist-title').innerText = folderName.toUpperCase();
-            const listContainer = document.getElementById('song-list-container');
-            listContainer.innerHTML = ""; 
+    currentPlaylistName = folderName;
+    currentPlaylist = allPlaylists[folderName] || [];
+    
+    document.getElementById('playlist-title').innerText = folderName.toUpperCase();
+    const listContainer = document.getElementById('song-list-container');
+    listContainer.innerHTML = ""; 
 
-            if (currentPlaylist.length === 0) {
-                listContainer.innerHTML = `<p class="empty-msg">Belum ada lagu di folder ini ✨</p>`;
-            } else {
-                currentPlaylist.forEach((song, index) => {
-                    const songItem = document.createElement('div');
-                    songItem.className = `song-item ${currentIndex === index && currentPlaylistName === folderName && isPlaying ? 'active-song' : ''}`;
-                    songItem.onclick = () => selectSong(index);
-                    songItem.innerHTML = `
-                        <div class="song-num">${index + 1}</div>
-                        <div class="song-meta">
-                            <span class="s-title">${song.title}</span>
-                            <span class="s-artist">${song.artist}</span>
-                        </div>
-                        <span class="material-icons-round play-icon-list">play_circle_filled</span>
-                    `;
-                    listContainer.appendChild(songItem);
-                });
-            }
+    if (currentPlaylist.length === 0) {
+        listContainer.innerHTML = `<p class="empty-msg">Belum ada lagu di folder ini ✨</p>`;
+    } else {
+        currentPlaylist.forEach((song, index) => {
+            const songItem = document.createElement('div');
+            songItem.className = `song-item ${currentIndex === index && currentPlaylistName === folderName && isPlaying ? 'active-song' : ''}`;
+            songItem.onclick = () => selectSong(index);
+            songItem.innerHTML = `
+                <div class="song-num">${index + 1}</div>
+                <div class="song-meta">
+                    <span class="s-title">${song.title}</span>
+                    <span class="s-artist">${song.artist}</span>
+                </div>
+                <span class="material-icons-round play-icon-list">play_circle_filled</span>
+            `;
+            listContainer.appendChild(songItem);
+        });
+    }
 
-            document.getElementById('folder-screen').classList.add('hide');
-            document.getElementById('playlist-screen').classList.remove('hide');
-        }
+    // ==========================================
+    // LOGIKA BARU: MENGUBAH BACKGROUND UTAMA BODY
+    // ==========================================
+    if (['enhypen', 'treasure'].includes(folderName)) {
+        document.body.style.background = "linear-gradient(135deg, #e0f2fe 0%, #f8fafc 100%)"; // Biru Pastel
+    } else if (['hearts2hearts', 'blackpink'].includes(folderName)) {
+        document.body.style.background = "linear-gradient(135deg, #fce7f3 0%, #f8fafc 100%)"; // Pink Pastel
+    } else if (['babymonster', 'txt'].includes(folderName)) {
+        document.body.style.background = "linear-gradient(135deg, #fee2e2 0%, #f8fafc 100%)"; // Merah Pastel
+    } else if (['cortis', 'nct'].includes(folderName)) {
+        document.body.style.background = "linear-gradient(135deg, #dcfce7 0%, #f8fafc 100%)"; // Hijau Pastel
+    } else if (['aespa', 'lngshot'].includes(folderName)) {
+        document.body.style.background = "linear-gradient(135deg, #e5e7eb 0%, #f8fafc 100%)"; // Abu/Dark Lembut
+    } else if (folderName === 'bts') {
+        document.body.style.background = "linear-gradient(135deg, #f3e8ff 0%, #f8fafc 100%)"; // Ungu Pastel
+    } else if (folderName === 'illit') {
+        document.body.style.background = "linear-gradient(135deg, #ffedd5 0%, #f8fafc 100%)"; // Peach Pastel
+    } else {
+        document.body.style.background = "linear-gradient(135deg, #f1f5f9 0%, #f8fafc 100%)"; // Default Putih Bersih
+    }
+    // ==========================================
+
+    document.getElementById('folder-screen').classList.add('hide');
+    document.getElementById('playlist-screen').classList.remove('hide');
+}
+
 
         function backToFolders() {
-            document.getElementById('playlist-screen').classList.add('hide');
-            document.getElementById('folder-screen').classList.remove('hide');
-        }
+    document.getElementById('playlist-screen').classList.add('hide');
+    document.getElementById('folder-screen').classList.remove('hide');
+    
+    // Kembalikan background utama ke warna default beranda
+    document.body.style.background = "linear-gradient(135deg, #e3f2fd 0%, #f8fafc 100%)"; 
+}
 
         function updatePlaybackPosition() {
             if ('mediaSession' in navigator && audio.duration) {
