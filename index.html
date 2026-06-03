@@ -18,6 +18,7 @@
         }
 
         body {
+            /* Gradasi Biru Pastel Lembut ke Putih Bersih */
             background: linear-gradient(135deg, #e3f2fd 0%, #f8fafc 100%); 
             background-attachment: fixed;
             color: #4a5568;
@@ -66,22 +67,15 @@
             transform: scale(0.95);
         }
 
-        /* GRADASI & BINGKAI ULTRA PASTEL (13 FOLDER) */
-        .f-blue { background: linear-gradient(135deg, #f0f7ff, #e1effe); border-color: #bae6fd; }       
-        .f-pink { background: linear-gradient(135deg, #fff5f7, #fde8ec); border-color: #fbcfe8; }       
-        .f-green { background: linear-gradient(135deg, #f3faf4, #e3f7e6); border-color: #c6f6d5; }      
-        .f-red { background: linear-gradient(135deg, #fff5f5, #fde8e8); border-color: #fecaca; }        
-        .f-grey { background: linear-gradient(135deg, #f9fafb, #f3f4f6); border-color: #e5e7eb; }       
-        .f-purple { background: linear-gradient(135deg, #faf5ff, #f3e8ff); border-color: #e9d5ff; }     
-        
-        /* 7 FOLDER BARU */
-        .f-brown { background: linear-gradient(135deg, #fdf8f5, #f5e6d3); border-color: #e6ccb2; } /* BTS: Coklat Pastel */
-        .f-yellow { background: linear-gradient(135deg, #fefce8, #fef08a); border-color: #fde047; } /* BLACKPINK: Kuning Pastel */
-        .f-peach { background: linear-gradient(135deg, #fff7ed, #ffedd5); border-color: #fed7aa; } /* ILLIT: Peach Pastel */
-        .f-orange { background: linear-gradient(135deg, #fffaf5, #ffedd5); border-color: #ffe3e3; } /* TXT: Oren Pastel */
-        .f-cream { background: linear-gradient(135deg, #fffdfa, #fef3c7); border-color: #fde68a; } /* AESPA: Cream Pastel */
-        .f-darkgrey { background: linear-gradient(135deg, #f1f3f5, #e2e8f0); border-color: #cbd5e1; } /* NCT: Hitam Pastel/Abu Tua Lembut */
-        .f-gold { background: linear-gradient(135deg, #fffbeb, #fef3c7); border-color: #fcd34d; } /* TREASURE: Keemasan Pucat */
+        /* GRADASI & BINGKAI ULTRA PASTEL SESUAI REQUES */
+        .f-blue { background: linear-gradient(135deg, #f0f7ff, #e1effe); border-color: #bae6fd; }       /* ENHYPEN, TREASURE */
+        .f-pink { background: linear-gradient(135deg, #fff5f7, #fde8ec); border-color: #fbcfe8; }       /* HEARTS2HEARTS, BLACKPINK */
+        .f-green { background: linear-gradient(135deg, #f3faf4, #e3f7e6); border-color: #c6f6d5; }      /* CORTIS, NCT */
+        .f-red { background: linear-gradient(135deg, #fff5f5, #fde8e8); border-color: #fecaca; }        /* BABYMONSTER, TXT */
+        .f-purple { background: linear-gradient(135deg, #faf5ff, #f3e8ff); border-color: #e9d5ff; }     /* BTS */
+        .f-peach { background: linear-gradient(135deg, #fff7ed, #ffedd5); border-color: #fed7aa; }      /* ILLIT */
+        .f-dark { background: linear-gradient(135deg, #f3f4f6, #e5e7eb); border-color: #cbd5e1; }       /* AESPA, LNGSHOT (Abu Gelap Lembut) */
+        .f-white { background: linear-gradient(135deg, #fafafa, #f1f1f1); border-color: #dddddd; }      /* LAINNYA (Putih Keruh) */
 
         .folder-img {
             width: 100%;
@@ -297,60 +291,69 @@
     <div class="container" id="folder-screen">
         <h2 class="app-title">My Vibe Library</h2>
         <div class="folder-list">
-            <!-- Folder Lama -->
+            <!-- 1. ENHYPEN (Biru Pastel) -->
             <div class="folder-box f-blue" onclick="openPlaylist('enhypen')">
                 <img src="https://e.usen.com/image/02583c0ec7a9b0000a1b02f9b4c81d74f958f1f2.jpg" class="folder-img" alt="ENHYPEN">
                 <span class="folder-name">ENHYPEN</span>
             </div>
+            <!-- 2. HEARTS2HEARTS (Pink Pastel) -->
             <div class="folder-box f-pink" onclick="openPlaylist('hearts2hearts')">
                 <img src="https://static.wikia.nocookie.net/kpop/images/e/e2/Hearts2Hearts_Rude%21_group_concept_photo_1.png" class="folder-img" alt="HEARTS2HEARTS">
                 <span class="folder-name">HEARTS2HEARTS</span>
             </div>
+            <!-- 3. CORTIS (Ijo Pastel) -->
             <div class="folder-box f-green" onclick="openPlaylist('cortis')">
                 <img src="https://lxpr.lspr.ac.id/wp-content/uploads/2025/11/X-cortis.jpg" class="folder-img" alt="CORTIS">
                 <span class="folder-name">CORTIS</span>
             </div>
+            <!-- 4. BABYMONSTER (Merah Pastel) -->
             <div class="folder-box f-red" onclick="openPlaylist('babymonster')">
                 <img src="https://uploaded.celebconfirmed.com/2_d73841a135.jpg" class="folder-img" alt="BABYMONSTER">
                 <span class="folder-name">BABYMONSTER</span>
             </div>
-            <div class="folder-box f-grey" onclick="openPlaylist('lngshot')">
-                <img src="https://www.billboard.com/wp-content/uploads/2026/02/LNGSHOT-k-pop-rookie-of-the-month-2026-cr-jang-jungwoo-billboard-2.jpg?w=1280" class="folder-img" alt="LNGSHOT">
-                <span class="folder-name">LNGSHOT</span>
-            </div>
-
-            <!-- 7 Folder Baru -->
-            <div class="folder-box f-brown" onclick="openPlaylist('bts')">
+            
+            <!-- 5. BTS (Ungu Pastel) -->
+            <div class="folder-box f-purple" onclick="openPlaylist('bts')">
                 <img src="https://img-highend.okezone.com/okz/900/pictureArticle/images_jod496f3_Gp09Y0.jpeg" class="folder-img" alt="BTS">
                 <span class="folder-name">BTS</span>
             </div>
-            <div class="folder-box f-yellow" onclick="openPlaylist('blackpink')">
-                <img src="https://dam.mediacorp.sg/image/upload/s--q-gwlQdg--/c_crop,h_409,w_728,x_0,y_17/c_fill,g_auto,h_468,w_830/f_auto,q_auto/v1/mediacorp/cnabahasa/images/2026-02/blackpink2.jpg" class="folder-img" alt="BLACKPINK">
+            <!-- 6. BLACKPINK (Pink Pastel) -->
+            <div class="folder-box f-pink" onclick="openPlaylist('blackpink')">
+                <img src="https://www.billboard.com/wp-content/uploads/2022/08/04-BLACKPINK-cr-YG-Entertainment-press-2022-billboard-1548.jpg" class="folder-img" alt="BLACKPINK">
                 <span class="folder-name">BLACKPINK</span>
             </div>
+            <!-- 7. ILLIT (Peach Pastel) -->
             <div class="folder-box f-peach" onclick="openPlaylist('illit')">
-                <img src="https://akcdn.detik.net.id/community/media/visual/2024/10/18/illit.jpeg" class="folder-img" alt="ILLIT">
+                <img src="https://images.soco.id/446-GH_l6_2bcAAEHMx.jpeg.jpeg" class="folder-img" alt="ILLIT">
                 <span class="folder-name">ILLIT</span>
             </div>
-            <div class="folder-box f-orange" onclick="openPlaylist('txt')">
-                <img src="https://laboratoriopop.com.br/wp-content/uploads/2022/12/35FA9181-CF36-4A57-AA37-47F11DBC240B-748x935.jpeg" class="folder-img" alt="TXT">
-                <span class="folder-name">TXT</span>
-            </div>
-            <div class="folder-box f-cream" onclick="openPlaylist('aespa')">
+            <!-- 8. AESPA (Hitam/Abu Lembut) -->
+            <div class="folder-box f-dark" onclick="openPlaylist('aespa')">
                 <img src="https://www.billboard.com/wp-content/uploads/2025/03/feature-aespa-billboard-2025-bb5-abi-polinsky-6-1548.jpg" class="folder-img" alt="AESPA">
                 <span class="folder-name">AESPA</span>
             </div>
-            <div class="folder-box f-darkgrey" onclick="openPlaylist('nct')">
-                <img src="https://akcdn.detik.net.id/community/media/visual/2020/09/15/nct-2018.jpeg" class="folder-img" alt="NCT">
-                <span class="folder-name">NCT</span>
+            <!-- 9. LNGSHOT (Hitam/Abu Lembut) -->
+            <div class="folder-box f-dark" onclick="openPlaylist('lngshot')">
+                <img src="https://rollingstoneindia.com/wp-content/uploads/2026/03/Lngshot_ShotCallers_Concept-Photo_group1-1536x1123.jpeg" class="folder-img" alt="LNGSHOT">
+                <span class="folder-name">LNGSHOT</span>
             </div>
-            <div class="folder-box f-gold" onclick="openPlaylist('treasure')">
+            <!-- 10. TXT (Merah Pastel) -->
+            <div class="folder-box f-red" onclick="openPlaylist('txt')">
+                <img src="https://laboratoriopop.com.br/wp-content/uploads/2022/12/35FA9181-CF36-4A57-AA37-47F11DBC240B-748x935.jpeg" class="folder-img" alt="TXT">
+                <span class="folder-name">TXT</span>
+            </div>
+            <!-- 11. TREASURE (Biru Pastel) -->
+            <div class="folder-box f-blue" onclick="openPlaylist('treasure')">
                 <img src="https://rollingstoneindia.com/wp-content/uploads/2025/03/Treasure-Pleasure-Group-Photo-1-YG-Entertainment-1536x1024.jpg" class="folder-img" alt="TREASURE">
                 <span class="folder-name">TREASURE</span>
             </div>
-
-            <!-- Folder Lainnya di akhir -->
-            <div class="folder-box f-purple" onclick="openPlaylist('lainnya')">
+            <!-- 12. NCT (Ijo Pastel) -->
+            <div class="folder-box f-green" onclick="openPlaylist('nct')">
+                <img src="https://akcdn.detik.net.id/community/media/visual/2020/09/15/nct-2018.jpeg" class="folder-img" alt="NCT">
+                <span class="folder-name">NCT</span>
+            </div>
+            <!-- 13. LAINNYA (Putih Keruh Pastel) -->
+            <div class="folder-box f-white" onclick="openPlaylist('lainnya')">
                 <img src="https://images.stockcake.com/public/e/c/5/ec5d6681-20bf-48fa-a2f3-1f611e01b1f1_large/tropical-sunset-beach-stockcake.jpg" class="folder-img" alt="LAINNYA">
                 <span class="folder-name">LAINNYA</span>
             </div>
@@ -523,22 +526,41 @@
             
             document.getElementById('mini-play-icon').innerText = isPlaying ? "pause" : "play_arrow";
 
-            // MATRIX SINKRONISASI 13 WARNA MINI PLAYER ULTRA PASTEL
+            // SINKRONISASI MATRIKS WARNA MINI PLAYER BARU (100% PASTELL)
             miniPlayer.className = "mini-player"; 
-            if (currentPlaylistName === 'enhypen') miniPlayer.style.background = "linear-gradient(135deg, #f0f7ff, #e1effe)"; 
-            else if (currentPlaylistName === 'hearts2hearts') miniPlayer.style.background = "linear-gradient(135deg, #fff5f7, #fde8ec)"; 
-            else if (currentPlaylistName === 'babymonster') miniPlayer.style.background = "linear-gradient(135deg, #fff5f5, #fde8e8)"; 
-            else if (currentPlaylistName === 'lngshot') miniPlayer.style.background = "linear-gradient(135deg, #f9fafb, #f3f4f6)"; 
-            else if (currentPlaylistName === 'cortis') miniPlayer.style.background = "linear-gradient(135deg, #f3faf4, #e3f7e6)"; 
-            else if (currentPlaylistName === 'lainnya') miniPlayer.style.background = "linear-gradient(135deg, #faf5ff, #f3e8ff)"; 
-            // Sinkronisasi 7 Folder Baru
-            else if (currentPlaylistName === 'bts') miniPlayer.style.background = "linear-gradient(135deg, #fdf8f5, #f5e6d3)"; 
-            else if (currentPlaylistName === 'blackpink') miniPlayer.style.background = "linear-gradient(135deg, #fefce8, #fef08a)"; 
-            else if (currentPlaylistName === 'illit') miniPlayer.style.background = "linear-gradient(135deg, #fff7ed, #ffedd5)"; 
-            else if (currentPlaylistName === 'txt') miniPlayer.style.background = "linear-gradient(135deg, #fffaf5, #ffedd5)"; 
-            else if (currentPlaylistName === 'aespa') miniPlayer.style.background = "linear-gradient(135deg, #fffdfa, #fef3c7)"; 
-            else if (currentPlaylistName === 'nct') miniPlayer.style.background = "linear-gradient(135deg, #f1f3f5, #e2e8f0)"; 
-            else if (currentPlaylistName === 'treasure') miniPlayer.style.background = "linear-gradient(135deg, #fffbeb, #fef3c7)"; 
+            
+            // 1. Biru Pastel (Enhypen, Treasure)
+            if (['enhypen', 'treasure'].includes(currentPlaylistName)) {
+                miniPlayer.style.background = "linear-gradient(135deg, #f0f7ff, #e1effe)"; 
+            } 
+            // 2. Pink Pastel (Hearts2Hearts, Blackpink)
+            else if (['hearts2hearts', 'blackpink'].includes(currentPlaylistName)) {
+                miniPlayer.style.background = "linear-gradient(135deg, #fff5f7, #fde8ec)"; 
+            } 
+            // 3. Merah Pastel (Babymonster, TXT)
+            else if (['babymonster', 'txt'].includes(currentPlaylistName)) {
+                miniPlayer.style.background = "linear-gradient(135deg, #fff5f5, #fde8e8)"; 
+            } 
+            // 4. Ijo Pastel (Cortis, NCT)
+            else if (['cortis', 'nct'].includes(currentPlaylistName)) {
+                miniPlayer.style.background = "linear-gradient(135deg, #f3faf4, #e3f7e6)"; 
+            } 
+            // 5. Abu/Item Lembut (Aespa, Lngshot)
+            else if (['aespa', 'lngshot'].includes(currentPlaylistName)) {
+                miniPlayer.style.background = "linear-gradient(135deg, #f3f4f6, #e5e7eb)"; 
+            } 
+            // 6. Ungu Pastel (BTS)
+            else if (currentPlaylistName === 'bts') {
+                miniPlayer.style.background = "linear-gradient(135deg, #faf5ff, #f3e8ff)"; 
+            } 
+            // 7. Peach Pastel (ILLIT)
+            else if (currentPlaylistName === 'illit') {
+                miniPlayer.style.background = "linear-gradient(135deg, #fff7ed, #ffedd5)"; 
+            } 
+            // 8. Putih Keruh (Lainnya)
+            else if (currentPlaylistName === 'lainnya') {
+                miniPlayer.style.background = "linear-gradient(135deg, #fafafa, #f1f1f1)"; 
+            }
 
             const items = document.querySelectorAll('.song-item');
             items.forEach((item, idx) => {
