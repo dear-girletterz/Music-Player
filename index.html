@@ -12,7 +12,6 @@
 </head>
 <body>
 
-    <!-- HALAMAN 1: DAFTAR FOLDER UTAMA -->
     <div class="container" id="folder-screen">
         <h2 class="app-title">My Vibe Library</h2>
         <div class="folder-list">
@@ -43,44 +42,42 @@
         </div>
     </div>
 
-    <!-- HALAMAN 2: DAFTAR LAGU BERJEJER (PLAYLIST VIEW) -->
     <div class="container hide" id="playlist-screen">
         <div class="playlist-card">
             <div class="playlist-header">
                 <span class="material-icons-round back-btn" onclick="backToFolders()">arrow_back</span>
                 <h3 id="playlist-title">Nama Playlist</h3>
             </div>
-            <!-- Tempat daftar lagu berjejer ke bawah muncul -->
             <div class="song-list" id="song-list-container"></div>
         </div>
     </div>
 
-    <!-- MINI PLAYER YANG MUNCUL DI BAWAH KALO LAGU DIPUTAR -->
     <div class="mini-player hide" id="mini-player">
-        <!-- Garis Pemutar Lagu (Progress Bar) -->
+        <div class="mini-header-content">
+            <img id="mini-cover" src="" alt="Cover" class="mini-album-art">
+            <div class="mini-info">
+                <h4 id="mini-title">Judul Lagu</h4>
+                <p id="mini-artist">Penyanyi</p>
+            </div>
+        </div>
+
         <div class="progress-container">
             <span id="current-time">0:00</span>
             <input type="range" id="progress-bar" min="0" max="100" value="0" step="0.1" onchange="seekAudio()">
             <span id="total-duration">0:00</span>
         </div>
 
-        <div class="mini-main-content">
-            <div class="mini-info">
-                <h4 id="mini-title">Judul Lagu</h4>
-                <p id="mini-artist">Penyanyi</p>
-            </div>
-            <div class="mini-controls">
-                <button onclick="togglePlay()"><span class="material-icons-round" id="mini-play-icon">play_arrow</span></button>
-                <button onclick="nextSong()"><span class="material-icons-round">skip_next</span></button>
-            </div>
+        <div class="mini-controls-row">
+            <button onclick="prevSong()"><span class="material-icons-round">skip_previous</span></button>
+            <button onclick="togglePlay()" class="play-trigger"><span class="material-icons-round" id="mini-play-icon">play_arrow</span></button>
+            <button onclick="nextSong()"><span class="material-icons-round">skip_next</span></button>
         </div>
     </div>
 
-    <!-- Tag Audio HTML5 Tersembunyi -->
     <audio id="audio-player"></audio>
 
     <script>
-        // DATABASE LAGU MENGGUNAKAN LINK CDN (DIJAMIN LANCAR DAN BISA BACKGROUND PLAY)
+        // DATABASE LAGU MENGGUNAKAN LINK CDN
         const allPlaylists = {
             enhypen: [
                 { title: "Given-Taken", artist: "ENHYPEN", url: "https://cdn.jsdelivr.net/gh/dear-girletterz/Music-Player@main/Lagu/giventaken.mp3", cover: "https://i.imgur.com/esqG32w.jpeg" },
@@ -101,19 +98,17 @@
         const audio = document.getElementById('audio-player');
         let isPlaying = false;
 
-        // Buka daftar lagu berjejer ke bawah
         function openPlaylist(folderName) {
             currentPlaylistName = folderName;
             currentPlaylist = allPlaylists[folderName];
             
             document.getElementById('playlist-title').innerText = folderName.toUpperCase();
             const listContainer = document.getElementById('song-list-container');
-            listContainer.innerHTML = ""; // reset list
+            listContainer.innerHTML = ""; 
 
             if (currentPlaylist.length === 0) {
                 listContainer.innerHTML = `<p class="empty-msg">Belum ada lagu di folder ini ✨</p>`;
             } else {
-                // Tampilkan list berjejer ke bawah
                 currentPlaylist.forEach((song, index) => {
                     const songItem = document.createElement('div');
                     songItem.className = `song-item ${currentIndex === index && currentPlaylistName === folderName && isPlaying ? 'active-song' : ''}`;
@@ -139,7 +134,17 @@
             document.getElementById('folder-screen').classList.remove('hide');
         }
 
-        // Ketika salah satu lagu di list diklik
+        // Sinkronisasi status detik berjalan ke sistem notifikasi HP
+        function updatePlaybackPosition() {
+            if ('mediaSession' in navigator && audio.duration) {
+                navigator.mediaSession.setPositionState({
+                    duration: audio.duration,
+                    playbackRate: audio.playbackRate,
+                    position: audio.currentTime
+                });
+            }
+        }
+
         function selectSong(index) {
             currentIndex = index;
             const song = currentPlaylist[currentIndex];
@@ -151,11 +156,14 @@
                 isPlaying = true;
                 updateUI();
                 setupNotification(song);
+                if ('mediaSession' in navigator) {
+                    navigator.mediaSession.playbackState = "playing";
+                }
             }).catch(err => {
                 console.log("Gagal memutar:", err);
                 alert("Waduh, lagunya gagal diputar. Cek lagi nama filenya di GitHub ya!");
             });
-        } // <-- Kurung kurawal penutup yang hilang tadi sudah dipasang di sini!
+        }
 
         function togglePlay() {
             if (!audio.src) return;
@@ -180,24 +188,29 @@
                 
         function prevSong() {
             if (currentPlaylist.length === 0) return;
-            // Rumus biar kalau di lagu pertama diklik prev, dia mundur ke lagu paling terakhir
             currentIndex = (currentIndex - 1 + currentPlaylist.length) % currentPlaylist.length;
             selectSong(currentIndex);
         }
-
 
         function updateUI() {
             const song = currentPlaylist[currentIndex];
             if (!song) return;
 
-            // Munculkan mini player bawah
             document.getElementById('mini-player').classList.remove('hide');
             document.getElementById('mini-title').innerText = song.title;
             document.getElementById('mini-artist').innerText = song.artist;
             
+            // TAMPILKAN GAMBAR COVER DI WEB
+            const coverImg = document.getElementById('mini-cover');
+            if(song.cover) {
+                coverImg.src = song.cover;
+                coverImg.style.display = "block";
+            } else {
+                coverImg.style.display = "none";
+            }
+            
             document.getElementById('mini-play-icon').innerText = isPlaying ? "pause" : "play_arrow";
 
-            // Update status keaktifan di list lagu
             const items = document.querySelectorAll('.song-item');
             items.forEach((item, idx) => {
                 if (idx === currentIndex) item.classList.add('active-song');
@@ -205,7 +218,6 @@
             });
         }
 
-        // Gambar cover otomatis nyantol pakai foto grup ENHYPEN sesuai request kamu!
         function setupNotification(song) {
             if ('mediaSession' in navigator) {
                 navigator.mediaSession.metadata = new MediaMetadata({
@@ -217,28 +229,31 @@
                     ]
                 });
 
-                // Tombol kontrol di Notif HP
                 navigator.mediaSession.setActionHandler('play', () => togglePlay());
                 navigator.mediaSession.setActionHandler('pause', () => togglePlay());
                 navigator.mediaSession.setActionHandler('nexttrack', () => nextSong());
-                
-                // BARIS INI YANG BIKIN IKON LAGU SEBELUMNYA MUNCUL DI NOTIF HP!
                 navigator.mediaSession.setActionHandler('previoustrack', () => prevSong());
+                
+                // Fitur geser menit langsung dari bar notifikasi HP
+                navigator.mediaSession.setActionHandler('seekto', (details) => {
+                    if (details.fastSeek && 'fastSeek' in audio) {
+                        audio.fastSeek(details.seekTime);
+                    } else {
+                        audio.currentTime = details.seekTime;
+                    }
+                    updatePlaybackPosition();
+                });
             }
         }
 
-
-        // Otomatis putar lagu berikutnya kalau lagu habis
         audio.onended = () => {
             nextSong();
-      
         };
         
         const progressBar = document.getElementById('progress-bar');
         const currentTimeEl = document.getElementById('current-time');
         const totalDurationEl = document.getElementById('total-duration');
 
-        // Fungsi format detik angka menjadi menit (Contoh: 125 detik -> 2:05)
         function formatTime(seconds) {
             if (isNaN(seconds)) return "0:00";
             const min = Math.floor(seconds / 60);
@@ -246,34 +261,31 @@
             return `${min}:${sec < 10 ? '0' : ''}${sec}`;
         }
 
-        // Jalankan ini setiap kali lagu berputar (Detik demi detik)
         audio.ontimeupdate = () => {
             if (audio.duration) {
-                // Hitung persentase jalannya lagu untuk menggeser garis
                 const progressPercent = (audio.currentTime / audio.duration) * 100;
                 progressBar.value = progressPercent;
-
-                // Update teks menit berjalan di layar
                 currentTimeEl.innerText = formatTime(audio.currentTime);
+                
+                // Kirim data waktu ke sistem HP secara realtime agar selaras
+                updatePlaybackPosition();
             }
         };
 
-        // Ketika total durasi lagu sudah berhasil dibaca penuh oleh internet
         audio.onloadedmetadata = () => {
             totalDurationEl.innerText = formatTime(audio.duration);
-            currentTimeEl.innerText = "0:00"; // Paksa tampilan mulai dari nol pas ganti lagu
+            currentTimeEl.innerText = "0:00"; 
             progressBar.value = 0;
+            updatePlaybackPosition();
         };
 
-        // Fungsi ketika garis pemutar ditarik/digeser oleh kamu
         function seekAudio() {
             if (audio.duration) {
-                // Hitung detik berdasarkan posisi geseran kamu
                 const seekTime = (progressBar.value / 100) * audio.duration;
                 audio.currentTime = seekTime;
+                updatePlaybackPosition();
             }
         }
-
     </script>
 </body>
 </html>
