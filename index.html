@@ -55,25 +55,46 @@
         }
 
         .folder-box {
-            border-radius: 20px;
-            padding: 15px;
-            text-align: center;
-            cursor: pointer;
-            transition: transform 0.2s, box-shadow 0.2s;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02);
-        }
+    border-radius: 20px;
+    padding: 15px;
+    text-align: center;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02);
+    border: 1px solid transparent; /* Garis dasar transparan sebelum diwarnai */
+}
+
 
         .folder-box:active {
             transform: scale(0.95);
         }
 
-       /* Gradasi Kotak Folder ULTRA PASTEL (Super Lembut & Aesthetic) */
-.f-blue { background: linear-gradient(135deg, #f0f7ff, #e1effe); }       
-.f-pink { background: linear-gradient(135deg, #fff5f7, #fde8ec); }       
-.f-green { background: linear-gradient(135deg, #f3faf4, #e3f7e6); }      
-.f-red { background: linear-gradient(135deg, #fff5f5, #fde8e8); }        
-.f-grey { background: linear-gradient(135deg, #f9fafb, #f3f4f6); }       
-.f-purple { background: linear-gradient(135deg, #faf5ff, #f3e8ff); }     
+/* Gradasi Kotak Folder ULTRA PASTEL + Bingkai Tipis Senada */
+.f-blue { 
+    background: linear-gradient(135deg, #f0f7ff, #e1effe); 
+    border-color: #bbf7d0; /* Alternatif biru pastel yang lebih tegas */
+    border-color: #bae6fd; 
+}       
+.f-pink { 
+    background: linear-gradient(135deg, #fff5f7, #fde8ec); 
+    border-color: #fbcfe8; 
+}       
+.f-green { 
+    background: linear-gradient(135deg, #f3faf4, #e3f7e6); 
+    border-color: #c6f6d5; 
+}      
+.f-red { 
+    background: linear-gradient(135deg, #fff5f5, #fde8e8); 
+    border-color: #fecaca; 
+}        
+.f-grey { 
+    background: linear-gradient(135deg, #f9fafb, #f3f4f6); 
+    border-color: #e5e7eb; 
+}       
+.f-purple { 
+    background: linear-gradient(135deg, #faf5ff, #f3e8ff); 
+    border-color: #e9d5ff; 
+}     
 
         .folder-img {
             width: 100%;
