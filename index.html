@@ -26,6 +26,7 @@
             display: flex;
             justify-content: center;
             min-height: 100vh;
+            transition: background 0.5s ease; /* Transisi halus saat ganti background folder */
         }
 
         .container {
@@ -68,13 +69,12 @@
         }
 
         /* GRADASI & BINGKAI ULTRA PASTEL SESUAI REQUES */
-        .f-blue { background: linear-gradient(135deg, #f0f7ff, #e1effe); border-color: #bae6fd; }       /* ENHYPEN, TREASURE */
         .f-pink { background: linear-gradient(135deg, #fff5f7, #fde8ec); border-color: #fbcfe8; }       /* HEARTS2HEARTS, BLACKPINK */
-        .f-green { background: linear-gradient(135deg, #f3faf4, #e3f7e6); border-color: #c6f6d5; }      /* CORTIS, NCT */
         .f-red { background: linear-gradient(135deg, #fff5f5, #fde8e8); border-color: #fecaca; }        /* BABYMONSTER, TXT */
-        .f-purple { background: linear-gradient(135deg, #faf5ff, #f3e8ff); border-color: #e9d5ff; }     /* BTS */
-        .f-peach { background: linear-gradient(135deg, #fff7ed, #ffedd5); border-color: #fed7aa; }      /* ILLIT */
+        .f-blue { background: linear-gradient(135deg, #f0f7ff, #e1effe); border-color: #bae6fd; }       /* ENHYPEN, TREASURE */
+        .f-green { background: linear-gradient(135deg, #f3faf4, #e3f7e6); border-color: #c6f6d5; }      /* CORTIS, NCT */
         .f-dark { background: linear-gradient(135deg, #f3f4f6, #e5e7eb); border-color: #cbd5e1; }       /* AESPA, LNGSHOT (Abu Gelap Lembut) */
+        .f-purple { background: linear-gradient(135deg, #faf5ff, #f3e8ff); border-color: #e9d5ff; }     /* BTS, ILLIT */
         .f-white { background: linear-gradient(135deg, #fafafa, #f1f1f1); border-color: #dddddd; }      /* LAINNYA (Putih Keruh) */
 
         .folder-img {
@@ -290,55 +290,67 @@
     <div class="container" id="folder-screen">
         <h2 class="app-title">Hanyfa's Playlist</h2>
         <div class="folder-list">
-            <div class="folder-box f-blue" onclick="openPlaylist('enhypen')">
-                <img src="https://e.usen.com/image/02583c0ec7a9b0000a1b02f9b4c81d74f958f1f2.jpg" class="folder-img" alt="ENHYPEN">
-                <span class="folder-name">ENHYPEN</span>
-            </div>
+            <!-- BARIS 1: PINK PASTEL -->
             <div class="folder-box f-pink" onclick="openPlaylist('hearts2hearts')">
                 <img src="https://static.wikia.nocookie.net/kpop/images/e/e2/Hearts2Hearts_Rude%21_group_concept_photo_1.png" class="folder-img" alt="HEARTS2HEARTS">
                 <span class="folder-name">HEARTS2HEARTS</span>
-            </div>
-            <div class="folder-box f-green" onclick="openPlaylist('cortis')">
-                <img src="https://lxpr.lspr.ac.id/wp-content/uploads/2025/11/X-cortis.jpg" class="folder-img" alt="CORTIS">
-                <span class="folder-name">CORTIS</span>
-            </div>
-            <div class="folder-box f-red" onclick="openPlaylist('babymonster')">
-                <img src="https://uploaded.celebconfirmed.com/2_d73841a135.jpg" class="folder-img" alt="BABYMONSTER">
-                <span class="folder-name">BABYMONSTER</span>
-            </div>
-            
-            <div class="folder-box f-purple" onclick="openPlaylist('bts')">
-                <img src="https://img-highend.okezone.com/okz/900/pictureArticle/images_jod496f3_Gp09Y0.jpeg" class="folder-img" alt="BTS">
-                <span class="folder-name">BTS</span>
             </div>
             <div class="folder-box f-pink" onclick="openPlaylist('blackpink')">
                 <img src="https://www.billboard.com/wp-content/uploads/2022/08/04-BLACKPINK-cr-YG-Entertainment-press-2022-billboard-1548.jpg" class="folder-img" alt="BLACKPINK">
                 <span class="folder-name">BLACKPINK</span>
             </div>
-            <div class="folder-box f-peach" onclick="openPlaylist('illit')">
-                <img src="https://images.soco.id/446-GH_l6_2bcAAEHMx.jpeg.jpeg" class="folder-img" alt="ILLIT">
-                <span class="folder-name">ILLIT</span>
-            </div>
-            <div class="folder-box f-dark" onclick="openPlaylist('aespa')">
-                <img src="https://www.billboard.com/wp-content/uploads/2025/03/feature-aespa-billboard-2025-bb5-abi-polinsky-6-1548.jpg" class="folder-img" alt="AESPA">
-                <span class="folder-name">AESPA</span>
-            </div>
-            <div class="folder-box f-dark" onclick="openPlaylist('lngshot')">
-                <img src="https://rollingstoneindia.com/wp-content/uploads/2026/03/Lngshot_ShotCallers_Concept-Photo_group1-1536x1123.jpeg" class="folder-img" alt="LNGSHOT">
-                <span class="folder-name">LNGSHOT</span>
+
+            <!-- BARIS 2: MERAH PASTEL -->
+            <div class="folder-box f-red" onclick="openPlaylist('babymonster')">
+                <img src="https://uploaded.celebconfirmed.com/2_d73841a135.jpg" class="folder-img" alt="BABYMONSTER">
+                <span class="folder-name">BABYMONSTER</span>
             </div>
             <div class="folder-box f-red" onclick="openPlaylist('txt')">
                 <img src="https://laboratoriopop.com.br/wp-content/uploads/2022/12/35FA9181-CF36-4A57-AA37-47F11DBC240B-748x935.jpeg" class="folder-img" alt="TXT">
                 <span class="folder-name">TXT</span>
             </div>
+
+            <!-- BARIS 3: BIRU PASTEL -->
+            <div class="folder-box f-blue" onclick="openPlaylist('enhypen')">
+                <img src="https://e.usen.com/image/02583c0ec7a9b0000a1b02f9b4c81d74f958f1f2.jpg" class="folder-img" alt="ENHYPEN">
+                <span class="folder-name">ENHYPEN</span>
+            </div>
             <div class="folder-box f-blue" onclick="openPlaylist('treasure')">
                 <img src="https://rollingstoneindia.com/wp-content/uploads/2025/03/Treasure-Pleasure-Group-Photo-1-YG-Entertainment-1536x1024.jpg" class="folder-img" alt="TREASURE">
                 <span class="folder-name">TREASURE</span>
+            </div>
+
+            <!-- BARIS 4: HIJAU PASTEL -->
+            <div class="folder-box f-green" onclick="openPlaylist('cortis')">
+                <img src="https://lxpr.lspr.ac.id/wp-content/uploads/2025/11/X-cortis.jpg" class="folder-img" alt="CORTIS">
+                <span class="folder-name">CORTIS</span>
             </div>
             <div class="folder-box f-green" onclick="openPlaylist('nct')">
                 <img src="https://akcdn.detik.net.id/community/media/visual/2020/09/15/nct-2018.jpeg" class="folder-img" alt="NCT">
                 <span class="folder-name">NCT</span>
             </div>
+
+            <!-- BARIS 5: ABU / DARK SOFT -->
+            <div class="folder-box f-dark" onclick="openPlaylist('lngshot')">
+                <img src="https://rollingstoneindia.com/wp-content/uploads/2026/03/Lngshot_ShotCallers_Concept-Photo_group1-1536x1123.jpeg" class="folder-img" alt="LNGSHOT">
+                <span class="folder-name">LNGSHOT</span>
+            </div>
+            <div class="folder-box f-dark" onclick="openPlaylist('aespa')">
+                <img src="https://www.billboard.com/wp-content/uploads/2025/03/feature-aespa-billboard-2025-bb5-abi-polinsky-6-1548.jpg" class="folder-img" alt="AESPA">
+                <span class="folder-name">AESPA</span>
+            </div>
+
+            <!-- BARIS 6: UNGU PASTEL (ILLIT gabung ke UNGU) -->
+            <div class="folder-box f-purple" onclick="openPlaylist('bts')">
+                <img src="https://img-highend.okezone.com/okz/900/pictureArticle/images_jod496f3_Gp09Y0.jpeg" class="folder-img" alt="BTS">
+                <span class="folder-name">BTS</span>
+            </div>
+            <div class="folder-box f-purple" onclick="openPlaylist('illit')">
+                <img src="https://images.soco.id/446-GH_l6_2bcAAEHMx.jpeg.jpeg" class="folder-img" alt="ILLIT">
+                <span class="folder-name">ILLIT</span>
+            </div>
+
+            <!-- BARIS 7: LAINNYA -->
             <div class="folder-box f-white" onclick="openPlaylist('lainnya')">
                 <img src="https://images.stockcake.com/public/e/c/5/ec5d6681-20bf-48fa-a2f3-1f611e01b1f1_large/tropical-sunset-beach-stockcake.jpg" class="folder-img" alt="LAINNYA">
                 <span class="folder-name">LAINNYA</span>
@@ -449,15 +461,15 @@
             ],
             
             hearts2hearts: [
-                { title: "The Chase", artist: "HEARTS2HEARTS", url: "https://cdn.jsdelivr.net/gh/dear-girletterz/Music-Player@main/Lagu2/thechase.mp3" }, 
-                { title: "Butterflies", artist: "HEARTS2HEARTS", url: "https://cdn.jsdelivr.net/gh/dear-girletterz/Music-Player@main/Lagu2/butterflies.mp3" }, 
+                { title: "The Chase", artist: "HEARTS2HEARTS", url: "https://cdn.jsdelivr.net/gh/dear-girletterz/Music-Player@main/Lagu2/thechase.mp3?v=2" }, 
+                { title: "Butterflies", artist: "HEARTS2HEARTS", url: "https://cdn.jsdelivr.net/gh/dear-girletterz/Music-Player@main/Lagu2/butterflies.mp3?v=2" }, 
                 { title: "Style", artist: "HEARTS2HEARTS", url: "https://cdn.jsdelivr.net/gh/dear-girletterz/Music-Player@main/Lagu2/style.mp3?v=2" }, 
-                { title: "Focus", artist: "HEARTS2HEARTS", url: "https://cdn.jsdelivr.net/gh/dear-girletterz/Music-Player@main/Lagu2/focus.mp3" }, 
-                { title: "Apple Pie", artist: "HEARTS2HEARTS", url: "https://cdn.jsdelivr.net/gh/dear-girletterz/Music-Player@main/Lagu2/applepie.mp3" }, 
-                { title: "Pretty Please", artist: "HEARTS2HEARTS", url: "https://cdn.jsdelivr.net/gh/dear-girletterz/Music-Player@main/Lagu2/prettyplease.mp3" }, 
-                { title: "Flutter", artist: "HEARTS2HEARTS", url: "https://cdn.jsdelivr.net/gh/dear-girletterz/Music-Player@main/Lagu2/flutter.mp3" }, 
-                { title: "Blue Moon", artist: "HEARTS2HEARTS", url: "https://cdn.jsdelivr.net/gh/dear-girletterz/Music-Player@main/Lagu2/bluemoon.mp3" }, 
-                { title: "Rude!", artist: "HEARTS2HEARTS", url: "https://cdn.jsdelivr.net/gh/dear-girletterz/Music-Player@main/Lagu2/rude.mp3" }
+                { title: "Focus", artist: "HEARTS2HEARTS", url: "https://cdn.jsdelivr.net/gh/dear-girletterz/Music-Player@main/Lagu2/focus.mp3?v=2" }, 
+                { title: "Apple Pie", artist: "HEARTS2HEARTS", url: "https://cdn.jsdelivr.net/gh/dear-girletterz/Music-Player@main/Lagu2/applepie.mp3?v=2" }, 
+                { title: "Pretty Please", artist: "HEARTS2HEARTS", url: "https://cdn.jsdelivr.net/gh/dear-girletterz/Music-Player@main/Lagu2/prettyplease.mp3?v=2" }, 
+                { title: "Flutter", artist: "HEARTS2HEARTS", url: "https://cdn.jsdelivr.net/gh/dear-girletterz/Music-Player@main/Lagu2/flutter.mp3?v=2" }, 
+                { title: "Blue Moon", artist: "HEARTS2HEARTS", url: "https://cdn.jsdelivr.net/gh/dear-girletterz/Music-Player@main/Lagu2/bluemoon.mp3?v=2" }, 
+                { title: "Rude!", artist: "HEARTS2HEARTS", url: "https://cdn.jsdelivr.net/gh/dear-girletterz/Music-Player@main/Lagu2/rude.mp3?v=2" }
             ],
             
             cortis: [
@@ -494,66 +506,62 @@
         let isPlaying = false;
 
         function openPlaylist(folderName) {
-    currentPlaylistName = folderName;
-    currentPlaylist = allPlaylists[folderName] || [];
-    
-    document.getElementById('playlist-title').innerText = folderName.toUpperCase();
-    const listContainer = document.getElementById('song-list-container');
-    listContainer.innerHTML = ""; 
+            currentPlaylistName = folderName;
+            currentPlaylist = allPlaylists[folderName] || [];
+            
+            document.getElementById('playlist-title').innerText = folderName.toUpperCase();
+            const listContainer = document.getElementById('song-list-container');
+            listContainer.innerHTML = ""; 
 
-    if (currentPlaylist.length === 0) {
-        listContainer.innerHTML = `<p class="empty-msg">Belum ada lagu di folder ini ✨</p>`;
-    } else {
-        currentPlaylist.forEach((song, index) => {
-            const songItem = document.createElement('div');
-            songItem.className = `song-item ${currentIndex === index && currentPlaylistName === folderName && isPlaying ? 'active-song' : ''}`;
-            songItem.onclick = () => selectSong(index);
-            songItem.innerHTML = `
-                <div class="song-num">${index + 1}</div>
-                <div class="song-meta">
-                    <span class="s-title">${song.title}</span>
-                    <span class="s-artist">${song.artist}</span>
-                </div>
-                <span class="material-icons-round play-icon-list">play_circle_filled</span>
-            `;
-            listContainer.appendChild(songItem);
-        });
-    }
+            if (currentPlaylist.length === 0) {
+                listContainer.innerHTML = `<p class="empty-msg">Belum ada lagu di folder ini ✨</p>`;
+            } else {
+                currentPlaylist.forEach((song, index) => {
+                    const songItem = document.createElement('div');
+                    songItem.className = `song-item ${currentIndex === index && currentPlaylistName === folderName && isPlaying ? 'active-song' : ''}`;
+                    songItem.onclick = () => selectSong(index);
+                    songItem.innerHTML = `
+                        <div class="song-num">${index + 1}</div>
+                        <div class="song-meta">
+                            <span class="s-title">${song.title}</span>
+                            <span class="s-artist">${song.artist}</span>
+                        </div>
+                        <span class="material-icons-round play-icon-list">play_circle_filled</span>
+                    `;
+                    listContainer.appendChild(songItem);
+                });
+            }
 
-    // ==========================================
-    // LOGIKA BARU: MENGUBAH BACKGROUND UTAMA BODY
-    // ==========================================
-    if (['enhypen', 'treasure'].includes(folderName)) {
-        document.body.style.background = "linear-gradient(135deg, #e0f2fe 0%, #f8fafc 100%)"; // Biru Pastel
-    } else if (['hearts2hearts', 'blackpink'].includes(folderName)) {
-        document.body.style.background = "linear-gradient(135deg, #fce7f3 0%, #f8fafc 100%)"; // Pink Pastel
-    } else if (['babymonster', 'txt'].includes(folderName)) {
-        document.body.style.background = "linear-gradient(135deg, #fee2e2 0%, #f8fafc 100%)"; // Merah Pastel
-    } else if (['cortis', 'nct'].includes(folderName)) {
-        document.body.style.background = "linear-gradient(135deg, #dcfce7 0%, #f8fafc 100%)"; // Hijau Pastel
-    } else if (['aespa', 'lngshot'].includes(folderName)) {
-        document.body.style.background = "linear-gradient(135deg, #e5e7eb 0%, #f8fafc 100%)"; // Abu/Dark Lembut
-    } else if (folderName === 'bts') {
-        document.body.style.background = "linear-gradient(135deg, #f3e8ff 0%, #f8fafc 100%)"; // Ungu Pastel
-    } else if (folderName === 'illit') {
-        document.body.style.background = "linear-gradient(135deg, #ffedd5 0%, #f8fafc 100%)"; // Peach Pastel
-    } else {
-        document.body.style.background = "linear-gradient(135deg, #f1f5f9 0%, #f8fafc 100%)"; // Default Putih Bersih
-    }
-    // ==========================================
+            // ==========================================
+            // LOGIKA BACKGROUND UTAMA LAYAR PLAYLIST
+            // ==========================================
+            if (['enhypen', 'treasure'].includes(folderName)) {
+                document.body.style.background = "linear-gradient(135deg, #e0f2fe 0%, #f8fafc 100%)"; // Biru Pastel
+            } else if (['hearts2hearts', 'blackpink'].includes(folderName)) {
+                document.body.style.background = "linear-gradient(135deg, #fce7f3 0%, #f8fafc 100%)"; // Pink Pastel
+            } else if (['babymonster', 'txt'].includes(folderName)) {
+                document.body.style.background = "linear-gradient(135deg, #fee2e2 0%, #f8fafc 100%)"; // Merah Pastel
+            } else if (['cortis', 'nct'].includes(folderName)) {
+                document.body.style.background = "linear-gradient(135deg, #dcfce7 0%, #f8fafc 100%)"; // Hijau Pastel
+            } else if (['aespa', 'lngshot'].includes(folderName)) {
+                document.body.style.background = "linear-gradient(135deg, #e5e7eb 0%, #f8fafc 100%)"; // Abu/Dark Lembut
+            } else if (['bts', 'illit'].includes(folderName)) {
+                document.body.style.background = "linear-gradient(135deg, #f3e8ff 0%, #f8fafc 100%)"; // Ungu Pastel (ILLIT SAMAAN)
+            } else {
+                document.body.style.background = "linear-gradient(135deg, #f1f5f9 0%, #f8fafc 100%)"; // Default Putih Bersih
+            }
 
-    document.getElementById('folder-screen').classList.add('hide');
-    document.getElementById('playlist-screen').classList.remove('hide');
-}
-
+            document.getElementById('folder-screen').classList.add('hide');
+            document.getElementById('playlist-screen').classList.remove('hide');
+        }
 
         function backToFolders() {
-    document.getElementById('playlist-screen').classList.add('hide');
-    document.getElementById('folder-screen').classList.remove('hide');
-    
-    // Kembalikan background utama ke warna default beranda
-    document.body.style.background = "linear-gradient(135deg, #e3f2fd 0%, #f8fafc 100%)"; 
-}
+            document.getElementById('playlist-screen').classList.add('hide');
+            document.getElementById('folder-screen').classList.remove('hide');
+            
+            // Kembalikan background utama ke warna default beranda biru pastel bawaan awal
+            document.body.style.background = "linear-gradient(135deg, #e3f2fd 0%, #f8fafc 100%)"; 
+        }
 
         function updatePlaybackPosition() {
             if ('mediaSession' in navigator && audio.duration) {
@@ -612,50 +620,47 @@
         }
 
         function updateUI() {
-    const song = currentPlaylist[currentIndex];
-    if (!song) return;
+            const song = currentPlaylist[currentIndex];
+            if (!song) return;
 
-    const miniPlayer = document.getElementById('mini-player');
-    if (miniPlayer) {
-        miniPlayer.classList.remove('hide');
-        document.getElementById('mini-title').innerText = song.title;
-        document.getElementById('mini-artist').innerText = song.artist;
-        document.getElementById('mini-play-icon').innerText = isPlaying ? "pause" : "play_arrow";
+            const miniPlayer = document.getElementById('mini-player');
+            if (miniPlayer) {
+                miniPlayer.classList.remove('hide');
+                document.getElementById('mini-title').innerText = song.title;
+                document.getElementById('mini-artist').innerText = song.artist;
+                document.getElementById('mini-play-icon').innerText = isPlaying ? "pause" : "play_arrow";
 
-        // SINKRONISASI MATRIKS WARNA MINI PLAYER BARU
-        miniPlayer.className = "mini-player"; 
-        if (['enhypen', 'treasure'].includes(currentPlaylistName)) {
-            miniPlayer.style.background = "linear-gradient(135deg, #f0f7ff, #e1effe)"; 
-        } else if (['hearts2hearts', 'blackpink'].includes(currentPlaylistName)) {
-            miniPlayer.style.background = "linear-gradient(135deg, #fff5f7, #fde8ec)"; 
-        } else if (['babymonster', 'txt'].includes(currentPlaylistName)) {
-            miniPlayer.style.background = "linear-gradient(135deg, #fff5f5, #fde8e8)"; 
-        } else if (['cortis', 'nct'].includes(currentPlaylistName)) {
-            miniPlayer.style.background = "linear-gradient(135deg, #f3faf4, #e3f7e6)"; 
-        } else if (['aespa', 'lngshot'].includes(currentPlaylistName)) {
-            miniPlayer.style.background = "linear-gradient(135deg, #f3f4f6, #e5e7eb)"; 
-        } else if (currentPlaylistName === 'bts') {
-            miniPlayer.style.background = "linear-gradient(135deg, #faf5ff, #f3e8ff)"; 
-        } else if (currentPlaylistName === 'illit') {
-            miniPlayer.style.background = "linear-gradient(135deg, #fff7ed, #ffedd5)"; 
-        } else if (currentPlaylistName === 'lainnya') {
-            miniPlayer.style.background = "linear-gradient(135deg, #fafafa, #f1f1f1)"; 
+                // SINKRONISASI MATRIKS WARNA MINI PLAYER BARU
+                miniPlayer.className = "mini-player"; 
+                if (['enhypen', 'treasure'].includes(currentPlaylistName)) {
+                    miniPlayer.style.background = "linear-gradient(135deg, #f0f7ff, #e1effe)"; 
+                } else if (['hearts2hearts', 'blackpink'].includes(currentPlaylistName)) {
+                    miniPlayer.style.background = "linear-gradient(135deg, #fff5f7, #fde8ec)"; 
+                } else if (['babymonster', 'txt'].includes(currentPlaylistName)) {
+                    miniPlayer.style.background = "linear-gradient(135deg, #fff5f5, #fde8e8)"; 
+                } else if (['cortis', 'nct'].includes(currentPlaylistName)) {
+                    miniPlayer.style.background = "linear-gradient(135deg, #f3faf4, #e3f7e6)"; 
+                } else if (['aespa', 'lngshot'].includes(currentPlaylistName)) {
+                    miniPlayer.style.background = "linear-gradient(135deg, #f3f4f6, #e5e7eb)"; 
+                } else if (['bts', 'illit'].includes(currentPlaylistName)) {
+                    miniPlayer.style.background = "linear-gradient(135deg, #faf5ff, #f3e8ff)"; // Ungu Pastel Mini Player (ILLIT SAMAAN)
+                } else if (currentPlaylistName === 'lainnya') {
+                    miniPlayer.style.background = "linear-gradient(135deg, #fafafa, #f1f1f1)"; 
+                }
+            }
+
+            // PENGAMAN TOTAL: Hanya update list lagu jika layar playlist TIDAK sedang tersembunyi
+            const playlistScreen = document.getElementById('playlist-screen');
+            if (playlistScreen && !playlistScreen.classList.contains('hide')) {
+                const items = document.querySelectorAll('.song-item');
+                if (items.length > 0) {
+                    items.forEach((item, idx) => {
+                        if (idx === currentIndex) item.classList.add('active-song');
+                        else item.classList.remove('active-song');
+                    });
+                }
+            }
         }
-    }
-
-    // PENGAMAN TOTAL: Hanya update list lagu jika layar playlist TIDAK sedang tersembunyi
-    const playlistScreen = document.getElementById('playlist-screen');
-    if (playlistScreen && !playlistScreen.classList.contains('hide')) {
-        const items = document.querySelectorAll('.song-item');
-        if (items.length > 0) {
-            items.forEach((item, idx) => {
-                if (idx === currentIndex) item.classList.add('active-song');
-                else item.classList.remove('active-song');
-            });
-        }
-    }
-}
-
 
         function setupNotification(song) {
             if ('mediaSession' in navigator) {
