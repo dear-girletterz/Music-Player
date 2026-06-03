@@ -133,35 +133,35 @@ body {
     padding: 20px;
 }
 
-/* DESIGN MINI PLAYER FULL & CENTERED */
+/* DESIGN MINI PLAYER FULL & CENTERED (WARNA PASTEL DINAMIS) */
 .mini-player {
     position: fixed;
     bottom: 25px;
     left: 50%;
     transform: translateX(-50%);
-    width: calc(100% - 30px); /* Lebar full hampir mentok layar kiri-kanan */
+    width: calc(100% - 30px); /* Lebar full seimbang kiri-kanan */
     max-width: 360px;
-    background: #1e2025; /* Warna gelap solid */
-    color: white;
     border-radius: 28px;
     padding: 24px 20px 20px 20px;
     display: flex;
     flex-direction: column;
     gap: 16px;
-    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2); /* Shadow lebih soft untuk pastel */
     z-index: 999;
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    transition: background 0.3s ease; /* Efek transisi warna halus saat ganti folder */
 }
 
 /* Info Lagu - SEMUANYA DI TENGAH */
 .mini-song-info {
-    text-align: center; /* Rata tengah pas */
+    text-align: center;
     width: 100%;
 }
 
 #mini-title {
     font-size: 19px;
     font-weight: 700;
-    color: #ffffff;
+    color: #22252a; /* Diubah gelap agar kontras dengan warna pastel */
     letter-spacing: -0.3px;
     white-space: normal;
     word-wrap: break-word;
@@ -170,9 +170,9 @@ body {
 
 #mini-artist {
     font-size: 12px;
-    color: #8a8f9d;
-    text-transform: uppercase; /* Huruf kapital estetik */
-    font-weight: 500;
+    color: #555a66; /* Warna penyanyi menyesuaikan */
+    text-transform: uppercase;
+    font-weight: 600;
     letter-spacing: 0.5px;
     margin-top: 4px;
 }
@@ -191,8 +191,8 @@ body {
 #progress-bar {
     flex-grow: 1;
     height: 5px;
-    accent-color: #6366f1; 
-    background: rgba(255, 255, 255, 0.1);
+    accent-color: #4f46e5; /* Warna penunjuk menit dibuat kontras */
+    background: rgba(0, 0, 0, 0.1); /* Background garis transparan gelap */
     border-radius: 10px;
     cursor: pointer;
     outline: none;
@@ -200,8 +200,8 @@ body {
 
 #total-duration {
     font-size: 15px;
-    color: #ffffff;
-    font-weight: 500;
+    color: #22252a;
+    font-weight: 600;
     min-width: 35px;
     text-align: right;
 }
@@ -210,24 +210,24 @@ body {
 .mini-bottom-section {
     display: flex;
     flex-direction: column;
-    align-items: center; /* Menit berjalan ikut ke tengah */
+    align-items: center;
     width: 100%;
     gap: 12px;
 }
 
 #current-time {
     font-size: 16px;
-    color: #ffffff;
-    font-weight: 500;
-    text-align: center; /* Teks menit pas di tengah atas tombol */
+    color: #22252a;
+    font-weight: 600;
+    text-align: center;
 }
 
 /* Baris Tombol Kontrol di Tengah */
 .mini-controls-row {
     display: flex;
     align-items: center;
-    justify-content: center; /* Tombol pas di tengah */
-    gap: 45px; /* Jarak antar tombol dibuat lega dan pas */
+    justify-content: center;
+    gap: 45px;
     width: 100%;
     margin-top: 5px;
 }
@@ -235,7 +235,7 @@ body {
 .mini-controls-row button {
     background: none;
     border: none;
-    color: #8a8f9d;
+    color: #555a66; /* Tombol warna abu gelap estetik */
     cursor: pointer;
     display: flex;
     align-items: center;
@@ -245,7 +245,7 @@ body {
 
 .mini-controls-row button:active {
     transform: scale(0.9);
-    color: #ffffff;
+    color: #000000;
 }
 
 /* Ukuran Ikon Next & Prev */
@@ -253,10 +253,10 @@ body {
     font-size: 36px;
 }
 
-/* Tombol Play Utama Bersih & Besar di Tengah (Tanpa Bulatan Latar Belakang) */
+/* Tombol Play Utama Bersih & Besar di Tengah (Tanpa Kotak/Bulatan Latar Belakang) */
 .mini-controls-row button.play-trigger {
     background: none; 
-    color: white;
+    color: #22252a;
     width: auto;
     height: auto;
     border-radius: 0;
@@ -265,5 +265,5 @@ body {
 
 .mini-controls-row button.play-trigger .material-icons-round {
     font-size: 46px; 
-    color: #ffffff;
+    color: #22252a;
 }
