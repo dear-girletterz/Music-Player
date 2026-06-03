@@ -53,31 +53,29 @@
     </div>
 
     <div class="mini-player hide" id="mini-player">
-        <div class="mini-header-content">
-            <img id="mini-cover" src="" alt="Cover" class="mini-album-art">
-            <div class="mini-info">
-                <h4 id="mini-title">Judul Lagu</h4>
-                <p id="mini-artist">Penyanyi</p>
-            </div>
+        <div class="mini-song-info">
+            <h4 id="mini-title">Judul Lagu</h4>
+            <p id="mini-artist">Penyanyi</p>
         </div>
 
-        <div class="progress-container">
-            <span id="current-time">0:00</span>
+        <div class="progress-wrapper">
             <input type="range" id="progress-bar" min="0" max="100" value="0" step="0.1" onchange="seekAudio()">
             <span id="total-duration">0:00</span>
         </div>
 
-        <div class="mini-controls-row">
-            <button onclick="prevSong()"><span class="material-icons-round">skip_previous</span></button>
-            <button onclick="togglePlay()" class="play-trigger"><span class="material-icons-round" id="mini-play-icon">play_arrow</span></button>
-            <button onclick="nextSong()"><span class="material-icons-round">skip_next</span></button>
+        <div class="mini-bottom-section">
+            <span id="current-time">0:00</span>
+            <div class="mini-controls-row">
+                <button onclick="prevSong()"><span class="material-icons-round">skip_previous</span></button>
+                <button onclick="togglePlay()" class="play-trigger"><span class="material-icons-round" id="mini-play-icon">play_arrow</span></button>
+                <button onclick="nextSong()"><span class="material-icons-round">skip_next</span></button>
+            </div>
         </div>
     </div>
 
     <audio id="audio-player"></audio>
 
     <script>
-        // DATABASE LAGU MENGGUNAKAN LINK CDN
         const allPlaylists = {
             enhypen: [
                 { title: "Given-Taken", artist: "ENHYPEN", url: "https://cdn.jsdelivr.net/gh/dear-girletterz/Music-Player@main/Lagu/giventaken.mp3", cover: "https://i.imgur.com/esqG32w.jpeg" },
@@ -134,7 +132,6 @@
             document.getElementById('folder-screen').classList.remove('hide');
         }
 
-        // Sinkronisasi status detik berjalan ke sistem notifikasi HP
         function updatePlaybackPosition() {
             if ('mediaSession' in navigator && audio.duration) {
                 navigator.mediaSession.setPositionState({
@@ -161,7 +158,6 @@
                 }
             }).catch(err => {
                 console.log("Gagal memutar:", err);
-                alert("Waduh, lagunya gagal diputar. Cek lagi nama filenya di GitHub ya!");
             });
         }
 
@@ -200,15 +196,6 @@
             document.getElementById('mini-title').innerText = song.title;
             document.getElementById('mini-artist').innerText = song.artist;
             
-            // TAMPILKAN GAMBAR COVER DI WEB
-            const coverImg = document.getElementById('mini-cover');
-            if(song.cover) {
-                coverImg.src = song.cover;
-                coverImg.style.display = "block";
-            } else {
-                coverImg.style.display = "none";
-            }
-            
             document.getElementById('mini-play-icon').innerText = isPlaying ? "pause" : "play_arrow";
 
             const items = document.querySelectorAll('.song-item');
@@ -234,7 +221,6 @@
                 navigator.mediaSession.setActionHandler('nexttrack', () => nextSong());
                 navigator.mediaSession.setActionHandler('previoustrack', () => prevSong());
                 
-                // Fitur geser menit langsung dari bar notifikasi HP
                 navigator.mediaSession.setActionHandler('seekto', (details) => {
                     if (details.fastSeek && 'fastSeek' in audio) {
                         audio.fastSeek(details.seekTime);
@@ -246,9 +232,7 @@
             }
         }
 
-        audio.onended = () => {
-            nextSong();
-        };
+        audio.onended = () => { nextSong(); };
         
         const progressBar = document.getElementById('progress-bar');
         const currentTimeEl = document.getElementById('current-time');
@@ -266,8 +250,6 @@
                 const progressPercent = (audio.currentTime / audio.duration) * 100;
                 progressBar.value = progressPercent;
                 currentTimeEl.innerText = formatTime(audio.currentTime);
-                
-                // Kirim data waktu ke sistem HP secara realtime agar selaras
                 updatePlaybackPosition();
             }
         };
