@@ -192,11 +192,21 @@
             const song = currentPlaylist[currentIndex];
             if (!song) return;
 
-            document.getElementById('mini-player').classList.remove('hide');
+            const miniPlayer = document.getElementById('mini-player');
+            miniPlayer.classList.remove('hide');
             document.getElementById('mini-title').innerText = song.title;
             document.getElementById('mini-artist').innerText = song.artist;
             
             document.getElementById('mini-play-icon').innerText = isPlaying ? "pause" : "play_arrow";
+
+            // KODE OTOMATIS MENGEMBALIKAN WARNA GRADASI PASTEL SESUAI FOLDER
+            miniPlayer.className = "mini-player"; // Reset class dasar
+            if (currentPlaylistName === 'enhypen') miniPlayer.style.background = "linear-gradient(135deg, #e0f2fe, #bae6fd)"; // Biru Muda Pastel
+            else if (currentPlaylistName === 'hearts2hearts') miniPlayer.style.background = "linear-gradient(135deg, #fce7f3, #fbcfe8)"; // Pink Muda Pastel
+            else if (currentPlaylistName === 'babymonster') miniPlayer.style.background = "linear-gradient(135deg, #fee2e2, #fecaca)"; // Merah Muda Pastel
+            else if (currentPlaylistName === 'lngshot') miniPlayer.style.background = "linear-gradient(135deg, #f3f4f6, #e5e7eb)"; // Abu Muda Pastel
+            else if (currentPlaylistName === 'cortis') miniPlayer.style.background = "linear-gradient(135deg, #f0fdf4, #dcfce7)"; // Hijau Muda Pastel
+            else if (currentPlaylistName === 'lainnya') miniPlayer.style.background = "linear-gradient(135deg, #f3e8ff, #e9d5ff)"; // Ungu Muda Pastel
 
             const items = document.querySelectorAll('.song-item');
             items.forEach((item, idx) => {
@@ -204,6 +214,7 @@
                 else item.classList.remove('active-song');
             });
         }
+
 
         function setupNotification(song) {
             if ('mediaSession' in navigator) {
