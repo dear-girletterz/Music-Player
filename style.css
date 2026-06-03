@@ -1,5 +1,5 @@
 /* ==========================================
-   TEMA UTAMA: GRADASI PASTEL CERAH & BERSIH
+   TEMA UTAMA: GRADASI SUPER SOFT PASTEL
    ========================================== */
 * {
     margin: 0;
@@ -9,7 +9,8 @@
 }
 
 body {
-    background: linear-gradient(135deg, #A8D8EA 0%, #F6CFCF 100%); /* Gradasi Biru Pastel ke Pink Pastel */
+    /* Perpaduan Biru Pastel Air & Pink Pastel yang Sangat Muda */
+    background: linear-gradient(135deg, #e3f2fd 0%, #fae1e5 100%); 
     color: #2c3e50;
     padding: 20px;
     display: flex;
@@ -32,11 +33,11 @@ body {
     font-weight: 700;
     margin-bottom: 25px;
     text-align: center;
-    color: #2c3e50;
+    color: #4a5568; /* Warna teks judul yang lebih lembut dari hitam pekat */
 }
 
 /* ==========================================
-   WARNA KOTAK FOLDER HOMEPAGE (PASTEL ASLI)
+   WARNA KOTAK FOLDER (SUPER MUDA & ADEM)
    ========================================== */
 .folder-list {
     display: grid;
@@ -50,20 +51,20 @@ body {
     text-align: center;
     cursor: pointer;
     transition: transform 0.2s, box-shadow 0.2s;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.03); /* Shadow super tipis agar clean */
 }
 
 .folder-box:active {
     transform: scale(0.95);
 }
 
-/* Menggunakan linear-gradient untuk gradasi warna pastel pada kotak folder */
-.f-blue { background: linear-gradient(135deg, #e0f2fe, #bae6fd); }       
-.f-pink { background: linear-gradient(135deg, #fce7f3, #fbcfe8); }       
-.f-green { background: linear-gradient(135deg, #f0fdf4, #dcfce7); }      
-.f-red { background: linear-gradient(135deg, #fee2e2, #fecaca); }        
-.f-grey { background: linear-gradient(135deg, #f3f4f6, #e5e7eb); }       
-.f-purple { background: linear-gradient(135deg, #f3e8ff, #e9d5ff); }     
+/* Palet Gradasi Ultra Pastel (Diturunkan kepekatannya agar sangat soft) */
+.f-blue { background: linear-gradient(135deg, #f0f7ff, #e1effe); }       /* Biru awan muda */
+.f-pink { background: linear-gradient(135deg, #fff5f7, #fde8ec); }       /* Pink kelopak bunga mawar muda */
+.f-green { background: linear-gradient(135deg, #f3faf4, #e3f7e6); }      /* Hijau mint muda */
+.f-red { background: linear-gradient(135deg, #fff5f5, #fde8e8); }        /* Merah pastel samar */
+.f-grey { background: linear-gradient(135deg, #f9fafb, #f3f4f6); }       /* Abu-abu putih bersih */
+.f-purple { background: linear-gradient(135deg, #faf5ff, #f3e8ff); }     /* Ungu lavender muda */
 
 .folder-img {
     width: 100%;
@@ -71,22 +72,24 @@ body {
     object-fit: cover;
     border-radius: 14px;
     margin-bottom: 10px;
+    opacity: 0.95; /* Sedikit dilembutkan agar menyatu dengan background kotak */
 }
 
 .folder-name {
     font-size: 14px;
     font-weight: 600;
-    color: #2c3e50;
+    color: #4a5568; /* Hitam abu-abu charcoal yang lembut, tidak terlalu kontras menusuk */
 }
 
 /* ==========================================
    HALAMAN PLAYLIST DETAIL
    ========================================== */
 .playlist-card {
-    background: #ffffff;
+    background: rgba(255, 255, 255, 0.85); /* Semi transparan agar gradasi body sedikit membayang */
+    backdrop-filter: blur(10px); /* Efek kaca buram aesthetic */
     border-radius: 24px;
     padding: 20px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.02);
 }
 
 .playlist-header {
@@ -99,7 +102,7 @@ body {
 .back-btn {
     cursor: pointer;
     font-size: 28px;
-    color: #2c3e50;
+    color: #4a5568;
 }
 
 .song-list {
@@ -114,19 +117,19 @@ body {
     gap: 15px;
     padding: 14px;
     border-radius: 16px;
-    background: #f8fafc;
+    background: rgba(255, 255, 255, 0.5);
     cursor: pointer;
     transition: background 0.2s;
 }
 
 .active-song {
-    background: rgba(99, 102, 241, 0.1);
-    border: 1px solid #6366f1;
+    background: rgba(255, 255, 255, 0.9);
+    border: 1px solid rgba(74, 85, 104, 0.2);
 }
 
 .song-num {
     font-size: 14px;
-    color: #8a8f9d;
+    color: #a0aec0;
     min-width: 20px;
 }
 
@@ -139,26 +142,26 @@ body {
 .s-title {
     font-size: 14px;
     font-weight: 600;
-    color: #2c3e50;
+    color: #4a5568;
 }
 
 .s-artist {
     font-size: 12px;
-    color: #8a8f9d;
+    color: #a0aec0;
 }
 
 .play-icon-list {
-    color: #6366f1;
+    color: #a0aec0;
 }
 
 .empty-msg {
     text-align: center;
-    color: #8a8f9d;
+    color: #a0aec0;
     padding: 20px;
 }
 
 /* ========================================================
-   MINI PLAYER: FULL, TENGAH SEMUA, WARNA FONT HITAM HALUS
+   MINI PLAYER: BERSIH, LEMBUT & MENGIKUTI TEMA ULTRA PASTEL
    ======================================================== */
 .mini-player {
     position: fixed;
@@ -172,9 +175,9 @@ body {
     display: flex;
     flex-direction: column;
     gap: 16px;
-    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.12); 
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04); 
     z-index: 999;
-    border: 1px solid rgba(255, 255, 255, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.7);
     transition: background 0.3s ease;
 }
 
@@ -184,9 +187,9 @@ body {
 }
 
 #mini-title {
-    font-size: 19px;
+    font-size: 18px;
     font-weight: 700;
-    color: #2c3e50; 
+    color: #4a5568; 
     letter-spacing: -0.3px;
     white-space: normal;
     word-wrap: break-word;
@@ -195,7 +198,7 @@ body {
 
 #mini-artist {
     font-size: 12px;
-    color: #5a6c7d;
+    color: #718096;
     text-transform: uppercase;
     font-weight: 600;
     letter-spacing: 0.5px;
@@ -214,17 +217,17 @@ body {
 
 #progress-bar {
     flex-grow: 1;
-    height: 5px;
-    accent-color: #2c3e50; 
-    background: rgba(0, 0, 0, 0.08);
+    height: 4px;
+    accent-color: #718096; 
+    background: rgba(0, 0, 0, 0.05);
     border-radius: 10px;
     cursor: pointer;
     outline: none;
 }
 
 #total-duration {
-    font-size: 15px;
-    color: #2c3e50;
+    font-size: 14px;
+    color: #718096;
     font-weight: 600;
     min-width: 35px;
     text-align: right;
@@ -239,8 +242,8 @@ body {
 }
 
 #current-time {
-    font-size: 16px;
-    color: #2c3e50;
+    font-size: 15px;
+    color: #718096;
     font-weight: 600;
     text-align: center;
 }
@@ -257,7 +260,7 @@ body {
 .mini-controls-row button {
     background: none;
     border: none;
-    color: #5a6c7d;
+    color: #a0aec0;
     cursor: pointer;
     display: flex;
     align-items: center;
@@ -267,16 +270,16 @@ body {
 
 .mini-controls-row button:active {
     transform: scale(0.9);
-    color: #2c3e50;
+    color: #4a5568;
 }
 
 .mini-controls-row .material-icons-round {
-    font-size: 36px;
+    font-size: 34px;
 }
 
 .mini-controls-row button.play-trigger {
     background: none; 
-    color: #2c3e50;
+    color: #4a5568;
     width: auto;
     height: auto;
     border-radius: 0;
@@ -284,6 +287,6 @@ body {
 }
 
 .mini-controls-row button.play-trigger .material-icons-round {
-    font-size: 46px; 
-    color: #2c3e50;
+    font-size: 44px; 
+    color: #4a5568;
 }
