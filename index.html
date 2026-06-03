@@ -560,58 +560,46 @@
         }
 
         function updateUI() {
-            const song = currentPlaylist[currentIndex];
-            if (!song) return;
+    const song = currentPlaylist[currentIndex];
+    if (!song) return;
 
-            const miniPlayer = document.getElementById('mini-player');
-            miniPlayer.classList.remove('hide');
-            document.getElementById('mini-title').innerText = song.title;
-            document.getElementById('mini-artist').innerText = song.artist;
-            
-            document.getElementById('mini-play-icon').innerText = isPlaying ? "pause" : "play_arrow";
+    const miniPlayer = document.getElementById('mini-player');
+    miniPlayer.classList.remove('hide');
+    document.getElementById('mini-title').innerText = song.title;
+    document.getElementById('mini-artist').innerText = song.artist;
+    
+    document.getElementById('mini-play-icon').innerText = isPlaying ? "pause" : "play_arrow";
 
-            // SINKRONISASI MATRIKS WARNA MINI PLAYER BARU (100% PASTELL)
-            miniPlayer.className = "mini-player"; 
-            
-            // 1. Biru Pastel (Enhypen, Treasure)
-            if (['enhypen', 'treasure'].includes(currentPlaylistName)) {
-                miniPlayer.style.background = "linear-gradient(135deg, #f0f7ff, #e1effe)"; 
-            } 
-            // 2. Pink Pastel (Hearts2Hearts, Blackpink)
-            else if (['hearts2hearts', 'blackpink'].includes(currentPlaylistName)) {
-                miniPlayer.style.background = "linear-gradient(135deg, #fff5f7, #fde8ec)"; 
-            } 
-            // 3. Merah Pastel (Babymonster, TXT)
-            else if (['babymonster', 'txt'].includes(currentPlaylistName)) {
-                miniPlayer.style.background = "linear-gradient(135deg, #fff5f5, #fde8e8)"; 
-            } 
-            // 4. Ijo Pastel (Cortis, NCT)
-            else if (['cortis', 'nct'].includes(currentPlaylistName)) {
-                miniPlayer.style.background = "linear-gradient(135deg, #f3faf4, #e3f7e6)"; 
-            } 
-            // 5. Abu/Item Lembut (Aespa, Lngshot)
-            else if (['aespa', 'lngshot'].includes(currentPlaylistName)) {
-                miniPlayer.style.background = "linear-gradient(135deg, #f3f4f6, #e5e7eb)"; 
-            } 
-            // 6. Ungu Pastel (BTS)
-            else if (currentPlaylistName === 'bts') {
-                miniPlayer.style.background = "linear-gradient(135deg, #faf5ff, #f3e8ff)"; 
-            } 
-            // 7. Peach Pastel (ILLIT)
-            else if (currentPlaylistName === 'illit') {
-                miniPlayer.style.background = "linear-gradient(135deg, #fff7ed, #ffedd5)"; 
-            } 
-            // 8. Putih Keruh (Lainnya)
-            else if (currentPlaylistName === 'lainnya') {
-                miniPlayer.style.background = "linear-gradient(135deg, #fafafa, #f1f1f1)"; 
-            }
+    // SINKRONISASI MATRIKS WARNA MINI PLAYER BARU
+    miniPlayer.className = "mini-player"; 
+    
+    if (['enhypen', 'treasure'].includes(currentPlaylistName)) {
+        miniPlayer.style.background = "linear-gradient(135deg, #f0f7ff, #e1effe)"; 
+    } else if (['hearts2hearts', 'blackpink'].includes(currentPlaylistName)) {
+        miniPlayer.style.background = "linear-gradient(135deg, #fff5f7, #fde8ec)"; 
+    } else if (['babymonster', 'txt'].includes(currentPlaylistName)) {
+        miniPlayer.style.background = "linear-gradient(135deg, #fff5f5, #fde8e8)"; 
+    } else if (['cortis', 'nct'].includes(currentPlaylistName)) {
+        miniPlayer.style.background = "linear-gradient(135deg, #f3faf4, #e3f7e6)"; 
+    } else if (['aespa', 'lngshot'].includes(currentPlaylistName)) {
+        miniPlayer.style.background = "linear-gradient(135deg, #f3f4f6, #e5e7eb)"; 
+    } else if (currentPlaylistName === 'bts') {
+        miniPlayer.style.background = "linear-gradient(135deg, #faf5ff, #f3e8ff)"; 
+    } else if (currentPlaylistName === 'illit') {
+        miniPlayer.style.background = "linear-gradient(135deg, #fff7ed, #ffedd5)"; 
+    } else if (currentPlaylistName === 'lainnya') {
+        miniPlayer.style.background = "linear-gradient(135deg, #fafafa, #f1f1f1)"; 
+    }
 
-            const items = document.querySelectorAll('.song-item');
-            items.forEach((item, idx) => {
-                if (idx === currentIndex) item.classList.add('active-song');
-                else item.classList.remove('active-song');
-            });
-        }
+    // PENGAMAN UTAMA: Hanya jalankan perulangan jika lagu di layar sudah beres dimuat
+    const items = document.querySelectorAll('.song-item');
+    if (items.length > 0) {
+        items.forEach((item, idx) => {
+            if (idx === currentIndex) item.classList.add('active-song');
+            else item.classList.remove('active-song');
+        });
+    }
+}
 
         function setupNotification(song) {
             if ('mediaSession' in navigator) {
