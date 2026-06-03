@@ -436,7 +436,8 @@
 
         function openPlaylist(folderName) {
             currentPlaylistName = folderName;
-            currentPlaylist = allPlaylists[folderName];
+            // MEMPERBAIKI BUG: Mengambil data menggunakan key asli folderName (huruf kecil)
+            currentPlaylist = allPlaylists[folderName] || [];
             
             document.getElementById('playlist-title').innerText = folderName.toUpperCase();
             const listContainer = document.getElementById('song-list-container');
