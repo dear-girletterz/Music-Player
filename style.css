@@ -1,5 +1,5 @@
 /* ==========================================
-   TEMA UTAMA: GRADASI SUPER SOFT PASTEL
+   TEMA UTAMA: GRADASI BIRU PASTEL & PUTIH LEMBUT
    ========================================== */
 * {
     margin: 0;
@@ -9,15 +9,10 @@
 }
 
 body {
-    /* Gradasi Aesthetic: Langit Biru -> Ombak Mint -> Peach/Pink Cerah */
-    background: linear-gradient(
-        135deg, 
-        #b3e5fc 0%,   /* Sky Blue (Vibes Langit Cerah) */
-        #b2dfdb 50%,  /* Mint/Soft Cyan (Vibes Ombak Laut) */
-        #ffe0b2 100%  /* Soft Peach (Vibes Pasir Pantai / Sunset Remaja) */
-    );
-    background-attachment: fixed; /* Biar gradasinya mengunci dan ga patah saat di-scroll */
-    color: #2c3e50;
+    /* Gradasi super tenang: Biru langit pastel pudar ke Putih Susu */
+    background: linear-gradient(135deg, #e3f2fd 0%, #f8fafc 100%); 
+    background-attachment: fixed;
+    color: #4a5568;
     padding: 20px;
     display: flex;
     justify-content: center;
@@ -39,13 +34,11 @@ body {
     font-weight: 700;
     margin-bottom: 25px;
     text-align: center;
-    color: #34495e; /* Warna abu-biru gelap yang lembut, cocok dengan latar belakang */
-    text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.5); /* Efek bayangan putih tipis biar teksnya timbul */
+    color: #4a5568;
 }
 
-
 /* ==========================================
-   WARNA KOTAK FOLDER (SUPER MUDA & ADEM)
+   WARNA KOTAK FOLDER HOMEPAGE (PASTEL SEJUK)
    ========================================== */
 .folder-list {
     display: grid;
@@ -59,20 +52,20 @@ body {
     text-align: center;
     cursor: pointer;
     transition: transform 0.2s, box-shadow 0.2s;
-    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.03); /* Shadow super tipis agar clean */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02);
 }
 
 .folder-box:active {
     transform: scale(0.95);
 }
 
-/* Palet Gradasi Ultra Pastel (Diturunkan kepekatannya agar sangat soft) */
-.f-blue { background: linear-gradient(135deg, #f0f7ff, #e1effe); }       /* Biru awan muda */
-.f-pink { background: linear-gradient(135deg, #fff5f7, #fde8ec); }       /* Pink kelopak bunga mawar muda */
-.f-green { background: linear-gradient(135deg, #f3faf4, #e3f7e6); }      /* Hijau mint muda */
-.f-red { background: linear-gradient(135deg, #fff5f5, #fde8e8); }        /* Merah pastel samar */
-.f-grey { background: linear-gradient(135deg, #f9fafb, #f3f4f6); }       /* Abu-abu putih bersih */
-.f-purple { background: linear-gradient(135deg, #faf5ff, #f3e8ff); }     /* Ungu lavender muda */
+/* Gradasi Kotak Folder Tetap Lembut */
+.f-blue { background: linear-gradient(135deg, #e0f2fe, #bae6fd); }       
+.f-pink { background: linear-gradient(135deg, #fce7f3, #fbcfe8); }       
+.f-green { background: linear-gradient(135deg, #f0fdf4, #dcfce7); }      
+.f-red { background: linear-gradient(135deg, #fee2e2, #fecaca); }        
+.f-grey { background: linear-gradient(135deg, #f3f4f6, #e5e7eb); }       
+.f-purple { background: linear-gradient(135deg, #f3e8ff, #e9d5ff); }     
 
 .folder-img {
     width: 100%;
@@ -80,21 +73,20 @@ body {
     object-fit: cover;
     border-radius: 14px;
     margin-bottom: 10px;
-    opacity: 0.95; /* Sedikit dilembutkan agar menyatu dengan background kotak */
 }
 
 .folder-name {
     font-size: 14px;
     font-weight: 600;
-    color: #4a5568; /* Hitam abu-abu charcoal yang lembut, tidak terlalu kontras menusuk */
+    color: #2c3e50;
 }
 
 /* ==========================================
    HALAMAN PLAYLIST DETAIL
    ========================================== */
 .playlist-card {
-    background: rgba(255, 255, 255, 0.85); /* Semi transparan agar gradasi body sedikit membayang */
-    backdrop-filter: blur(10px); /* Efek kaca buram aesthetic */
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(10px);
     border-radius: 24px;
     padding: 20px;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.02);
@@ -125,14 +117,14 @@ body {
     gap: 15px;
     padding: 14px;
     border-radius: 16px;
-    background: rgba(255, 255, 255, 0.5);
+    background: rgba(255, 255, 255, 0.6);
     cursor: pointer;
     transition: background 0.2s;
 }
 
 .active-song {
-    background: rgba(255, 255, 255, 0.9);
-    border: 1px solid rgba(74, 85, 104, 0.2);
+    background: rgba(255, 255, 255, 0.95);
+    border: 1px solid rgba(74, 85, 104, 0.15);
 }
 
 .song-num {
@@ -169,7 +161,7 @@ body {
 }
 
 /* ========================================================
-   MINI PLAYER: BERSIH, LEMBUT & MENGIKUTI TEMA ULTRA PASTEL
+   MINI PLAYER: SUPER LEMBUT (ANGGUN & CLEAN)
    ======================================================== */
 .mini-player {
     position: fixed;
@@ -183,9 +175,9 @@ body {
     display: flex;
     flex-direction: column;
     gap: 16px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04); 
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.05); 
     z-index: 999;
-    border: 1px solid rgba(255, 255, 255, 0.7);
+    border: 1px solid rgba(255, 255, 255, 0.8);
     transition: background 0.3s ease;
 }
 
@@ -197,10 +189,8 @@ body {
 #mini-title {
     font-size: 18px;
     font-weight: 700;
-    color: #4a5568; 
+    color: #2c3e50; 
     letter-spacing: -0.3px;
-    white-space: normal;
-    word-wrap: break-word;
     line-height: 1.3;
 }
 
@@ -209,7 +199,6 @@ body {
     color: #718096;
     text-transform: uppercase;
     font-weight: 600;
-    letter-spacing: 0.5px;
     margin-top: 4px;
 }
 
@@ -220,7 +209,6 @@ body {
     width: 100%;
     gap: 12px;
     margin-top: 4px;
-    padding: 0 4px;
 }
 
 #progress-bar {
@@ -228,7 +216,6 @@ body {
     height: 4px;
     accent-color: #718096; 
     background: rgba(0, 0, 0, 0.05);
-    border-radius: 10px;
     cursor: pointer;
     outline: none;
 }
@@ -253,7 +240,6 @@ body {
     font-size: 15px;
     color: #718096;
     font-weight: 600;
-    text-align: center;
 }
 
 .mini-controls-row {
@@ -262,7 +248,6 @@ body {
     justify-content: center;
     gap: 45px;
     width: 100%;
-    margin-top: 5px;
 }
 
 .mini-controls-row button {
@@ -286,15 +271,9 @@ body {
 }
 
 .mini-controls-row button.play-trigger {
-    background: none; 
     color: #4a5568;
-    width: auto;
-    height: auto;
-    border-radius: 0;
-    box-shadow: none;
 }
 
 .mini-controls-row button.play-trigger .material-icons-round {
     font-size: 44px; 
-    color: #4a5568;
 }
