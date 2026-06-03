@@ -67,17 +67,17 @@
         </div>
     </div>
 
-    <!-- Tag Audio HTML5 Tersembunyi (Biar bisa jalan di background) -->
+    <!-- Tag Audio HTML5 Tersembunyi -->
     <audio id="audio-player"></audio>
 
     <script>
-        // DATABASE LAGU MENGGUNAKAN AUDIO MP3/M4A (BIAR BISA BACKROUND PLAY)
+        // DATABASE LAGU MENGGUNAKAN LINK CDN (DIJAMIN LANCAR DAN BISA BACKGROUND PLAY)
         const allPlaylists = {
             enhypen: [
-                { title: "Given-Taken", artist: "ENHYPEN", url: "https://raw.githubusercontent.com/dear-girletterz/Music-Player/main/Lagu/giventaken.mp3", cover: "https://i.imgur.com/esqG32w.jpeg" },
-                { title: "Let Me In (20 CUBE)", artist: "ENHYPEN", url: "https://raw.githubusercontent.com/dear-girletterz/Music-Player/main/Lagu/letmein(20cube).mp3", cover: "https://i.imgur.com/esqG32w.jpeg"},
-                { title: "10 Months", artist: "ENHYPEN", url: "https://raw.githubusercontent.com/dear-girletterz/Music-Player/main/Lagu/10months.mp3", cover: "https://i.imgur.com/esqG32w.jpeg" },
-                { title: "Flicker", artist: "ENHYPEN", url: "https://raw.githubusercontent.com/dear-girletterz/Music-Player/main/Lagu/flicker.mp3", cover: "https://i.imgur.com/esqG32w.jpeg" }     
+                { title: "Given-Taken", artist: "ENHYPEN", url: "https://cdn.jsdelivr.net/gh/dear-girletterz/Music-Player@main/Lagu/giventaken.mp3", cover: "https://i.imgur.com/esqG32w.jpeg" },
+                { title: "Let Me In (20 CUBE)", artist: "ENHYPEN", url: "https://cdn.jsdelivr.net/gh/dear-girletterz/Music-Player@main/Lagu/letmein(20cube).mp3", cover: "https://i.imgur.com/esqG32w.jpeg" },
+                { title: "10 Months", artist: "ENHYPEN", url: "https://cdn.jsdelivr.net/gh/dear-girletterz/Music-Player@main/Lagu/10months.mp3", cover: "https://i.imgur.com/esqG32w.jpeg" },
+                { title: "Flicker", artist: "ENHYPEN", url: "https://cdn.jsdelivr.net/gh/dear-girletterz/Music-Player@main/Lagu/flicker.mp3", cover: "https://i.imgur.com/esqG32w.jpeg" }     
             ],
             hearts2hearts: [],
             cortis: [],
@@ -136,13 +136,17 @@
             const song = currentPlaylist[currentIndex];
             
             audio.src = song.url;
-audio.load(); // <-- Tambahkan baris ini untuk me-refresh audio player
-audio.play().then(() => {
-    isPlaying = true;
-    updateUI();
-    setupNotification(song);
-}).catch(err => console.log("Gagal memutar:", err));
-        
+            audio.load(); 
+            
+            audio.play().then(() => {
+                isPlaying = true;
+                updateUI();
+                setupNotification(song);
+            }).catch(err => {
+                console.log("Gagal memutar:", err);
+                alert("Waduh, lagunya gagal diputar. Cek lagi nama filenya di GitHub ya!");
+            });
+        } // <-- Kurung kurawal penutup yang hilang tadi sudah dipasang di sini!
 
         function togglePlay() {
             if (!audio.src) return;
@@ -184,7 +188,7 @@ audio.play().then(() => {
             });
         }
 
-        // FITUR SAKTI: BIAR NYANTOL DI NOTIFIKASI HP & TETEP NYALA DI BACKGROUND
+        // Gambar cover otomatis nyantol pakai foto grup ENHYPEN sesuai request kamu!
         function setupNotification(song) {
             if ('mediaSession' in navigator) {
                 navigator.mediaSession.metadata = new MediaMetadata({
@@ -192,7 +196,7 @@ audio.play().then(() => {
                     artist: song.artist,
                     album: currentPlaylistName.toUpperCase(),
                     artwork: [
-                        { src: 'https://images.unsplash.com/photo-1514525253161-7a46d19cd819?q=80&w=256&auto=format&fit=crop', sizes: '256x256', type: 'image/jpeg' }
+                        { src: song.cover, sizes: '512x512', type: 'image/jpeg' }
                     ]
                 });
 
