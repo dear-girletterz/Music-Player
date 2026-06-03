@@ -56,14 +56,23 @@
     </div>
 
     <!-- MINI PLAYER YANG MUNCUL DI BAWAH KALO LAGU DIPUTAR -->
-    <div class="mini-player hide" id="mini-player" onclick="openFullPlayer()">
-        <div class="mini-info">
-            <h4 id="mini-title">Judul Lagu</h4>
-            <p id="mini-artist">Penyanyi</p>
+    <div class="mini-player hide" id="mini-player">
+        <!-- Garis Pemutar Lagu (Progress Bar) -->
+        <div class="progress-container">
+            <span id="current-time">0:00</span>
+            <input type="range" id="progress-bar" min="0" max="100" value="0" step="0.1" onchange="seekAudio()">
+            <span id="total-duration">0:00</span>
         </div>
-        <div class="mini-controls" onclick="event.stopPropagation();">
-            <button onclick="togglePlay()"><span class="material-icons-round" id="mini-play-icon">play_arrow</span></button>
-            <button onclick="nextSong()"><span class="material-icons-round">skip_next</span></button>
+
+        <div class="mini-main-content">
+            <div class="mini-info">
+                <h4 id="mini-title">Judul Lagu</h4>
+                <p id="mini-artist">Penyanyi</p>
+            </div>
+            <div class="mini-controls">
+                <button onclick="togglePlay()"><span class="material-icons-round" id="mini-play-icon">play_arrow</span></button>
+                <button onclick="nextSong()"><span class="material-icons-round">skip_next</span></button>
+            </div>
         </div>
     </div>
 
@@ -168,6 +177,14 @@
             currentIndex = (currentIndex + 1) % currentPlaylist.length;
             selectSong(currentIndex);
         }
+                
+        function prevSong() {
+            if (currentPlaylist.length === 0) return;
+            // Rumus biar kalau di lagu pertama diklik prev, dia mundur ke lagu paling terakhir
+            currentIndex = (currentIndex - 1 + currentPlaylist.length) % currentPlaylist.length;
+            selectSong(currentIndex);
+        }
+
 
         function updateUI() {
             const song = currentPlaylist[currentIndex];
@@ -204,13 +221,59 @@
                 navigator.mediaSession.setActionHandler('play', () => togglePlay());
                 navigator.mediaSession.setActionHandler('pause', () => togglePlay());
                 navigator.mediaSession.setActionHandler('nexttrack', () => nextSong());
+                
+                // BARIS INI YANG BIKIN IKON LAGU SEBELUMNYA MUNCUL DI NOTIF HP!
+                navigator.mediaSession.setActionHandler('previoustrack', () => prevSong());
             }
         }
+
 
         // Otomatis putar lagu berikutnya kalau lagu habis
         audio.onended = () => {
             nextSong();
+      
         };
+        
+        const progressBar = document.getElementById('progress-bar');
+        const currentTimeEl = document.getElementById('current-time');
+        const totalDurationEl = document.getElementById('total-duration');
+
+        // Fungsi format detik angka menjadi menit (Contoh: 125 detik -> 2:05)
+        function formatTime(seconds) {
+            if (isNaN(seconds)) return "0:00";
+            const min = Math.floor(seconds / 60);
+            const sec = Math.floor(seconds % 60);
+            return `${min}:${sec < 10 ? '0' : ''}${sec}`;
+        }
+
+        // Jalankan ini setiap kali lagu berputar (Detik demi detik)
+        audio.ontimeupdate = () => {
+            if (audio.duration) {
+                // Hitung persentase jalannya lagu untuk menggeser garis
+                const progressPercent = (audio.currentTime / audio.duration) * 100;
+                progressBar.value = progressPercent;
+
+                // Update teks menit berjalan di layar
+                currentTimeEl.innerText = formatTime(audio.currentTime);
+            }
+        };
+
+        // Ketika total durasi lagu sudah berhasil dibaca penuh oleh internet
+        audio.onloadedmetadata = () => {
+            totalDurationEl.innerText = formatTime(audio.duration);
+            currentTimeEl.innerText = "0:00"; // Paksa tampilan mulai dari nol pas ganti lagu
+            progressBar.value = 0;
+        };
+
+        // Fungsi ketika garis pemutar ditarik/digeser oleh kamu
+        function seekAudio() {
+            if (audio.duration) {
+                // Hitung detik berdasarkan posisi geseran kamu
+                const seekTime = (progressBar.value / 100) * audio.duration;
+                audio.currentTime = seekTime;
+            }
+        }
+
     </script>
 </body>
 </html>
