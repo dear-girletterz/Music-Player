@@ -8,10 +8,284 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
-    <link rel="stylesheet" href="style.css?v=999">
+    
+    <!-- KODE CSS LANGSUNG DI SINI BIAR FORCED UPDATE & BEBAS CACHE -->
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            /* Gradasi Biru Pastel Lembut ke Putih Bersih */
+            background: linear-gradient(135deg, #e3f2fd 0%, #f8fafc 100%); 
+            background-attachment: fixed;
+            color: #4a5568;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 400px;
+            margin-bottom: 180px; 
+        }
+
+        .hide {
+            display: none !important;
+        }
+
+        .app-title {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 25px;
+            text-align: center;
+            color: #4a5568;
+        }
+
+        /* HOMEPAGE FOLDER LIST */
+        .folder-list {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+        }
+
+        .folder-box {
+            border-radius: 20px;
+            padding: 15px;
+            text-align: center;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02);
+        }
+
+        .folder-box:active {
+            transform: scale(0.95);
+        }
+
+        /* Gradasi Kotak Folder Pastel Sejuk */
+        .f-blue { background: linear-gradient(135deg, #e0f2fe, #bae6fd); }       
+        .f-pink { background: linear-gradient(135deg, #fce7f3, #fbcfe8); }       
+        .f-green { background: linear-gradient(135deg, #f0fdf4, #dcfce7); }      
+        .f-red { background: linear-gradient(135deg, #fee2e2, #fecaca); }        
+        .f-grey { background: linear-gradient(135deg, #f3f4f6, #e5e7eb); }       
+        .f-purple { background: linear-gradient(135deg, #f3e8ff, #e9d5ff); }     
+
+        .folder-img {
+            width: 100%;
+            height: 120px;
+            object-fit: cover;
+            border-radius: 14px;
+            margin-bottom: 10px;
+        }
+
+        .folder-name {
+            font-size: 14px;
+            font-weight: 600;
+            color: #2c3e50;
+        }
+
+        /* PLAYLIST SCREEN */
+        .playlist-card {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(10px);
+            border-radius: 24px;
+            padding: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.02);
+        }
+
+        .playlist-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .back-btn {
+            cursor: pointer;
+            font-size: 28px;
+            color: #4a5568;
+        }
+
+        .song-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .song-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 14px;
+            border-radius: 16px;
+            background: rgba(255, 255, 255, 0.6);
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .active-song {
+            background: rgba(255, 255, 255, 0.95);
+            border: 1px solid rgba(74, 85, 104, 0.15);
+        }
+
+        .song-num {
+            font-size: 14px;
+            color: #a0aec0;
+            min-width: 20px;
+        }
+
+        .song-meta {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .s-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: #4a5568;
+        }
+
+        .s-artist {
+            font-size: 12px;
+            color: #a0aec0;
+        }
+
+        .play-icon-list {
+            color: #a0aec0;
+        }
+
+        .empty-msg {
+            text-align: center;
+            color: #a0aec0;
+            padding: 20px;
+        }
+
+        /* MINI PLAYER ULTRA PASTEL (SANGAT MUDA) */
+        .mini-player {
+            position: fixed;
+            bottom: 25px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: calc(100% - 30px); 
+            max-width: 360px;
+            border-radius: 28px;
+            padding: 24px 20px 20px 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.05); 
+            z-index: 999;
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            transition: background 0.3s ease;
+        }
+
+        .mini-song-info {
+            text-align: center;
+            width: 100%;
+        }
+
+        #mini-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: #2c3e50; 
+            letter-spacing: -0.3px;
+            line-height: 1.3;
+        }
+
+        #mini-artist {
+            font-size: 12px;
+            color: #718096;
+            text-transform: uppercase;
+            font-weight: 600;
+            margin-top: 4px;
+        }
+
+        .progress-wrapper {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            gap: 12px;
+            margin-top: 4px;
+        }
+
+        #progress-bar {
+            flex-grow: 1;
+            height: 4px;
+            accent-color: #718096; 
+            background: rgba(0, 0, 0, 0.05);
+            cursor: pointer;
+            outline: none;
+        }
+
+        #total-duration {
+            font-size: 14px;
+            color: #718096;
+            font-weight: 600;
+            min-width: 35px;
+            text-align: right;
+        }
+
+        .mini-bottom-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            gap: 12px;
+        }
+
+        #current-time {
+            font-size: 15px;
+            color: #718096;
+            font-weight: 600;
+        }
+
+        .mini-controls-row {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 45px;
+            width: 100%;
+        }
+
+        .mini-controls-row button {
+            background: none;
+            border: none;
+            color: #a0aec0;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+        }
+
+        .mini-controls-row button:active {
+            transform: scale(0.9);
+            color: #4a5568;
+        }
+
+        .mini-controls-row .material-icons-round {
+            font-size: 34px;
+        }
+
+        .mini-controls-row button.play-trigger {
+            color: #4a5568;
+        }
+
+        .mini-controls-row button.play-trigger .material-icons-round {
+            font-size: 44px; 
+        }
+    </style>
 </head>
 <body>
 
+    <!-- HALAMAN 1: DAFTAR FOLDER UTAMA -->
     <div class="container" id="folder-screen">
         <h2 class="app-title">My Vibe Library</h2>
         <div class="folder-list">
@@ -42,6 +316,7 @@
         </div>
     </div>
 
+    <!-- HALAMAN 2: DAFTAR LAGU BERJEJER -->
     <div class="container hide" id="playlist-screen">
         <div class="playlist-card">
             <div class="playlist-header">
@@ -52,6 +327,7 @@
         </div>
     </div>
 
+    <!-- MINI PLAYER VERTIKAL BERWARNA ULTRA PASTEL -->
     <div class="mini-player hide" id="mini-player">
         <div class="mini-song-info">
             <h4 id="mini-title">Judul Lagu</h4>
@@ -189,19 +465,6 @@
         }
 
         function updateUI() {
-    const song = currentPlaylist[currentIndex];
-    if (!song) return;
-
-    const miniPlayer = document.getElementById('mini-player');
-    miniPlayer.classList.remove('hide');
-    document.getElementById('mini-title').innerText = song.title;
-    document.getElementById('mini-artist').innerText = song.artist;
-    
-    document.getElementById('mini-play-icon').innerText = isPlaying ? "pause" : "play_arrow";
-
-    // SINKRONISASI WARNA MINI PLAYER (PASTEL SOFT VERSION)
-    miniPlayer.className = "mini-player"; 
-            function updateUI() {
             const song = currentPlaylist[currentIndex];
             if (!song) return;
 
@@ -212,7 +475,7 @@
             
             document.getElementById('mini-play-icon').innerText = isPlaying ? "pause" : "play_arrow";
 
-            // WARNA BACKGROUND MINI PLAYER DIBUAT ULTRA PASTEL (SANGAT MUDA)
+            // MATRIKS GRADASI WARNA MINI PLAYER VERSI ULTRA PASTEL (SANGAT MUDA)
             miniPlayer.className = "mini-player"; 
             if (currentPlaylistName === 'enhypen') miniPlayer.style.background = "linear-gradient(135deg, #f0f7ff, #e1effe)"; 
             else if (currentPlaylistName === 'hearts2hearts') miniPlayer.style.background = "linear-gradient(135deg, #fff5f7, #fde8ec)"; 
@@ -227,7 +490,6 @@
                 else item.classList.remove('active-song');
             });
         }
-
 
         function setupNotification(song) {
             if ('mediaSession' in navigator) {
