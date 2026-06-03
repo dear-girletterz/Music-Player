@@ -39,8 +39,10 @@ body {
     font-weight: 700;
     margin-bottom: 25px;
     text-align: center;
-    color: #4a5568; /* Warna teks judul yang lebih lembut dari hitam pekat */
+    color: #34495e; /* Warna abu-biru gelap yang lembut, cocok dengan latar belakang */
+    text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.5); /* Efek bayangan putih tipis biar teksnya timbul */
 }
+
 
 /* ==========================================
    WARNA KOTAK FOLDER (SUPER MUDA & ADEM)
