@@ -189,31 +189,39 @@
         }
 
         function updateUI() {
-            const song = currentPlaylist[currentIndex];
-            if (!song) return;
+    const song = currentPlaylist[currentIndex];
+    if (!song) return;
 
-            const miniPlayer = document.getElementById('mini-player');
-            miniPlayer.classList.remove('hide');
-            document.getElementById('mini-title').innerText = song.title;
-            document.getElementById('mini-artist').innerText = song.artist;
-            
-            document.getElementById('mini-play-icon').innerText = isPlaying ? "pause" : "play_arrow";
+    const miniPlayer = document.getElementById('mini-player');
+    miniPlayer.classList.remove('hide');
+    document.getElementById('mini-title').innerText = song.title;
+    document.getElementById('mini-artist').innerText = song.artist;
+    
+    document.getElementById('mini-play-icon').innerText = isPlaying ? "pause" : "play_arrow";
 
-            // SINKRONISASI WARNA MINI PLAYER (LEBIH MUDA/PASTEL)
-            miniPlayer.className = "mini-player"; 
-            if (currentPlaylistName === 'enhypen') miniPlayer.style.background = "linear-gradient(135deg, #f0f7ff, #e1effe)"; 
-            else if (currentPlaylistName === 'hearts2hearts') miniPlayer.style.background = "linear-gradient(135deg, #fff5f7, #fde8ec)"; 
-            else if (currentPlaylistName === 'babymonster') miniPlayer.style.background = "linear-gradient(135deg, #fff5f5, #fde8e8)"; 
-            else if (currentPlaylistName === 'lngshot') miniPlayer.style.background = "linear-gradient(135deg, #f9fafb, #f3f4f6)"; 
-            else if (currentPlaylistName === 'cortis') miniPlayer.style.background = "linear-gradient(135deg, #f3faf4, #e3f7e6)"; 
-            else if (currentPlaylistName === 'lainnya') miniPlayer.style.background = "linear-gradient(135deg, #faf5ff, #f3e8ff)"; 
+    // SINKRONISASI WARNA MINI PLAYER (PASTEL SOFT VERSION)
+    miniPlayer.className = "mini-player"; 
+    
+    if (currentPlaylistName === 'enhypen') {
+        miniPlayer.style.background = "linear-gradient(135deg, #e3f2fd, #bbdefb)"; // Biru Pastel
+    } else if (currentPlaylistName === 'hearts2hearts') {
+        miniPlayer.style.background = "linear-gradient(135deg, #fce4ec, #f8bbd0)"; // Pink Pastel
+    } else if (currentPlaylistName === 'cortis') {
+        miniPlayer.style.background = "linear-gradient(135deg, #e8f5e9, #c8e6c9)"; // Hijau Pastel
+    } else if (currentPlaylistName === 'babymonster') {
+        miniPlayer.style.background = "linear-gradient(135deg, #ffebee, #ffcdd2)"; // Merah Pastel
+    } else if (currentPlaylistName === 'lngshot') {
+        miniPlayer.style.background = "linear-gradient(135deg, #f5f5f5, #eeeeee)"; // Abu Pastel
+    } else if (currentPlaylistName === 'lainnya') {
+        miniPlayer.style.background = "linear-gradient(135deg, #f3e5f5, #e1bee7)"; // Ungu Pastel
+    }
 
-            const items = document.querySelectorAll('.song-item');
-            items.forEach((item, idx) => {
-                if (idx === currentIndex) item.classList.add('active-song');
-                else item.classList.remove('active-song');
-            });
-        }
+    const items = document.querySelectorAll('.song-item');
+    items.forEach((item, idx) => {
+        if (idx === currentIndex) item.classList.add('active-song');
+        else item.classList.remove('active-song');
+    });
+}
 
         function setupNotification(song) {
             if ('mediaSession' in navigator) {
