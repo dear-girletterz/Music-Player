@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hanyfa's Music Player</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+        body { background: linear-gradient(135deg, #e3f2fd 0%, #f8fafc 100%); background-attachment: fixed; color: #4a5568; padding: 20px; display: flex; justify-content: center; min-height: 100vh; transition: background 0.5s ease; }
+        .container { width: 100%; max-width: 400px; margin-bottom: 180px; }
+        .hide { display: none !important; }
+        .playlist-card { background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(10px); border-radius: 24px; padding: 20px; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.02); }
+        .playlist-header { display: flex; align-items: center; gap: 15px; margin-bottom: 20px; }
+        .back-btn { cursor: pointer; font-size: 28px; color: #4a5568; text-decoration: none; }
+        .song-list { display: flex; flex-direction: column; gap: 10px; }
+        .song-item { display: flex; align-items: center; gap: 15px; padding: 14px; border-radius: 16px; background: rgba(255, 255, 255, 0.6); cursor: pointer; transition: background 0.2s; }
+        .active-song { background: rgba(255, 255, 255, 0.95); border: 1px solid rgba(74, 85, 104, 0.15); }
+        .song-num { font-size: 14px; color: #a0aec0; min-width: 20px; }
+        .song-meta { flex-grow: 1; display: flex; flex-direction: column; }
+        .s-title { font-size: 14px; font-weight: 600; color: #4a5568; }
+        .s-artist { font-size: 12px; color: #a0aec0; }
+        .play-icon-list { color: #a0aec0; }
+        .empty-msg { text-align: center; color: #a0aec0; padding: 20px; }
+        
+        /* MINI PLAYER */
+        .mini-player { position: fixed; bottom: 25px; left: 50%; transform: translateX(-50%); width: calc(100% - 30px); max-width: 360px; border-radius: 28px; padding: 24px 20px 20px 20px; display: flex; flex-direction: column; gap: 16px; box-shadow: 0 8px 25px rgba(0, 0, 0, 0.05); z-index: 999; border: 1px solid rgba(255, 255, 255, 0.8); transition: background 0.3s ease; }
+        .mini-song-info { text-align: center; width: 100%; }
+        #mini-title { font-size: 18px; font-weight: 700; color: #2c3e50; letter-spacing: -0.3px; line-height: 1.3; }
+        #mini-artist { font-size: 12px; color: #718096; text-transform: uppercase; font-weight: 600; margin-top: 4px; }
+        .progress-wrapper { display: flex; align-items: center; justify-content: center; width: 100%; gap: 12px; margin-top: 4px; }
+        #progress-bar { flex-grow: 1; height: 4px; accent-color: #718096; background: rgba(0, 0, 0, 0.05); cursor: pointer; outline: none; }
+        .mini-bottom-section { display: flex; flex-direction: column; align-items: center; width: 100%; gap: 12px; }
+        #current-time, #total-duration { font-size: 14px; color: #718096; font-weight: 600; }
+        .mini-controls-row { display: flex; align-items: center; justify-content: center; gap: 45px; width: 100%; }
+        .mini-controls-row button { background: none; border: none; color: #a0aec0; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.2s ease; }
+        .mini-controls-row button:active { transform: scale(0.9); color: #4a5568; }
+        .mini-controls-row .material-icons-round { font-size: 34px; }
+        .mini-controls-row button.play-trigger { color: #4a5568; }
+        .mini-controls-row button.play-trigger .material-icons-round { font-size: 44px; }
+    </style>
+</head>
+<body>
+
+    <div class="container" id="playlist-screen">
+        <div class="playlist-card">
+            <div class="playlist-header">
+                <a href="index.html" class="material-icons-round back-btn">arrow_back</a>
+                <h3 id="playlist-title">Nama Playlist</h3>
+            </div>
+            <div class="song-list" id="song-list-container"></div>
+        </div>
+    </div>
+
+    <!-- MINI PLAYER -->
+    <div class="mini-player hide" id="mini-player">
+        <div class="mini-song-info">
+            <h4 id="mini-title">Judul Lagu</h4>
+            <p id="mini-artist">Penyanyi</p>
+        </div>
+        <div class="progress-wrapper">
+            <input type="range" id="progress-bar" min="0" max="100" value="0" step="0.1" onchange="seekAudio()">
+            <span id="total-duration">0:00</span>
+        </div>
+        <div class="mini-bottom-section">
+            <span id="current-time">0:00</span>
+            <div class="mini-controls-row">
+                <button onclick="prevSong()"><span class="material-icons-round">skip_previous</span></button>
+                <button onclick="togglePlay()" class="play-trigger"><span class="material-icons-round" id="mini-play-icon">play_arrow</span></button>
+                <button onclick="nextSong()"><span class="material-icons-round">skip_next</span></button>
+            </div>
+        </div>
+    </div>
+
+    <audio id="audio-player"></audio>
+
+    <script>
+        // SEMUA PLAYLIST TERPUSAT DI SINI SEKARANG
+        const allPlaylists = {
+            // Silakan isi lagu ENHYPEN 1 kamu di sini nanti
+            enhypen1: [
+                { title: "Given-Taken", artist: "ENHYPEN", url: "https://cdn.jsdelivr.net/gh/dear-girletterz/Music-Player@main/Lagu/giventaken.mp3?v=2" },
+                { title: "Let Me In (20 CUBE)", artist: "ENHYPEN", url: "https://cdn.jsdelivr.net/gh/dear-girletterz/Music-Player@main/Lagu/letmein(20cube).mp3?v=2" },
+                { title: "10 Months", artist: "ENHYPEN", url: "https://cdn.jsdelivr.net/gh/dear-girletterz/Music-Player@main/Lagu/10months.mp3?v=2" }, 
+                { title: "Flicker", artist: "ENHYPEN", url: "https://cdn.jsdelivr.net/gh/dear-girletterz/Music-Player@main/Lagu/flicker.mp3?v=2" }, 
+                { title: "Drunk-Dazed", artist: "ENHYPEN", url: "https://cdn.jsdelivr.net/gh/dear-girletterz/Music-Player@main/Lagu/drunkdazed.mp3?v=2" },
+                { title: "Fever", artist: "ENHYPEN", url: "https://cdn.jsdelivr.net/gh/dear-girletterz/Music-Player@main/Lagu/feverr.mp3?v=2" }, 
+                { title: "Not For Sale", artist: "ENHYPEN", url: "https://cdn.jsdelivr.net/gh/dear-girletterz/Music-Player@main/Lagu/notforsalee.mp3?v=2" }, 
+                { title: "Mixed Up", artist: "ENHYPEN", url: "https://cdn.jsdelivr.net/gh/dear-girletterz/Music-Player@main/Lagu/mixedupp.mp3?v=2" }, 
+                { title: "Tamed-Dashed", artist: "ENHYPEN", url: "https://cdn.jsdelivr.net/gh/dear-girletterz/Music-Player@main/Lagu/tameddashedd.mp3?v=2" }, 
+                { title: "Upper Side Dreamin'", artist: "ENHYPEN", url: "https://cdn.jsdelivr.net/gh/dear-girletterz/Music-Player@main/Lagu/uppersidedreaminn.mp3?v=2" }, 
+                { title: "Just A Little Bit", artist: "ENHYPEN", url: "https://cdn.jsdelivr.net/gh/dear-girletterz/Music-Player@main/Lagu/justalittlebitt.mp3?v=2" }, 
+                { title: "Go Big or Go Home", artist: "ENHYPEN", url: "https://cdn.jsdelivr.net/gh/dear-girletterz/Music-Player@main/Lagu/gobigorgohome.mp3?v=2" },
+                { title: "Blockbuster (ft. Yeonjun)", artist: "ENHYPEN", url: "https://cdn.jsdelivr.net/gh/dear-girletterz/Music-Player@main/Lagu/blockbusterr.mp3?v=2" },
+                { title: "Attention, Please!", artist: "ENHYPEN", url: "https://cdn.jsdelivr.net/gh/dear-girletterz/Music-Player@main/Lagu/attentionpleasee.mp3?v=2" },
+                { title: "Blessed-Cursed", artist: "ENHYPEN", url: "https://cdn.jsdelivr.net/gh/dear-girletterz/Music-Player@main/Lagu/blessedcursed.mp3?v=2" }, 
+                { title: "Polaroid Love", artist: "ENHYPEN", url: "https://cdn.jsdelivr.net/gh/dear-girletterz/Music-Player@main/Lagu/polaroidlove.mp3?v=2" }, 
+                { title: "Future Perfect (Pass The MIC)", artist: "ENHYPEN", url: "https://cdn.jsdelivr.net/gh/dear-girletterz/Music-Player@main/Lagu/futureperfect.mp3?v=2" }, 
+                { title: "ParadoXXX Invasion", artist: "ENHYPEN", url: "https://cdn.jsdelivr.net/gh/dear-girletterz/Music-Player@main/Lagu/paradoxxxinvasion.mp3?v=2" }, 
+                { title: "TFW (That Feeling When)", artist: "ENHYPEN", url: "https://cdn.jsdelivr.net/gh/dear-girletterz/Music-Player@main/Lagu/tfw.mp3?v=2" }, 
+                { title: "Shout Out", artist: "ENHYPEN", url: "https://cdn.jsdelivr.net/gh/dear-girletterz/Music-Player@main/Lagu/shoutout.mp3?v=2" },
+                { title: "Fate (Intro)", artist: "ENHYPEN", url: "https://cdn.jsdelivr.net/gh/dear-girletterz/Music-Player@main/Lagu/fate.mp3?v=2" },
+                { title: "Bite Me", artist: "ENHYPEN", url: "https://cdn.jsdelivr.net/gh/dear-girletterz/Music-Player@main/Lagu/biteme.mp3?v=2" }, 
+                { title: "Sacrifice (Eat Me Up)", artist: "ENHYPEN", url: "https://cdn.jsdelivr.net/gh/dear-girletterz/Music-Player@main/Lagu/sacrifice.mp3?v=2" }, 
+                { title: "Chaconne", artist: "ENHYPEN", url: "https://cdn.jsdelivr.net/gh/dear-girletterz/Music-Player@main/Lagu/chaconne.mp3?v=2" }, 
+                { title: "Bills", artist: "ENHYPEN", url: "https://cdn.jsdelivr.net/gh/dear-girletterz/Music-Player@main/Lagu/bills.mp3?v=2" }, 
+                { title: "Karma", artist: "ENHYPEN", url: "https://cdn.jsdelivr.net/gh/dear-girletterz/Music-Player@main/Lagu/karma.mp3?v=2" },
+                { title: "Blossom", artist: "ENHYPEN", url: "https://cdn.jsdelivr.net/gh/dear-girletterz/Music-Player@main/Lagu/blossom.mp3?v=2" }, 
+                { title: "Sweet Venom", artist: "ENHYPEN", url: "https://cdn.jsdelivr.net/gh/dear-girletterz/Music-Player@main/Lagu/sweetvenom.mp3?v=2" }, 
+                { title: "Still Monster", artist: "ENHYPEN", url: "https://cdn.jsdelivr.net/gh/dear-girletterz/Music-Player@main/Lagu/stillmonster.mp3?v=2" }, 
+                { title: "Blind", artist: "ENHYPEN", url: "https://cdn.jsdelivr.net/gh/dear-girletterz/Music-Player@main/Lagu/blind.mp3?v=2" }, 
+                { title: "Orange Flower (You Complete Me)", artist: "ENHYPEN", url: "https://cdn.jsdelivr.net/gh/dear-girletterz/Music-Player@main/Lagu/orangeflower.mp3?v=2" }
+            ],
+          
+            enhypen2: [
+                { title: "One In A Billion", artist: "ENHYPEN", url: "https://cdn.jsdelivr.net/gh/dear-girletterz/Music-Player@main/Lagu/oneinabillion.mp3?v=2" }, 
+                { title: "Criminal Love", artist: "ENHYPEN", url: "https://cdn.jsdelivr.net/gh/dear-girletterz/Music-Player@main/Lagu/criminallove.mp3?v=2" }, 
+                { title: "Fatal Trouble", artist: "ENHYPEN", url: "https://cdn.jsdelivr.net/gh/dear-girletterz/Music-Player@main/Lagu/fataltrouble.mp3?v=2" }, 
+                { title: "Teeth", artist: "ENHYPEN", url: "https://cdn.jsdelivr.net/gh/dear-girletterz/Music-Player@main/Lagu/teeth.mp3?v=2" },
+                { title: "Lucifer", artist: "ENHYPEN", url: "https://cdn.jsdelivr.net/gh/dear-girletterz/Music-Player@main/Lagu/lucifer.mp3?v=2" }, 
+                { title: "Scream", artist: "ENHYPEN", url: "https://cdn.jsdelivr.net/gh/dear-girletterz/Music-Player@main/Lagu/scream.mp3?v=2" }, 
+                { title: "Moonstruck", artist: "ENHYPEN", url: "https://cdn.jsdelivr.net/gh/dear-girletterz/Music-Player@main/Lagu/moonstruck.mp3?v=2" }, 
+                { title: "XO (Only If You Say Yes)", artist: "ENHYPEN", url: "https://cdn.jsdelivr.net/gh/dear-girletterz/Music-Player@main/Lagu/xo.mp3?v=2" }, 
+                { title: "Your Eyes Only", artist: "ENHYPEN", url: "https://cdn.jsdelivr.net/gh/dear-girletterz/Music-Player@main/Lagu/youreyesonly.mp3?v=2" }, 
+                { title: "Hundred Broken Hearts", artist: "ENHYPEN", url: "https://cdn.jsdelivr.net/gh/dear-girletterz/Music-Player@main/Lagu/hundredbrokenhearts.mp3?v=2" },
+                { title: "Brought The Heat Back", artist: "ENHYPEN", url: "https://cdn.jsdelivr.net/gh/dear-girletterz/Music-Player@main/Lagu/broughttheheatback.mp3?v=2" }, 
+                { title: "Paranormal", artist: "ENHYPEN", url: "https://cdn.jsdelivr.net/gh/dear-girletterz/Music-Player@main/Lagu/paranormal.mp3?v=2" },
+                { title: "Royalty", artist: "ENHYPEN", url: "https://cdn.jsdelivr.net/gh/dear-girletterz/Music-Player@main/Lagu/royalty.mp3?v=2" }, 
+                { title: "Highway 1009", artist: "ENHYPEN", url: "https://cdn.jsdelivr.net/gh/dear-girletterz/Music-Player@main/Lagu/highway.mp3?v=2" }, 
+                { title: "Daydream", artist: "ENHYPEN", url: "https://cdn.jsdelivr.net/gh/dear-girletterz/Music-Player@main/Lagu/daydream.mp3?v=2" }, 
+                { title: "No Doubt", artist: "ENHYPEN", url: "https://cdn.jsdelivr.net/gh/dear-girletterz/Music-Player@main/Lagu/nodoubt.mp3?v=2" },
+                { title: "Flashover", artist: "ENHYPEN", url: "https://cdn.jsdelivr.net/gh/dear-girletterz/Music-Player@main/Lagu/flashover.mp3?v=2" },
+                { title: "Bad Desire (With or Without You)", artist: "ENHYPEN", url: "https://cdn.jsdelivr.net/gh/dear-girletterz/Music-Player@main/Lagu/baddesire.mp3?v=2" }, 
+                { title: "Loose", artist: "ENHYPEN", url: "https://cdn.jsdelivr.net/gh/dear-girletterz/Music-Player@main/Lagu/loose.mp3?v=2" }, 
+                { title: "Outside", artist: "ENHYPEN", url: "https://cdn.jsdelivr.net/gh/dear-girletterz/Music-Player@main/Lagu/outside.mp3?v=2" }, 
+                { title: "Helium", artist: "ENHYPEN", url: "https://cdn.jsdelivr.net/gh/dear-girletterz/Music-Player@main/Lagu/helium.mp3?v=2" }, 
+                { title: "Too Close", artist: "ENHYPEN", url: "https://cdn.jsdelivr.net/gh/dear-girletterz/Music-Player@main/Lagu/tooclose.mp3?v=2" }, 
+                { title: "Knife", artist: "ENHYPEN", url: "https://cdn.jsdelivr.net/gh/dear-girletterz/Music-Player@main/Lagu/knife.mp3?v=2" }, 
+                { title: "Stealer", artist: "ENHYPEN", url: "https://cdn.jsdelivr.net/gh/dear-girletterz/Music-Player@main/Lagu/stealer.mp3?v=2" }, 
+                { title: "Big Girls Don't Cry", artist: "ENHYPEN", url: "https://cdn.jsdelivr.net/gh/dear-girletterz/Music-Player@main/Lagu/bgdc.mp3?v=2" }, 
+                { title: "No Way Back (ft. So!YoON!)", artist: "ENHYPEN", url: "https://cdn.jsdelivr.net/gh/dear-girletterz/Music-Player@main/Lagu/nowayback.mp3?v=2" },
+                { title: "Lost Island", artist: "ENHYPEN", url: "https://cdn.jsdelivr.net/gh/dear-girletterz/Music-Player@main/Lagu/lostisland.mp3?v=2" }, 
+                { title: "Sleep Tight", artist: "ENHYPEN", url: "https://cdn.jsdelivr.net/gh/dear-girletterz/Music-Player@main/Lagu/sleeptight.mp3?v=2" }, 
+                { title: "Billy Poco (w/Tayo)", artist: "ENHYPEN", url: "https://cdn.jsdelivr.net/gh/dear-girletterz/Music-Player@main/Lagu/billypoco.mp3?v=2" }, 
+                { title: "Hey Tayo (w/Tayo)", artist: "ENHYPEN", url: "https://cdn.jsdelivr.net/gh/dear-girletterz/Music-Player@main/Lagu/heytayo.mp3?v=2" }, 
+                { title: "Dear Me (Jungwon)", artist: "ENHYPEN", url: "https://cdn.jsdelivr.net/gh/dear-girletterz/Music-Player@main/Lagu/dearme.mp3?v=2" }, 
+                { title: "Into The I-LAND", artist: "ENHYPEN", url: "https://cdn.jsdelivr.net/gh/dear-girletterz/Music-Player@main/Lagu/intotheiland.mp3?v=2" }, 
+                { title: "I&Credible (I-LAND)", artist: "ENHYPEN", url: "https://cdn.jsdelivr.net/gh/dear-girletterz/Music-Player@main/Lagu/incredible.mp3?v=2" }, 
+                { title: "Calling (Run To You)", artist: "ENHYPEN", url: "https://cdn.jsdelivr.net/gh/dear-girletterz/Music-Player@main/Lagu/calling.mp3?v=2" }
+            ],
+           
+            hearts2hearts: [
+                { title: "The Chase", artist: "HEARTS2HEARTS", url: "https://cdn.jsdelivr.net/gh/dear-girletterz/Music-Player@main/Lagu2/thechase.mp3?v=2" }, 
+                { title: "Butterflies", artist: "HEARTS2HEARTS", url: "https://cdn.jsdelivr.net/gh/dear-girletterz/Music-Player@main/Lagu2/butterflies.mp3?v=2" }, 
+                { title: "Style", artist: "HEARTS2HEARTS", url: "https://cdn.jsdelivr.net/gh/dear-girletterz/Music-Player@main/Lagu2/style.mp3?v=2" }, 
+                { title: "Focus", artist: "HEARTS2HEARTS", url: "https://cdn.jsdelivr.net/gh/dear-girletterz/Music-Player@main/Lagu2/focus.mp3?v=2" }, 
+                { title: "Apple Pie", artist: "HEARTS2HEARTS", url: "https://cdn.jsdelivr.net/gh/dear-girletterz/Music-Player@main/Lagu2/applepie.mp3?v=2" }, 
+                { title: "Pretty Please", artist: "HEARTS2HEARTS", url: "https://cdn.jsdelivr.net/gh/dear-girletterz/Music-Player@main/Lagu2/prettyplease.mp3?v=2" }, 
+                { title: "Flutter", artist: "HEARTS2HEARTS", url: "https://cdn.jsdelivr.net/gh/dear-girletterz/Music-Player@main/Lagu2/flutter.mp3?v=2" }, 
+                { title: "Blue Moon", artist: "HEARTS2HEARTS", url: "https://cdn.jsdelivr.net/gh/dear-girletterz/Music-Player@main/Lagu2/bluemoon.mp3?v=2" }, 
+                { title: "Rude!", artist: "HEARTS2HEARTS", url: "https://cdn.jsdelivr.net/gh/dear-girletterz/Music-Player@main/Lagu2/rude.mp3?v=2" }
+            ],
+            cortis: [
+                { title: "What You Want", artist: "CORTIS", url: "https://cdn.jsdelivr.net/gh/dear-girletterz/Music-Player@main/Lagu3/wyw.mp3?v=2" }, 
+                { title: "GO!", artist: "CORTIS", url: "https://cdn.jsdelivr.net/gh/dear-girletterz/Music-Player@main/Lagu3/go.mp3?v=2" }, 
+                { title: "FaSHioN", artist: "CORTIS", url: "https://cdn.jsdelivr.net/gh/dear-girletterz/Music-Player@main/Lagu3/fashion.mp3?v=2" }, 
+                { title: "JoyRide", artist: "CORTIS", url: "https://cdn.jsdelivr.net/gh/dear-girletterz/Music-Player@main/Lagu3/joyride.mp3?v=2" }, 
+                { title: "Lullaby", artist: "CORTIS", url: "https://cdn.jsdelivr.net/gh/dear-girletterz/Music-Player@main/Lagu3/lullaby.mp3?v=2" }, 
+                { title: "Mention Me (OST GOAT)", artist: "CORTIS", url: "https://cdn.jsdelivr.net/gh/dear-girletterz/Music-Player@main/Lagu3/mentionme.mp3?v=2" }, 
+                { title: "YoungCreatorCrew", artist: "CORTIS", url: "https://cdn.jsdelivr.net/gh/dear-girletterz/Music-Player@main/Lagu3/ycc.mp3?v=2" }, 
+                { title: "REDRED", artist: "CORTIS", url: "https://cdn.jsdelivr.net/gh/dear-girletterz/Music-Player@main/Lagu3/redred.mp3?v=2" }, 
+                { title: "TNT", artist: "CORTIS", url: "https://cdn.jsdelivr.net/gh/dear-girletterz/Music-Player@main/Lagu3/tnt.mp3?v=2" }, 
+                { title: "Acai", artist: "CORTIS", url: "https://cdn.jsdelivr.net/gh/dear-girletterz/Music-Player@main/Lagu3/acai.mp3?v=2" }, 
+                { title: "Wassup", artist: "CORTIS", url: "https://cdn.jsdelivr.net/gh/dear-girletterz/Music-Player@main/Lagu3/wassup.mp3?v=2" }, 
+                { title: "Blue Lips", artist: "CORTIS", url: "https://cdn.jsdelivr.net/gh/dear-girletterz/Music-Player@main/Lagu3/bluelips.mp3?v=2" }
+            ],
+            babymonster: [
+                { title: "Dream", artist: "BABYMONSTER", url: "https://cdn.jsdelivr.net/gh/dear-girletterz/Music-Player@main/Lagu4/dream.mp3?v=2" },
+                { title: "Batter Up", artist: "BABYMONSTER", url: "https://cdn.jsdelivr.net/gh/dear-girletterz/Music-Player@main/Lagu4/batterup.mp3?v=2" }, 
+                { title: "Stuck In The Middle", artist: "BABYMONSTER", url: "https://cdn.jsdelivr.net/gh/dear-girletterz/Music-Player@main/Lagu5/stuckinthemiddle.mp3?v=2" }, 
+                { title: "Sheesh", artist: "BABYMONSTER", url: "https://cdn.jsdelivr.net/gh/dear-girletterz/Music-Player@main/Lagu4/sheesh.mp3?v=2" }, 
+                { title: "Like That", artist: "BABYMONSTER", url: "https://cdn.jsdelivr.net/gh/dear-girletterz/Music-Player@main/Lagu4/forever.mp3?v=2" }, 
+                { title: "Clik Clak", artist: "BABYMONSTER", url: "https://cdn.jsdelivr.net/gh/dear-girletterz/Music-Player@main/Lagu4/clikclak.mp3?v=2" },
+                { title: "Drip", artist: "BABYMONSTER", url: "https://cdn.jsdelivr.net/gh/dear-girletterz/Music-Player@main/Lagu4/drip.mp3?v=2" },
+                { title: "Love, Maybe", artist: "BABYMONSTER", url: "https://cdn.jsdelivr.net/gh/dear-girletterz/Music-Player@main/Lagu4/lovemaybe.mp3?v=2" }, 
+                { title: "Really Like You", artist: "BABYMONSTER", url: "https://cdn.jsdelivr.net/gh/dear-girletterz/Music-Player@main/Lagu4/reallylikeyou.mp3?v=2" }, 
+                { title: "Billionaire", artist: "BABYMONSTER", url: "https://cdn.jsdelivr.net/gh/dear-girletterz/Music-Player@main/Lagu4/billionaire.mp3?v=2" }, 
+                { title: "Love In My Heart", artist: "BABYMONSTER", url: "https://cdn.jsdelivr.net/gh/dear-girletterz/Music-Player@main/Lagu4/loveinmyheartt.mp3?v=2" }, 
+                { title: "Woke Up In Tokyo (Asa & Ruka)", artist: "BABYMONSTER", url: "https://cdn.jsdelivr.net/gh/dear-girletterz/Music-Player@main/Lagu4/wokeupintokyo.mp3?v=2" }, 
+                { title: "Ghost", artist: "BABYMONSTER", url: "https://cdn.jsdelivr.net/gh/dear-girletterz/Music-Player@main/Lagu4/ghost.mp3?v=2" }, 
+                { title: "Hot Sauce", artist: "BABYMONSTER", url: "https://cdn.jsdelivr.net/gh/dear-girletterz/Music-Player@main/Lagu4/hotsauce.mp3?v=2" }, 
+                { title: "We Go Up", artist: "BABYMONSTER", url: "https://cdn.jsdelivr.net/gh/dear-girletterz/Music-Player@main/Lagu4/wegoup.mp3?v=2" }, 
+                { title: "Psycho", artist: "BABYMONSTER", url: "https://cdn.jsdelivr.net/gh/dear-girletterz/Music-Player@main/Lagu4/pshyo.mp3?v=2" }, 
+                { title: "Supa Dupa Luv", artist: "BABYMONSTER", url: "https://cdn.jsdelivr.net/gh/dear-girletterz/Music-Player@main/Lagu4/supadupaluv.mp3?v=2" }, 
+                { title: "Wild", artist: "BABYMONSTER", url: "https://cdn.jsdelivr.net/gh/dear-girletterz/Music-Player@main/Lagu4/wild.mp3?v=2" }, 
+                { title: "Choom", artist: "BABYMONSTER", url: "https://cdn.jsdelivr.net/gh/dear-girletterz/Music-Player@main/Lagu4/choom.mp3?v=2" },
+                { title: "Locked In", artist: "BABYMONSTER", url: "https://cdn.jsdelivr.net/gh/dear-girletterz/Music-Player@main/Lagu4/lockedin.mp3?v=2" }
+            ],
+            lngshot: [
+                { title: "Moonwalkin'", artist: "LNGSHOT", url: "https://cdn.jsdelivr.net/gh/dear-girletterz/Music-Player@main/Lagu5/moonwalkin.mp3?v=2" }, 
+                { title: "Saucin'", artist: "LNGSHOT", url: "https://cdn.jsdelivr.net/gh/dear-girletterz/Music-Player@main/Lagu5/saucin.mp3?v=2" }, 
+                { title: "Backseat", artist: "LNGSHOT", url: "https://cdn.jsdelivr.net/gh/dear-girletterz/Music-Player@main/Lagu5/backseet.mp3?v=2" }, 
+                { title: "FaceTime", artist: "LNGSHOT", url: "https://cdn.jsdelivr.net/gh/dear-girletterz/Music-Player@main/Lagu5/facetime.mp3?v=2" }, 
+                { title: "Never Let Go", artist: "LNGSHOT", url: "https://cdn.jsdelivr.net/gh/dear-girletterz/Music-Player@main/Lagu5/neverletgo.mp3?v=2" },
+                { title: "Fire With Fire", artist: "LNGSHOT", url: "https://cdn.jsdelivr.net/gh/dear-girletterz/Music-Player@main/Lagu5/firewithfire.mp3?v=2" }, 
+                { title: "Are You Ready", artist: "LNGSHOT", url: "https://cdn.jsdelivr.net/gh/dear-girletterz/Music-Player@main/Lagu5/areyouready.mp3?v=2" },
+                { title: "Trust Myself (Ryul)", artist: "LNGSHOT", url: "https://cdn.jsdelivr.net/gh/dear-girletterz/Music-Player@main/Lagu5/trustmyself.mp3?v=2" },  
+                { title: "Thinking (Ryul & Louis)", artist: "LNGSHOT", url: "https://cdn.jsdelivr.net/gh/dear-girletterz/Music-Player@main/Lagu5/thinking.mp3?v=2" },  
+                { title: "All Good (Woojin & Ryul)", artist: "LNGSHOT", url: "https://cdn.jsdelivr.net/gh/dear-girletterz/Music-Player@main/Lagu5/allgood.mp3?v=2" }, 
+                { title: "Ejeh (Woojin)", artist: "LNGSHOT", url: "https://cdn.jsdelivr.net/gh/dear-girletterz/Music-Player@main/Lagu5/ejeh.mp3?v=2" }, 
+                { title: "Next 2 U (Ohyul & Louis)", artist: "LNGSHOT", url: "https://cdn.jsdelivr.net/gh/dear-girletterz/Music-Player@main/Lagu5/nexttou.mp3?v=2" }, 
+                { title: "My Side (Woojin & Louis)", artist: "LNGSHOT", url: "https://cdn.jsdelivr.net/gh/dear-girletterz/Music-Player@main/Lagu5/myside.mp3?v=2" }, 
+                { title: "Good Girls (Louis)", artist: "LNGSHOT", url: "https://cdn.jsdelivr.net/gh/dear-girletterz/Music-Player@main/Lagu5/goodgirls.mp3?v=2" }, 
+                { title: "Boo Thang (Woojin)", artist: "LNGSHOT", url: "https://cdn.jsdelivr.net/gh/dear-girletterz/Music-Player@main/Lagu5/boothang.mp3?v=2" }, 
+                { title: "Summer Eyes (Ohyul)", artist: "LNGSHOT", url: "https://cdn.jsdelivr.net/gh/dear-girletterz/Music-Player@main/Lagu5/summereyes.mp3?v=2" }, 
+                { title: "For Us (Ryul)", artist: "LNGSHOT", url: "https://cdn.jsdelivr.net/gh/dear-girletterz/Music-Player@main/Lagu5/forus.mp3?v=2" }, 
+                { title: "Vanilla Days", artist: "LNGSHOT", url: "https://cdn.jsdelivr.net/gh/dear-girletterz/Music-Player@main/Lagu5/vanilladays.mp3?v=2" }, 
+                { title: "4SHO 4SHO", artist: "LNGSHOT", url: "https://cdn.jsdelivr.net/gh/dear-girletterz/Music-Player@main/Lagu5/foursho.mp3?v=2" }, 
+                { title: "YEAH! YEAH!", artist: "LNGSHOT", url: "https://cdn.jsdelivr.net/gh/dear-girletterz/Music-Player@main/Lagu5/yeahyeah.mp3?v=2" }, 
+                { title: "No Hi, No Hey", artist: "LNGSHOT", url: "https://cdn.jsdelivr.net/gh/dear-girletterz/Music-Player@main/Lagu5/nohinohey.mp3?v=2" }, 
+                { title: "Run It Up", artist: "LNGSHOT", url: "https://cdn.jsdelivr.net/gh/dear-girletterz/Music-Player@main/Lagu5/runitup.mp3?v=2" }, 
+                { title: "Gukbbong", artist: "LNGSHOT", url: "https://cdn.jsdelivr.net/gh/dear-girletterz/Music-Player@main/Lagu5/gukbbong.mp3?v=2" }, 
+                { title: "Moya", artist: "LNGSHOT", url: "https://cdn.jsdelivr.net/gh/dear-girletterz/Music-Player@main/Lagu5/moya.mp3?v=2" }, 
+                { title: "The Purge 4Shomix", artist: "LNGSHOT", url: "https://cdn.jsdelivr.net/gh/dear-girletterz/Music-Player@main/Lagu5/thepurge.mp3?v=2" }, 
+                { title: "Public Enemy 4Shomix", artist: "LNGSHOT", url: "https://cdn.jsdelivr.net/gh/dear-girletterz/Music-Player@main/Lagu5/publicenemy.mp3?v=2" }
+            ],
+            illit: [
+                { title: "Magnetic", artist: "ILLIT", url: "https://cdn.jsdelivr.net/gh/dear-girletterz/Music-Player@main/Lagu6/magnetic.mp3?v=2" }, 
+                { title: "My World", artist: "ILLIT", url: "https://cdn.jsdelivr.net/gh/dear-girletterz/Music-Player@main/Lagu6/myworld.mp3?v=2" },
+                { title: "Midnight Fiction", artist: "ILLIT", url: "https://cdn.jsdelivr.net/gh/dear-girletterz/Music-Player@main/Lagu6/midnightfiction.mp3?v=2" },  
+                { title: "Lucky Girl Syndrome", artist: "ILLIT", url: "https://cdn.jsdelivr.net/gh/dear-girletterz/Music-Player@main/Lagu6/luckygirlsyndrome.mp3?v=2" }, 
+                { title: "I'll Like You", artist: "ILLIT", url: "https://cdn.jsdelivr.net/gh/dear-girletterz/Music-Player@main/Lagu6/illlikeyou.mp3?v=2" }, 
+                { title: "Cherish (My Love)", artist: "ILLIT", url: "https://cdn.jsdelivr.net/gh/dear-girletterz/Music-Player@main/Lagu6/cherish.mp3?v=2" }, 
+                { title: "IYKYK (If You Know You Know)", artist: "ILLIT", url: "https://cdn.jsdelivr.net/gh/dear-girletterz/Music-Player@main/Lagu6/iykyk.mp3?v=2" }, 
+                { title: "Pimple", artist: "ILLIT", url: "https://cdn.jsdelivr.net/gh/dear-girletterz/Music-Player@main/Lagu6/pimple.mp3?v=2" }, 
+                { title: "Tick-Tack", artist: "ILLIT", url: "https://cdn.jsdelivr.net/gh/dear-girletterz/Music-Player@main/Lagu6/ticktack.mp3?v=2" },
+                { title: "Almond Chocolate", artist: "ILLIT", url: "https://cdn.jsdelivr.net/gh/dear-girletterz/Music-Player@main/Lagu6/almondchocolate.mp3?v=2" },  
+                { title: "See U Tonight (Kylie Cantrall ft. Yunah & Minju)", artist: "ILLIT", url: "https://cdn.jsdelivr.net/gh/dear-girletterz/Music-Player@main/Lagu6/seeutonight.mp3?v=2" }, 
+                { title: "The Look In Your Eyes (Wonhee)", artist: "ILLIT", url: "https://cdn.jsdelivr.net/gh/dear-girletterz/Music-Player@main/Lagu6/thelookinyoureyes.mp3?v=2" }, 
+                { title: "Little Monster", artist: "ILLIT", url: "https://cdn.jsdelivr.net/gh/dear-girletterz/Music-Player@main/Lagu6/littlemonster.mp3?v=2" },
+                { title: "Billyeoon Goyangi (Do The Dance)", artist: "ILLIT", url: "https://cdn.jsdelivr.net/gh/dear-girletterz/Music-Player@main/Lagu6/billyeoongoyangi.mp3?v=2" }, 
+                { title: "Jellyous", artist: "ILLIT", url: "https://cdn.jsdelivr.net/gh/dear-girletterz/Music-Player@main/Lagu6/jellyous.mp3?v=2" }, 
+                { title: "Oops!", artist: "ILLIT", url: "https://cdn.jsdelivr.net/gh/dear-girletterz/Music-Player@main/Lagu6/oops.mp3?v=2" }, 
+                { title: "Bamsopoong", artist: "ILLIT", url: "https://cdn.jsdelivr.net/gh/dear-girletterz/Music-Player@main/Lagu6/bamsopoong.mp3?v=2" }, 
+                { title: "Topping", artist: "ILLIT", url: "https://cdn.jsdelivr.net/gh/dear-girletterz/Music-Player@main/Lagu6/topping.mp3?v=2" }, 
+                { title: "Toki Yo Tomare", artist: "ILLIT", url: "https://cdn.jsdelivr.net/gh/dear-girletterz/Music-Player@main/Lagu6/tokiyotomare.mp3?v=2" }, 
+                { title: "Secret Quest", artist: "ILLIT", url: "https://cdn.jsdelivr.net/gh/dear-girletterz/Music-Player@main/Lagu6/secretquest.mp3?v=2" }, 
+                { title: "Love Smile (OST Last Summer w/Minju & Yunah)", artist: "ILLIT", url: "https://cdn.jsdelivr.net/gh/dear-girletterz/Music-Player@main/Lagu6/lovesmile.mp3?v=2" }, 
+                { title: "Not Cute Anymore", artist: "ILLIT", url: "https://cdn.jsdelivr.net/gh/dear-girletterz/Music-Player@main/Lagu6/notcuteanymore.mp3?v=2" }, 
+                { title: "Not Me", artist: "ILLIT", url: "https://cdn.jsdelivr.net/gh/dear-girletterz/Music-Player@main/Lagu6/notme.mp3?v=2" }, 
+                { title: "All For You", artist: "ILLIT", url: "https://cdn.jsdelivr.net/gh/dear-girletterz/Music-Player@main/Lagu6/allforyou.mp3?v=2" }, 
+                { title: "Sunday Morning", artist: "ILLIT", url: "https://cdn.jsdelivr.net/gh/dear-girletterz/Music-Player@main/Lagu6/sundaymorning.mp3?v=2" }, 
+                { title: "Bubee", artist: "ILLIT", url: "https://cdn.jsdelivr.net/gh/dear-girletterz/Music-Player@main/Lagu6/bubee.mp3?v=2" }, 
+                { title: "GRWM (Get Ready With Me)", artist: "ILLIT", url: "https://cdn.jsdelivr.net/gh/dear-girletterz/Music-Player@main/Lagu6/grwm.mp3?v=2" }, 
+                { title: "It's Me", artist: "ILLIT", url: "https://cdn.jsdelivr.net/gh/dear-girletterz/Music-Player@main/Lagu6/itsme.mp3?v=2" }, 
+                { title: "Paw, Paw!", artist: "ILLIT", url: "https://cdn.jsdelivr.net/gh/dear-girletterz/Music-Player@main/Lagu6/pawpaw.mp3?v=2" }, 
+                { title: "Mamihlapinatapai", artist: "ILLIT", url: "https://cdn.jsdelivr.net/gh/dear-girletterz/Music-Player@main/Lagu6/mamihlapinatapai.mp3?v=2" }, 
+                { title: "Love, Older You", artist: "ILLIT", url: "https://cdn.jsdelivr.net/gh/dear-girletterz/Music-Player@main/Lagu6/loveolderyou.mp3?v=2" } 
+            ],
+            bts: [], blackpink: [], txt: [], aespa: [], nct: [], treasure: [], lainnya: []
+        };
+
+        let currentPlaylist = [];
+        let currentPlaylistName = "";
+        let currentIndex = 0;
+        const audio = document.getElementById('audio-player');
+        let isPlaying = false;
+
+        // Ambil info grup dari parameter URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const grupAktif = urlParams.get('grup') || 'lainnya';
+
+        function initPlaylist() {
+            currentPlaylistName = grupAktif.toLowerCase();
+            currentPlaylist = allPlaylists[currentPlaylistName] || [];
+            
+            // Mengubah teks judul di bagian atas pemutar musik
+            let displayTitle = currentPlaylistName.toUpperCase();
+            if(displayTitle === "ENHYPEN1") displayTitle = "ENHYPEN 1";
+            if(displayTitle === "ENHYPEN2") displayTitle = "ENHYPEN 2";
+            document.getElementById('playlist-title').innerText = displayTitle;
+            
+            renderSongList();
+            setDynamicBackground(currentPlaylistName);
+        }
+
+        // WARNA BACKGROUND DYNAMIC PLAYER 
+        function setDynamicBackground(folderLower) {
+            if (['enhypen1', 'enhypen2'].includes(folderLower)) {
+                document.body.style.background = "linear-gradient(135deg, #e0f2fe 0%, #f8fafc 100%)"; // Biru
+            } else if (['hearts2hearts', 'blackpink'].includes(folderLower)) {
+                document.body.style.background = "linear-gradient(135deg, #fce7f3 0%, #f8fafc 100%)"; // Pink
+            } else if (['babymonster', 'txt'].includes(folderLower)) {
+                document.body.style.background = "linear-gradient(135deg, #fee2e2 0%, #f8fafc 100%)"; // Merah
+            } else if (['cortis', 'nct'].includes(folderLower)) {
+                document.body.style.background = "linear-gradient(135deg, #dcfce7 0%, #f8fafc 100%)"; // Hijau
+            } else if (['aespa', 'lngshot'].includes(folderLower)) {
+                document.body.style.background = "linear-gradient(135deg, #e5e7eb 0%, #f8fafc 100%)"; // Abu
+            } else if (['bts', 'illit'].includes(folderLower)) {
+                document.body.style.background = "linear-gradient(135deg, #f3e8ff 0%, #f8fafc 100%)"; // Ungu
+            } else {
+                // TREASURE & LAINNYA masuk ke sini (Putih/Abu Minimalis)
+                document.body.style.background = "linear-gradient(135deg, #f1f5f9 0%, #f8fafc 100%)"; 
+            }
+        }
+
+        function renderSongList() {
+            const listContainer = document.getElementById('song-list-container');
+            listContainer.innerHTML = ""; 
+
+            if (currentPlaylist.length === 0) {
+                listContainer.innerHTML = `<p class="empty-msg">Belum ada lagu di folder ini ✨</p>`;
+                return;
+            }
+
+            currentPlaylist.forEach((song, index) => {
+                const songItem = document.createElement('div');
+                songItem.className = `song-item ${currentIndex === index && isPlaying ? 'active-song' : ''}`;
+                songItem.onclick = () => selectSong(index);
+                songItem.innerHTML = `
+                    <div class="song-num">${index + 1}</div>
+                    <div class="song-meta">
+                        <span class="s-title">${song.title}</span>
+                        <span class="s-artist">${song.artist || 'Unknown'}</span>
+                    </div>
+                    <span class="material-icons-round play-icon-list">play_circle_filled</span>
+                `;
+                listContainer.appendChild(songItem);
+            });
+        }
+
+        function selectSong(index) {
+            currentIndex = index;
+            const song = currentPlaylist[currentIndex];
+            audio.src = song.url;
+            audio.load(); 
+            audio.play().then(() => {
+                isPlaying = true;
+                updateUI();
+                setupNotification(song);
+            }).catch(err => console.log("Gagal memutar:", err));
+        }
+
+        function togglePlay() {
+            if (!audio.src) return;
+            if (isPlaying) { audio.pause(); isPlaying = false; }
+            else { audio.play(); isPlaying = true; }
+            updateUI();
+        }
+
+        function nextSong() {
+            if (currentPlaylist.length === 0) return;
+            currentIndex = (currentIndex + 1) % currentPlaylist.length;
+            selectSong(currentIndex);
+        }
+                
+        function prevSong() {
+            if (currentPlaylist.length === 0) return;
+            currentIndex = (currentIndex - 1 + currentPlaylist.length) % currentPlaylist.length;
+            selectSong(currentIndex);
+        }
+
+        function updateUI() {
+            const song = currentPlaylist[currentIndex];
+            if (!song) return;
+
+            const miniPlayer = document.getElementById('mini-player');
+            if (miniPlayer) {
+                miniPlayer.classList.remove('hide');
+                document.getElementById('mini-title').innerText = song.title;
+                document.getElementById('mini-artist').innerText = song.artist;
+                document.getElementById('mini-play-icon').innerText = isPlaying ? "pause" : "play_arrow";
+
+                miniPlayer.className = "mini-player"; 
+                if (['enhypen1', 'enhypen2'].includes(currentPlaylistName)) miniPlayer.style.background = "linear-gradient(135deg, #f0f7ff, #e1effe)";
+                else if (['hearts2hearts', 'blackpink'].includes(currentPlaylistName)) miniPlayer.style.background = "linear-gradient(135deg, #fff5f7, #fde8ec)";
+                else if (['babymonster', 'txt'].includes(currentPlaylistName)) miniPlayer.style.background = "linear-gradient(135deg, #fff5f5, #fde8e8)";
+                else if (['cortis', 'nct'].includes(currentPlaylistName)) miniPlayer.style.background = "linear-gradient(135deg, #f3faf4, #e3f7e6)";
+                else if (['aespa', 'lngshot'].includes(currentPlaylistName)) miniPlayer.style.background = "linear-gradient(135deg, #f3f4f6, #e5e7eb)";
+                else if (['bts', 'illit'].includes(currentPlaylistName)) miniPlayer.style.background = "linear-gradient(135deg, #faf5ff, #f3e8ff)";
+                else miniPlayer.style.background = "linear-gradient(135deg, #fafafa, #f1f1f1)"; // TREASURE & LAINNYA
+            }
+
+            const items = document.querySelectorAll('.song-item');
+            items.forEach((item, idx) => {
+                if (idx === currentIndex && isPlaying) item.classList.add('active-song');
+                else item.classList.remove('active-song');
+            });
+        }
+
+        function setupNotification(song) {
+            if ('mediaSession' in navigator) {
+                navigator.mediaSession.metadata = new MediaMetadata({
+                    title: song.title, artist: song.artist, album: currentPlaylistName.toUpperCase()
+                });
+                navigator.mediaSession.setActionHandler('play', () => togglePlay());
+                navigator.mediaSession.setActionHandler('pause', () => togglePlay());
+                navigator.mediaSession.setActionHandler('nexttrack', () => nextSong());
+                navigator.mediaSession.setActionHandler('previoustrack', () => prevSong());
+            }
+        }
+
+        audio.onended = () => { nextSong(); };
+        const progressBar = document.getElementById('progress-bar');
+        const currentTimeEl = document.getElementById('current-time');
+        const totalDurationEl = document.getElementById('total-duration');
+
+        function formatTime(seconds) {
+            if (isNaN(seconds)) return "0:00";
+            const min = Math.floor(seconds / 60);
+            const sec = Math.floor(seconds % 60);
+            return `${min}:${sec < 10 ? '0' : ''}${sec}`;
+        }
+
+        audio.ontimeupdate = () => {
+            if (audio.duration) {
+                progressBar.value = (audio.currentTime / audio.duration) * 100;
+                currentTimeEl.innerText = formatTime(audio.currentTime);
+            }
+        };
+
+        audio.onloadedmetadata = () => {
+            totalDurationEl.innerText = formatTime(audio.duration);
+        };
+
+        function seekAudio() {
+            if (audio.duration) {
+                audio.currentTime = (progressBar.value / 100) * audio.duration;
+            }
+        }
+
+        initPlaylist();
+    </script>
+</body>
+</html>
