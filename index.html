@@ -590,18 +590,22 @@
         let isPlaying = false;
 
         
-    function openPlaylist(folderName) {
+    let songsDisplayed = 20; // Mengatur batas awal lagu yang ditampilkan
+
+function openPlaylist(folderName) {
     const folderLower = folderName.toLowerCase(); 
     currentPlaylistName = folderLower;
     currentPlaylist = allPlaylists[folderLower] || allPlaylists[folderName] || [];
     
     document.getElementById('playlist-title').innerText = folderName.toUpperCase();
-    const listContainer = document.getElementById('song-list-container');
     
-    // 1. Kosongkan dulu daftar lagu lama agar perpindahan halaman terasa ringan
-    listContainer.innerHTML = ""; 
+    // Reset jumlah lagu yang ditampilkan setiap kali folder baru dibuka
+    songsDisplayed = 20; 
 
-    // 2. Efek transisi warna background sesuai nama folder
+    // Panggil fungsi pembantu untuk merender lagu secara bertahap
+    renderSongList();
+
+    // Logika ganti background warna (tetap sama seperti punyamu)
     if (['enhypen', 'treasure'].includes(folderLower)) {
         document.body.style.background = "linear-gradient(135deg, #e0f2fe 0%, #f8fafc 100%)"; 
     } else if (['hearts2hearts', 'blackpink'].includes(folderLower)) {
@@ -618,38 +622,53 @@
         document.body.style.background = "linear-gradient(135deg, #f1f5f9 0%, #f8fafc 100%)"; 
     }
 
-    // 3. Sembunyikan layar menu utama dan munculkan layar playlist terlebih dahulu
     document.getElementById('folder-screen').classList.add('hide');
     document.getElementById('playlist-screen').classList.remove('hide');
-
-    // 4. Beri jeda 200 milidetik agar animasi selesai, baru muat lagunya sekaligus
-    setTimeout(() => {
-        if (currentPlaylist.length === 0) {
-            listContainer.innerHTML = `<p class="empty-msg">Belum ada lagu di folder ini ✨</p>`;
-        } else {
-            // Menggunakan DocumentFragment agar browser HP hanya menggambar ulang layar SATU kali saja
-            const fragment = document.createDocumentFragment();
-            
-            currentPlaylist.forEach((song, index) => {
-                const songItem = document.createElement('div');
-                songItem.className = `song-item ${currentIndex === index && currentPlaylistName === folderLower && isPlaying ? 'active-song' : ''}`;
-                songItem.onclick = () => selectSong(index);
-                songItem.innerHTML = `
-                    <div class="song-num">${index + 1}</div>
-                    <div class="song-meta">
-                        <span class="s-title">${song.title}</span>
-                        <span class="s-artist">${song.artist || 'Unknown'}</span>
-                    </div>
-                    <span class="material-icons-round play-icon-list">play_circle_filled</span>
-                `;
-                fragment.appendChild(songItem);
-            });
-            
-            // Masukkan semua lagu sekaligus ke dalam container
-            listContainer.appendChild(fragment);
-        }
-    }, 200); 
 }
+
+// FUNGSI BARU: Merender lagu secara bertahap agar tidak crash
+function renderSongList() {
+    const listContainer = document.getElementById('song-list-container');
+    listContainer.innerHTML = ""; 
+
+    if (currentPlaylist.length === 0) {
+        listContainer.innerHTML = `<p class="empty-msg">Belum ada lagu di folder ini ✨</p>`;
+        return;
+    }
+
+    // Hanya ambil lagu dari indeks 0 sampai batas "songsDisplayed"
+    const songsToRender = currentPlaylist.slice(0, songsDisplayed);
+
+    songsToRender.forEach((song, index) => {
+        const songItem = document.createElement('div');
+        songItem.className = `song-item ${currentIndex === index && currentPlaylistName === currentPlaylistName && isPlaying ? 'active-song' : ''}`;
+        songItem.onclick = () => selectSong(index);
+        songItem.innerHTML = `
+            <div class="song-num">${index + 1}</div>
+            <div class="song-meta">
+                <span class="s-title">${song.title}</span>
+                <span class="s-artist">${song.artist || 'Unknown'}</span>
+            </div>
+            <span class="material-icons-round play-icon-list">play_circle_filled</span>
+        `;
+        listContainer.appendChild(songItem);
+    });
+
+    // Jika total lagu lebih banyak dari yang ditampilkan, munculkan tombol "Load More"
+    if (currentPlaylist.length > songsDisplayed) {
+        const loadMoreBtn = document.createElement('button');
+        loadMoreBtn.innerText = `Lihat Lagu Lainnya (+${currentPlaylist.length - songsDisplayed})`;
+        // Desain tombol kustom biar rapi
+        loadMoreBtn.style = "margin-top: 15px; padding: 12px; width: 100%; border-radius: 12px; border: 1px dashed #a0aec0; background: rgba(255,255,255,0.5); color: #718096; cursor: pointer; font-weight: 600; font-size: 13px;";
+        
+        loadMoreBtn.onclick = () => {
+            songsDisplayed += 20; // Tambah 20 lagu lagi saat diklik
+            renderSongList(); // Gambar ulang daftarnya
+        };
+        listContainer.appendChild(loadMoreBtn);
+    }
+}
+
 
         function backToFolders() {
             document.getElementById('playlist-screen').classList.add('hide');
