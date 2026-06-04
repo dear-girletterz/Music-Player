@@ -78,9 +78,7 @@
     <audio id="audio-player"></audio>
 
     <script>
-        // SEMUA PLAYLIST TERPUSAT DI SINI SEKARANG
         const allPlaylists = {
-            // Silakan isi lagu ENHYPEN 1 kamu di sini nanti
             enhypen1: [
                 { title: "Given-Taken", artist: "ENHYPEN", url: "https://cdn.jsdelivr.net/gh/dear-girletterz/Music-Player@main/Lagu/giventaken.mp3?v=2" },
                 { title: "Let Me In (20 CUBE)", artist: "ENHYPEN", url: "https://cdn.jsdelivr.net/gh/dear-girletterz/Music-Player@main/Lagu/letmein(20cube).mp3?v=2" },
@@ -269,7 +267,6 @@
         const audio = document.getElementById('audio-player');
         let isPlaying = false;
 
-        // Ambil info grup dari parameter URL
         const urlParams = new URLSearchParams(window.location.search);
         const grupAktif = urlParams.get('grup') || 'lainnya';
 
@@ -277,7 +274,6 @@
             currentPlaylistName = grupAktif.toLowerCase();
             currentPlaylist = allPlaylists[currentPlaylistName] || [];
             
-            // Mengubah teks judul di bagian atas pemutar musik
             let displayTitle = currentPlaylistName.toUpperCase();
             if(displayTitle === "ENHYPEN1") displayTitle = "ENHYPEN 1";
             if(displayTitle === "ENHYPEN2") displayTitle = "ENHYPEN 2";
@@ -287,22 +283,20 @@
             setDynamicBackground(currentPlaylistName);
         }
 
-        // WARNA BACKGROUND DYNAMIC PLAYER 
         function setDynamicBackground(folderLower) {
             if (['enhypen1', 'enhypen2'].includes(folderLower)) {
-                document.body.style.background = "linear-gradient(135deg, #e0f2fe 0%, #f8fafc 100%)"; // Biru
+                document.body.style.background = "linear-gradient(135deg, #e0f2fe 0%, #f8fafc 100%)"; 
             } else if (['hearts2hearts', 'blackpink'].includes(folderLower)) {
-                document.body.style.background = "linear-gradient(135deg, #fce7f3 0%, #f8fafc 100%)"; // Pink
+                document.body.style.background = "linear-gradient(135deg, #fce7f3 0%, #f8fafc 100%)"; 
             } else if (['babymonster', 'txt'].includes(folderLower)) {
-                document.body.style.background = "linear-gradient(135deg, #fee2e2 0%, #f8fafc 100%)"; // Merah
+                document.body.style.background = "linear-gradient(135deg, #fee2e2 0%, #f8fafc 100%)"; 
             } else if (['cortis', 'nct'].includes(folderLower)) {
-                document.body.style.background = "linear-gradient(135deg, #dcfce7 0%, #f8fafc 100%)"; // Hijau
+                document.body.style.background = "linear-gradient(135deg, #dcfce7 0%, #f8fafc 100%)"; 
             } else if (['aespa', 'lngshot'].includes(folderLower)) {
-                document.body.style.background = "linear-gradient(135deg, #e5e7eb 0%, #f8fafc 100%)"; // Abu
+                document.body.style.background = "linear-gradient(135deg, #e5e7eb 0%, #f8fafc 100%)"; 
             } else if (['bts', 'illit'].includes(folderLower)) {
-                document.body.style.background = "linear-gradient(135deg, #f3e8ff 0%, #f8fafc 100%)"; // Ungu
+                document.body.style.background = "linear-gradient(135deg, #f3e8ff 0%, #f8fafc 100%)"; 
             } else {
-                // TREASURE & LAINNYA masuk ke sini (Putih/Abu Minimalis)
                 document.body.style.background = "linear-gradient(135deg, #f1f5f9 0%, #f8fafc 100%)"; 
             }
         }
@@ -353,6 +347,28 @@
 
         function nextSong() {
             if (currentPlaylist.length === 0) return;
+            
+            // LOGIKA JEMBATAN OTOMATIS ENHYPEN 1 -> ENHYPEN 2
+            if (currentIndex === currentPlaylist.length - 1) {
+                if (currentPlaylistName === 'enhypen1') {
+                    // Ubah URL browser tanpa reload halaman
+                    const newUrl = window.location.protocol + "//" + window.location.host + window.location.pathname + '?grup=enhypen2';
+                    window.history.pushState({ path: newUrl }, '', newUrl);
+                    
+                    // Alihkan data ke playlist ENHYPEN 2
+                    currentPlaylistName = 'enhypen2';
+                    currentPlaylist = allPlaylists['enhypen2'] || [];
+                    document.getElementById('playlist-title').innerText = "ENHYPEN 2";
+                    
+                    // Render ulang tampilan & setel lagu pertama (indeks 0)
+                    renderSongList();
+                    setDynamicBackground(currentPlaylistName);
+                    selectSong(0);
+                    return; 
+                }
+            }
+
+            // Jalur normal (looping dalam satu grup)
             currentIndex = (currentIndex + 1) % currentPlaylist.length;
             selectSong(currentIndex);
         }
@@ -381,7 +397,7 @@
                 else if (['cortis', 'nct'].includes(currentPlaylistName)) miniPlayer.style.background = "linear-gradient(135deg, #f3faf4, #e3f7e6)";
                 else if (['aespa', 'lngshot'].includes(currentPlaylistName)) miniPlayer.style.background = "linear-gradient(135deg, #f3f4f6, #e5e7eb)";
                 else if (['bts', 'illit'].includes(currentPlaylistName)) miniPlayer.style.background = "linear-gradient(135deg, #faf5ff, #f3e8ff)";
-                else miniPlayer.style.background = "linear-gradient(135deg, #fafafa, #f1f1f1)"; // TREASURE & LAINNYA
+                else miniPlayer.style.background = "linear-gradient(135deg, #fafafa, #f1f1f1)"; 
             }
 
             const items = document.querySelectorAll('.song-item');
