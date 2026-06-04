@@ -591,55 +591,69 @@
         const audio = document.getElementById('audio-player');
         let isPlaying = false;
 
+        
         function openPlaylist(folderName) {
-            currentPlaylistName = folderName;
-            currentPlaylist = allPlaylists[folderName] || [];
-            
-            document.getElementById('playlist-title').innerText = folderName.toUpperCase();
-            const listContainer = document.getElementById('song-list-container');
-            listContainer.innerHTML = ""; 
+    try {
+        currentPlaylistName = folderName;
+        currentPlaylist = allPlaylists[folderName] || [];
+        
+        document.getElementById('playlist-title').innerText = folderName.toUpperCase();
+        const listContainer = document.getElementById('song-list-container');
+        listContainer.innerHTML = ""; 
 
-            if (currentPlaylist.length === 0) {
-                listContainer.innerHTML = `<p class="empty-msg">Belum ada lagu di folder ini ✨</p>`;
-            } else {
-                currentPlaylist.forEach((song, index) => {
-                    const songItem = document.createElement('div');
-                    songItem.className = `song-item ${currentIndex === index && currentPlaylistName === folderName && isPlaying ? 'active-song' : ''}`;
-                    songItem.onclick = () => selectSong(index);
-                    songItem.innerHTML = `
-                        <div class="song-num">${index + 1}</div>
-                        <div class="song-meta">
-                            <span class="s-title">${song.title}</span>
-                            <span class="s-artist">${song.artist}</span>
-                        </div>
-                        <span class="material-icons-round play-icon-list">play_circle_filled</span>
-                    `;
-                    listContainer.appendChild(songItem);
-                });
-            }
+        if (currentPlaylist.length === 0) {
+            listContainer.innerHTML = `<p class="empty-msg">Belum ada lagu di folder ini ✨</p>`;
+        } else {
+            currentPlaylist.forEach((song, index) => {
+                // PENDETEKSI EROR DATA LAGU: Jika ada properti lagu yang rusak/hilang
+                if (!song || typeof song !== 'object') {
+                    throw new Error(`Data lagu pada urutan ke-${index + 1} rusak atau salah ketik tanda koma (,)`);
+                }
+                if (!song.title || !song.url) {
+                    throw new Error(`Lagu urutan ke-${index + 1} kehilangan properti title atau url`);
+                }
 
-            // ==========================================
-            // LOGIKA BACKGROUND UTAMA LAYAR PLAYLIST
-            // ==========================================
-            if (['enhypen', 'treasure'].includes(folderName)) {
-                document.body.style.background = "linear-gradient(135deg, #e0f2fe 0%, #f8fafc 100%)"; 
-            } else if (['hearts2hearts', 'blackpink'].includes(folderName)) {
-                document.body.style.background = "linear-gradient(135deg, #fce7f3 0%, #f8fafc 100%)"; 
-            } else if (['babymonster', 'txt'].includes(folderName)) {
-                document.body.style.background = "linear-gradient(135deg, #fee2e2 0%, #f8fafc 100%)"; 
-            } else if (['cortis', 'nct'].includes(folderName)) {
-                document.body.style.background = "linear-gradient(135deg, #dcfce7 0%, #f8fafc 100%)"; 
-            } else if (['aespa', 'lngshot'].includes(folderName)) {
-                document.body.style.background = "linear-gradient(135deg, #e5e7eb 0%, #f8fafc 100%)"; 
-            } else if (['bts', 'illit'].includes(folderName)) {
-                document.body.style.background = "linear-gradient(135deg, #f3e8ff 0%, #f8fafc 100%)"; 
-            } else {
-                document.body.style.background = "linear-gradient(135deg, #f1f5f9 0%, #f8fafc 100%)"; 
-            }
-
-            document.getElementById('folder-screen').classList.add('hide');
-            document.getElementById('playlist-screen').classList.remove('hide');
+                const songItem = document.createElement('div');
+                songItem.className = `song-item ${currentIndex === index && currentPlaylistName === folderName && isPlaying ? 'active-song' : ''}`;
+                songItem.onclick = () => selectSong(index);
+                songItem.innerHTML = `
+                    <div class="song-num">${index + 1}</div>
+                    <div class="song-meta">
+                        <span class="s-title">${song.title}</span>
+                        <span class="s-artist">${song.artist || 'Unknown'}</span>
+                    </div>
+                    <span class="material-icons-round play-icon-list">play_circle_filled</span>
+                `;
+                listContainer.appendChild(songItem);
+            });
         }
+
+        // Bagian ganti background warna folder
+        if (['enhypen', 'treasure'].includes(folderName)) {
+            document.body.style.background = "linear-gradient(135deg, #e0f2fe 0%, #f8fafc 100%)"; 
+        } else if (['hearts2hearts', 'blackpink'].includes(folderName)) {
+            document.body.style.background = "linear-gradient(135deg, #fce7f3 0%, #f8fafc 100%)"; 
+        } else if (['babymonster', 'txt'].includes(folderName)) {
+            document.body.style.background = "linear-gradient(135deg, #fee2e2 0%, #f8fafc 100%)"; 
+        } else if (['cortis', 'nct'].includes(folderName)) {
+            document.body.style.background = "linear-gradient(135deg, #dcfce7 0%, #f8fafc 100%)"; 
+        } else if (['aespa', 'lngshot'].includes(folderName)) {
+            document.body.style.background = "linear-gradient(135deg, #e5e7eb 0%, #f8fafc 100%)"; 
+        } else if (['bts', 'illit'].includes(folderName)) {
+            document.body.style.background = "linear-gradient(135deg, #f3e8ff 0%, #f8fafc 100%)"; 
+        } else {
+            document.body.style.background = "linear-gradient(135deg, #f1f5f9 0%, #f8fafc 100%)"; 
+        }
+
+        document.getElementById('folder-screen').classList.add('hide');
+        document.getElementById('playlist-screen').classList.remove('hide');
+
+    } catch (error) {
+        // MENAMPILKAN EROR LANGSUNG DI LAYAR HP
+        alert("Aplikasi Glitch! Ketemu masalahnya nih:\n" + error.message);
+        console.error(error);
+    }
+}
 
         function backToFolders() {
             document.getElementById('playlist-screen').classList.add('hide');
