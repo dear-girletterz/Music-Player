@@ -55,7 +55,6 @@
         </div>
     </div>
 
-    <!-- MINI PLAYER -->
     <div class="mini-player hide" id="mini-player">
         <div class="mini-song-info">
             <h4 id="mini-title">Judul Lagu</h4>
@@ -228,12 +227,11 @@
                 { title: "Annyeonghaseyo (Ryul dll)", artist: "LNGSHOT", url: "https://cdn.jsdelivr.net/gh/dear-girletterz/Music-Player@main/Lagu5/annyeonghaseyo.mp3?v=2" }, 
                 { title: "Lullaby Remix (Louis dll)", artist: "Louis dll)", url: "https://cdn.jsdelivr.net/gh/dear-girletterz/Music-Player@main/Lagu5/lullaby.mp3?v=2" }, 
                 { title: "All I Wanna Do (Jay Park)", artist: "LNGSHOT", url: "https://cdn.jsdelivr.net/gh/dear-girletterz/Music-Player@main/Lagu5/alliwannado.mp3?v=2" }, 
-                { title: "JOAH (Jay Park)", artist: "LNGSHOT", url: "https://cdn.jsdelivr.net/gh/dear-girletterz/Music-Player@main/Lagu/Joah.mp3?v=2" }, 
+                { title: "JOAH (Jay Park)", artist: "LNGSHOT", url: "https://cdn.jsdelivr.net/gh/dear-girletterz/Music-Player@main/Lagu5/Joah.mp3?v=2" }, 
                 { title: "Remedy (Jay Park)", artist: "LNGSHOT", url: "https://cdn.jsdelivr.net/gh/dear-girletterz/Music-Player@main/Lagu5/remedy.mp3?v=2" }, 
                 { title: "Mommae (Jay Park)", artist: "LNGSHOT", url: "https://cdn.jsdelivr.net/gh/dear-girletterz/Music-Player@main/Lagu5/mommae.mp3?v=2" }
             ],
             
-            // GRUP-GRUP BARU HASIL UPDATE REORGANISASI FOLDER
             blackpink1: [], blackpink2: [],
             txt1: [], txt2: [],
             aespa1: [], aespa2: [],
@@ -256,7 +254,6 @@
             currentPlaylistName = grupAktif.toLowerCase();
             currentPlaylist = allPlaylists[currentPlaylistName] || [];
             
-            // Format penulisan teks judul playlist
             let displayTitle = currentPlaylistName.toUpperCase();
             const formatGrup = ['enhypen', 'blackpink', 'txt', 'aespa', 'nct', 'bts', 'treasure', 'illit'];
             formatGrup.forEach(grup => {
@@ -273,26 +270,24 @@
             if (['enhypen1', 'enhypen2'].includes(folderLower)) {
                 document.body.style.background = "linear-gradient(135deg, #e0f2fe 0%, #f8fafc 100%)"; 
             } else if (['hearts2hearts', 'babymonster'].includes(folderLower)) {
-                // Peach pastel agak pink soft
                 document.body.style.background = "linear-gradient(135deg, #fff6f0 0%, #f8fafc 100%)"; 
             } else if (['blackpink1', 'blackpink2'].includes(folderLower)) {
                 document.body.style.background = "linear-gradient(135deg, #fce7f3 0%, #f8fafc 100%)"; 
             } else if (['txt1', 'txt2'].includes(folderLower)) {
-                document.body.style.background = "linear-gradient(135deg, #fee2e2 0%, #f8fafc 100%)"; 
+                // Merah dibuat agak lebih tua/pekat agar beda dari pink
+                document.body.style.background = "linear-gradient(135deg, #fecaca 0%, #f8fafc 100%)"; 
             } else if (['cortis', 'lngshot'].includes(folderLower)) {
-                // Hijau pastel disamakan
                 document.body.style.background = "linear-gradient(135deg, #dcfce7 0%, #f8fafc 100%)"; 
             } else if (['aespa1', 'aespa2'].includes(folderLower)) {
-                // Kuning pastel muda banget
-                document.body.style.background = "linear-gradient(135deg, #fefce8 0%, #f8fafc 100%)"; 
+                // Kuning dibuat super soft dan pudar
+                document.body.style.background = "linear-gradient(135deg, #fffdf0 0%, #f8fafc 100%)"; 
             } else if (['nct1', 'nct2'].includes(folderLower)) {
-                // Oranye pastel muda banget
                 document.body.style.background = "linear-gradient(135deg, #fff7ed 0%, #f8fafc 100%)"; 
-            } else if (['bts1', 'bts2', 'illit1'].includes(folderLower)) {
+            } else if (['bts1', 'bts2'].includes(folderLower)) {
                 document.body.style.background = "linear-gradient(135deg, #f3e8ff 0%, #f8fafc 100%)"; 
-            } else if (['treasure1', 'treasure2'].includes(folderLower)) {
-                // Abu pastel (sama kayak warna lngshot sebelum ganti)
-                document.body.style.background = "linear-gradient(135deg, #e5e7eb 0%, #f8fafc 100%)"; 
+            } else if (['treasure1', 'treasure2', 'illit1'].includes(folderLower)) {
+                // ILLIT digabung ke Abu Pastel agar seragam
+                document.body.style.background = "linear-gradient(135deg, #f3f4f6 0%, #f8fafc 100%)"; 
             } else {
                 document.body.style.background = "linear-gradient(135deg, #f1f5f9 0%, #f8fafc 100%)"; 
             }
@@ -345,7 +340,6 @@
         function nextSong() {
             if (currentPlaylist.length === 0) return;
             
-            // JEMBATAN OTOMATIS BILA KELOMPOK PERTAMA SUDAH SELESAI
             if (currentIndex === currentPlaylist.length - 1) {
                 const mapGrupLanjutan = {
                     'enhypen1': 'enhypen2',
@@ -371,7 +365,6 @@
                 }
             }
 
-            // Jalur normal looping data dalam satu folder
             currentIndex = (currentIndex + 1) % currentPlaylist.length;
             selectSong(currentIndex);
         }
@@ -397,12 +390,12 @@
                 if (['enhypen1', 'enhypen2'].includes(currentPlaylistName)) miniPlayer.style.background = "linear-gradient(135deg, #f0f7ff, #e1effe)";
                 else if (['hearts2hearts', 'babymonster'].includes(currentPlaylistName)) miniPlayer.style.background = "linear-gradient(135deg, #fff6f0, #fdede2)";
                 else if (['blackpink1', 'blackpink2'].includes(currentPlaylistName)) miniPlayer.style.background = "linear-gradient(135deg, #fff5f7, #fde8ec)";
-                else if (['txt1', 'txt2'].includes(currentPlaylistName)) miniPlayer.style.background = "linear-gradient(135deg, #fff5f5, #fde8e8)";
+                else if (['txt1', 'txt2'].includes(currentPlaylistName)) miniPlayer.style.background = "linear-gradient(135deg, #fee2e2, #fca5a5)";
                 else if (['cortis', 'lngshot'].includes(currentPlaylistName)) miniPlayer.style.background = "linear-gradient(135deg, #f3faf4, #e3f7e6)";
-                else if (['aespa1', 'aespa2'].includes(currentPlaylistName)) miniPlayer.style.background = "linear-gradient(135deg, #fefce8, #fef9c3)";
+                else if (['aespa1', 'aespa2'].includes(currentPlaylistName)) miniPlayer.style.background = "linear-gradient(135deg, #fffdf0, #fffbeb)";
                 else if (['nct1', 'nct2'].includes(currentPlaylistName)) miniPlayer.style.background = "linear-gradient(135deg, #fff7ed, #ffedd5)";
-                else if (['bts1', 'bts2', 'illit1'].includes(currentPlaylistName)) miniPlayer.style.background = "linear-gradient(135deg, #faf5ff, #f3e8ff)";
-                else if (['treasure1', 'treasure2'].includes(currentPlaylistName)) miniPlayer.style.background = "linear-gradient(135deg, #f3f4f6, #e5e7eb)";
+                else if (['bts1', 'bts2'].includes(currentPlaylistName)) miniPlayer.style.background = "linear-gradient(135deg, #faf5ff, #f3e8ff)";
+                else if (['treasure1', 'treasure2', 'illit1'].includes(currentPlaylistName)) miniPlayer.style.background = "linear-gradient(135deg, #f3f4f6, #e5e7eb)";
                 else miniPlayer.style.background = "linear-gradient(135deg, #fafafa, #f1f1f1)"; 
             }
 
