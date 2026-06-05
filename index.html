@@ -13,22 +13,23 @@
         .container { width: 100%; max-width: 400px; }
         .app-title { font-size: 24px; font-weight: 700; margin-bottom: 25px; text-align: center; color: #4a5568; }
         .folder-list { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; }
-        .folder-box { border-radius: 20px; padding: 15px; text-align: center; text-decoration: none; display: block; transition: transform 0.2s; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02); border: 1px solid transparent; }
+        .folder-box { border-radius: 20px; padding: 15px; text-align: center; text-decoration: none; display: block; transition: transform 0.2s; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05); border: 1px solid transparent; }
         .folder-box:active { transform: scale(0.95); }
         
-        /* Pewarnaan Folder Sesuai Kategori */
-        .f-blue { background: linear-gradient(135deg, #f0f7ff, #e1effe); border-color: #bae6fd; }
-        .f-green { background: linear-gradient(135deg, #f3faf4, #e3f7e6); border-color: #c6f6d5; }
-        .f-pink { background: linear-gradient(135deg, #fff5f7, #fde8ec); border-color: #fbcfe8; }
-        .f-red { background: linear-gradient(135deg, #fff5f5, #fde8e8); border-color: #fecaca; }
-        .f-dark { background: linear-gradient(135deg, #f3f4f6, #e5e7eb); border-color: #cbd5e1; }
-        .f-purple { background: linear-gradient(135deg, #faf5ff, #f3e8ff); border-color: #e9d5ff; }
-        .f-white { background: linear-gradient(135deg, #fafafa, #f1f1f1); border-color: #dddddd; }
-        
-        /* WARNA BARU REQUESTED */
-        .f-peach { background: linear-gradient(135deg, #fff6f0, #fdede2); border-color: #fed7aa; }
-        .f-yellow { background: linear-gradient(135deg, #fefce8, #fef9c3); border-color: #fef08a; }
-        .f-orange { background: linear-gradient(135deg, #fff7ed, #ffedd5); border-color: #ffedd5; }
+        /* WARNA KUSTOM */
+        .f-blue { background: linear-gradient(135deg, #f0f7ff, #e1effe); border-color: #bae6fd; } /* Enhypen */
+        .f-green { background: linear-gradient(135deg, #f3faf4, #e3f7e6); border-color: #c6f6d5; } /* Cortis */
+        .f-gray { background: linear-gradient(135deg, #f3f4f6, #e5e7eb); border-color: #cbd5e1; } /* Lngshot */
+        .f-peach { background: linear-gradient(135deg, #fff6f0, #fdede2); border-color: #fed7aa; } /* Hearts2Hearts */
+        .f-pink { background: linear-gradient(135deg, #fff5f7, #fde8ec); border-color: #fbcfe8; } /* Babymonster */
+        .f-red { background: linear-gradient(135deg, #fff5f5, #fde8e8); border-color: #fecaca; } /* Illit */
+        .f-purple { background: linear-gradient(135deg, #faf5ff, #f3e8ff); border-color: #e9d5ff; } /* Aespa */
+        .f-yellow-light { background: linear-gradient(135deg, #fffef2, #fefce8); border-color: #fef9c3; } /* Txt (kuning muda) */
+        .f-orange { background: linear-gradient(135deg, #fff7ed, #ffedd5); border-color: #ffedd5; } /* Nct */
+        .f-milo { background: linear-gradient(135deg, #f7f3f0, #eee7e0); border-color: #e5dcd3; } /* Treasure (milo muda) */
+        .f-maroon-soft { background: linear-gradient(135deg, #fdf2f2, #fceaea); border-color: #f8d7d7; } /* Blackpink (maroon soft) */
+        .f-gray-dark { background: linear-gradient(135deg, #ebebeb, #e0e0e0); border-color: #d1d1d1; } /* Bts (abu tua lembut) */
+        .f-white { background: linear-gradient(135deg, #ffffff, #f9f9f9); border-color: #eeeeee; } /* Lainnya */
         
         .folder-img { width: 100%; height: 120px; object-fit: cover; border-radius: 14px; margin-bottom: 10px; }
         .folder-name { font-size: 14px; font-weight: 600; color: #2c3e50; }
@@ -38,96 +39,54 @@
     <div class="container">
         <h2 class="app-title">Hanyfa's Playlist</h2>
         <div class="folder-list">
-            <!-- BARIS 1: ENHYPEN 1 & ENHYPEN 2 (Warna Biru) -->
-            <a href="playlist.html?grup=enhypen1" class="folder-box f-blue">
-                <img src="https://e.usen.com/image/02583c0ec7a9b0000a1b02f9b4c81d74f958f1f2.jpg" class="folder-img" alt="ENHYPEN 1">
-                <span class="folder-name">ENHYPEN 1</span>
-            </a>
-            <a href="playlist.html?grup=enhypen2" class="folder-box f-blue">
-                <img src="https://e.usen.com/image/02583c0ec7a9b0000a1b02f9b4c81d74f958f1f2.jpg" class="folder-img" alt="ENHYPEN 2">
-                <span class="folder-name">ENHYPEN 2</span>
-            </a>
-
-            <!-- BARIS 2: CORTIS & LNGSHOT (Warna Hijau) -->
-            <a href="playlist.html?grup=cortis" class="folder-box f-green">
-                <img src="https://lxpr.lspr.ac.id/wp-content/uploads/2025/11/X-cortis.jpg" class="folder-img" alt="CORTIS">
-                <span class="folder-name">CORTIS</span>
-            </a>
-            <a href="playlist.html?grup=lngshot" class="folder-box f-green">
-                <img src="https://rollingstoneindia.com/wp-content/uploads/2026/03/Lngshot_ShotCallers_Concept-Photo_group1-1536x1123.jpeg" class="folder-img" alt="LNGSHOT">
-                <span class="folder-name">LNGSHOT</span>
-            </a>
-
-            <!-- BARIS 3: HEARTS2HEARTS & BABYMONSTER (Warna Peach Pastel) -->
-            <a href="playlist.html?grup=hearts2hearts" class="folder-box f-peach">
-                <img src="https://static.wikia.nocookie.net/kpop/images/e/e2/Hearts2Hearts_Rude%21_group_concept_photo_1.png" class="folder-img" alt="HEARTS2HEARTS">
-                <span class="folder-name">HEARTS2HEARTS</span>
-            </a>
-            <a href="playlist.html?grup=babymonster" class="folder-box f-peach">
-                <img src="https://uploaded.celebconfirmed.com/2_d73841a135.jpg" class="folder-img" alt="BABYMONSTER">
-                <span class="folder-name">BABYMONSTER</span>
-            </a>
-
-            <!-- BARIS 4: BLACKPINK 1 & BLACKPINK 2 (Warna Pink) -->
-            <a href="playlist.html?grup=blackpink1" class="folder-box f-pink">
-                <img src="https://www.billboard.com/wp-content/uploads/2022/08/04-BLACKPINK-cr-YG-Entertainment-press-2022-billboard-1548.jpg" class="folder-img" alt="BLACKPINK 1">
-                <span class="folder-name">BLACKPINK 1</span>
-            </a>
-            <a href="playlist.html?grup=blackpink2" class="folder-box f-pink">
-                <img src="https://www.billboard.com/wp-content/uploads/2022/08/04-BLACKPINK-cr-YG-Entertainment-press-2022-billboard-1548.jpg" class="folder-img" alt="BLACKPINK 2">
-                <span class="folder-name">BLACKPINK 2</span>
-            </a>
-
-            <!-- BARIS 5: TXT 1 & TXT 2 (Warna Merah) -->
-            <a href="playlist.html?grup=txt1" class="folder-box f-red">
-                <img src="https://laboratoriopop.com.br/wp-content/uploads/2022/12/35FA9181-CF36-4A57-AA37-47F11DBC240B-748x935.jpeg" class="folder-img" alt="TXT 1">
-                <span class="folder-name">TXT 1</span>
-            </a>
-            <a href="playlist.html?grup=txt2" class="folder-box f-red">
-                <img src="https://laboratoriopop.com.br/wp-content/uploads/2022/12/35FA9181-CF36-4A57-AA37-47F11DBC240B-748x935.jpeg" class="folder-img" alt="TXT 2">
-                <span class="folder-name">TXT 2</span>
-            </a>
-
-            <!-- BARIS 6: AESPA (Upgrade target url ke aespa tanpa angka jika digabung) -->
-            <a href="playlist.html?grup=aespa" class="folder-box f-yellow">
-                <img src="https://www.billboard.com/wp-content/uploads/2025/03/feature-aespa-billboard-2025-bb5-abi-polinsky-6-1548.jpg" class="folder-img" alt="AESPA">
-                <span class="folder-name">AESPA</span>
-            </a>
-            <!-- Slot sisa baris Aespa dialihkan untuk efisiensi ruang/desain seimbang -->
-            <a href="playlist.html?grup=treasure" class="folder-box f-dark">
-                <img src="https://rollingstoneindia.com/wp-content/uploads/2025/03/Treasure-Pleasure-Group-Photo-1-YG-Entertainment-1536x1024.jpg" class="folder-img" alt="TREASURE">
-                <span class="folder-name">TREASURE</span>
-            </a>
-
-            <!-- BARIS 7: NCT 1 & NCT 2 (Warna Oranye Pastel Muda) -->
-            <a href="playlist.html?grup=nct1" class="folder-box f-orange">
-                <img src="https://akcdn.detik.net.id/community/media/visual/2020/09/15/nct-2018.jpeg" class="folder-img" alt="NCT 1">
-                <span class="folder-name">NCT 1</span>
-            </a>
-            <a href="playlist.html?grup=nct2" class="folder-box f-orange">
-                <img src="https://akcdn.detik.net.id/community/media/visual/2020/09/15/nct-2018.jpeg" class="folder-img" alt="NCT 2">
-                <span class="folder-name">NCT 2</span>
-            </a>
-
-            <!-- BARIS 8: BTS 1 & BTS 2 (Warna Ungu) -->
-            <a href="playlist.html?grup=bts1" class="folder-box f-purple">
-                <img src="https://img-highend.okezone.com/okz/900/pictureArticle/images_jod496f3_Gp09Y0.jpeg" class="folder-img" alt="BTS 1">
-                <span class="folder-name">BTS 1</span>
-            </a>
-            <a href="playlist.html?grup=bts2" class="folder-box f-purple">
-                <img src="https://img-highend.okezone.com/okz/900/pictureArticle/images_jod496f3_Gp09Y0.jpeg" class="folder-img" alt="BTS 2">
-                <span class="folder-name">BTS 2</span>
-            </a>
-
-            <!-- BARIS 9: ILLIT & LAINNYA (ILLIT sinkron ke grup=illit tanpa angka, Lainnya warna Putih) -->
-            <a href="playlist.html?grup=illit" class="folder-box f-purple">
-                <img src="https://images.soco.id/446-GH_l6_2bcAAEHMx.jpeg.jpeg" class="folder-img" alt="ILLIT">
-                <span class="folder-name">ILLIT</span>
-            </a>
-            <a href="playlist.html?grup=lainnya" class="folder-box f-white">
-                <img src="https://images.stockcake.com/public/e/c/5/ec5d6681-20bf-48fa-a2f3-1f611e01b1f1_large/tropical-sunset-beach-stockcake.jpg" class="folder-img" alt="LAINNYA">
-                <span class="folder-name">LAINNYA</span>
-            </a>
+            <!-- 1. Enhypen -->
+            <a href="playlist.html?grup=enhypen1" class="folder-box f-blue"><img src="https://e.usen.com/image/02583c0ec7a9b0000a1b02f9b4c81d74f958f1f2.jpg" class="folder-img"><span class="folder-name">ENHYPEN 1</span></a>
+            <a href="playlist.html?grup=enhypen2" class="folder-box f-blue"><img src="https://e.usen.com/image/02583c0ec7a9b0000a1b02f9b4c81d74f958f1f2.jpg" class="folder-img"><span class="folder-name">ENHYPEN 2</span></a>
+            
+            <!-- 2. Cortis -->
+            <a href="playlist.html?grup=cortis1" class="folder-box f-green"><img src="https://lxpr.lspr.ac.id/wp-content/uploads/2025/11/X-cortis.jpg" class="folder-img"><span class="folder-name">CORTIS 1</span></a>
+            <a href="playlist.html?grup=cortis2" class="folder-box f-green"><img src="https://lxpr.lspr.ac.id/wp-content/uploads/2025/11/X-cortis.jpg" class="folder-img"><span class="folder-name">CORTIS 2</span></a>
+            
+            <!-- 3. Lngshot -->
+            <a href="playlist.html?grup=lngshot1" class="folder-box f-gray"><img src="https://rollingstoneindia.com/wp-content/uploads/2026/03/Lngshot_ShotCallers_Concept-Photo_group1-1536x1123.jpeg" class="folder-img"><span class="folder-name">LNGSHOT 1</span></a>
+            <a href="playlist.html?grup=lngshot2" class="folder-box f-gray"><img src="https://rollingstoneindia.com/wp-content/uploads/2026/03/Lngshot_ShotCallers_Concept-Photo_group1-1536x1123.jpeg" class="folder-img"><span class="folder-name">LNGSHOT 2</span></a>
+            
+            <!-- 4. Hearts2Hearts -->
+            <a href="playlist.html?grup=hearts2hearts1" class="folder-box f-peach"><img src="https://static.wikia.nocookie.net/kpop/images/e/e2/Hearts2Hearts_Rude%21_group_concept_photo_1.png" class="folder-img"><span class="folder-name">H2H 1</span></a>
+            <a href="playlist.html?grup=hearts2hearts2" class="folder-box f-peach"><img src="https://static.wikia.nocookie.net/kpop/images/e/e2/Hearts2Hearts_Rude%21_group_concept_photo_1.png" class="folder-img"><span class="folder-name">H2H 2</span></a>
+            
+            <!-- 5. Babymonster & Illit -->
+            <a href="playlist.html?grup=babymonster1" class="folder-box f-pink"><img src="https://uploaded.celebconfirmed.com/2_d73841a135.jpg" class="folder-img"><span class="folder-name">BABYMONSTER 1</span></a>
+            <a href="playlist.html?grup=babymonster2" class="folder-box f-pink"><img src="https://uploaded.celebconfirmed.com/2_d73841a135.jpg" class="folder-img"><span class="folder-name">BABYMONSTER 2</span></a>
+            <a href="playlist.html?grup=illit1" class="folder-box f-red"><img src="https://images.soco.id/446-GH_l6_2bcAAEHMx.jpeg.jpeg" class="folder-img"><span class="folder-name">ILLIT 1</span></a>
+            <a href="playlist.html?grup=illit2" class="folder-box f-red"><img src="https://images.soco.id/446-GH_l6_2bcAAEHMx.jpeg.jpeg" class="folder-img"><span class="folder-name">ILLIT 2</span></a>
+            
+            <!-- 6. Aespa -->
+            <a href="playlist.html?grup=aespa1" class="folder-box f-purple"><img src="https://www.billboard.com/wp-content/uploads/2025/03/feature-aespa-billboard-2025-bb5-abi-polinsky-6-1548.jpg" class="folder-img"><span class="folder-name">AESPA 1</span></a>
+            <a href="playlist.html?grup=aespa2" class="folder-box f-purple"><img src="https://www.billboard.com/wp-content/uploads/2025/03/feature-aespa-billboard-2025-bb5-abi-polinsky-6-1548.jpg" class="folder-img"><span class="folder-name">AESPA 2</span></a>
+            
+            <!-- 7. Txt -->
+            <a href="playlist.html?grup=txt1" class="folder-box f-yellow-light"><img src="https://laboratoriopop.com.br/wp-content/uploads/2022/12/35FA9181-CF36-4A57-AA37-47F11DBC240B-748x935.jpeg" class="folder-img"><span class="folder-name">TXT 1</span></a>
+            <a href="playlist.html?grup=txt2" class="folder-box f-yellow-light"><img src="https://laboratoriopop.com.br/wp-content/uploads/2022/12/35FA9181-CF36-4A57-AA37-47F11DBC240B-748x935.jpeg" class="folder-img"><span class="folder-name">TXT 2</span></a>
+            
+            <!-- 8. Nct -->
+            <a href="playlist.html?grup=nct1" class="folder-box f-orange"><img src="https://akcdn.detik.net.id/community/media/visual/2020/09/15/nct-2018.jpeg" class="folder-img"><span class="folder-name">NCT 1</span></a>
+            <a href="playlist.html?grup=nct2" class="folder-box f-orange"><img src="https://akcdn.detik.net.id/community/media/visual/2020/09/15/nct-2018.jpeg" class="folder-img"><span class="folder-name">NCT 2</span></a>
+            
+            <!-- 9. Treasure -->
+            <a href="playlist.html?grup=treasure1" class="folder-box f-milo"><img src="https://rollingstoneindia.com/wp-content/uploads/2025/03/Treasure-Pleasure-Group-Photo-1-YG-Entertainment-1536x1024.jpg" class="folder-img"><span class="folder-name">TREASURE 1</span></a>
+            <a href="playlist.html?grup=treasure2" class="folder-box f-milo"><img src="https://rollingstoneindia.com/wp-content/uploads/2025/03/Treasure-Pleasure-Group-Photo-1-YG-Entertainment-1536x1024.jpg" class="folder-img"><span class="folder-name">TREASURE 2</span></a>
+            
+            <!-- 10. Blackpink -->
+            <a href="playlist.html?grup=blackpink1" class="folder-box f-maroon-soft"><img src="https://www.billboard.com/wp-content/uploads/2022/08/04-BLACKPINK-cr-YG-Entertainment-press-2022-billboard-1548.jpg" class="folder-img"><span class="folder-name">BLACKPINK 1</span></a>
+            <a href="playlist.html?grup=blackpink2" class="folder-box f-maroon-soft"><img src="https://www.billboard.com/wp-content/uploads/2022/08/04-BLACKPINK-cr-YG-Entertainment-press-2022-billboard-1548.jpg" class="folder-img"><span class="folder-name">BLACKPINK 2</span></a>
+            
+            <!-- 11. Bts -->
+            <a href="playlist.html?grup=bts1" class="folder-box f-gray-dark"><img src="https://img-highend.okezone.com/okz/900/pictureArticle/images_jod496f3_Gp09Y0.jpeg" class="folder-img"><span class="folder-name">BTS 1</span></a>
+            <a href="playlist.html?grup=bts2" class="folder-box f-gray-dark"><img src="https://img-highend.okezone.com/okz/900/pictureArticle/images_jod496f3_Gp09Y0.jpeg" class="folder-img"><span class="folder-name">BTS 2</span></a>
+            
+            <!-- 12. Lainnya -->
+            <a href="playlist.html?grup=lainnya" class="folder-box f-white"><img src="https://images.stockcake.com/public/e/c/5/ec5d6681-20bf-48fa-a2f3-1f611e01b1f1_large/tropical-sunset-beach-stockcake.jpg" class="folder-img"><span class="folder-name">LAINNYA</span></a>
         </div>
     </div>
 </body>
